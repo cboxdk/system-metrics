@@ -27,7 +27,7 @@ final class MacOsSysctlParser
         $content = trim($content, ' {}');
         $parts = preg_split('/[,\s]+/', $content);
 
-        if (count($parts) < 4) {
+        if ($parts === false || count($parts) < 4) {
             return Result::failure(
                 ParseException::forCommand('sysctl kern.cp_time', 'Invalid format')
             );
@@ -58,6 +58,12 @@ final class MacOsSysctlParser
         // Remove braces and split by comma or whitespace
         $content = trim($content, ' {}');
         $parts = preg_split('/[,\s]+/', $content);
+
+        if ($parts === false) {
+            return Result::failure(
+                ParseException::forCommand('sysctl kern.cp_times', 'Invalid format')
+            );
+        }
 
         $perCore = [];
         $coreIndex = 0;

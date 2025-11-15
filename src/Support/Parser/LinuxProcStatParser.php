@@ -79,7 +79,7 @@ final class LinuxProcStatParser
         // Format: cpu[N]  user nice system idle iowait irq softirq steal [guest guest_nice]
         $parts = preg_split('/\s+/', $line);
 
-        if (count($parts) < 9) {
+        if ($parts === false || count($parts) < 9) {
             return Result::failure(
                 ParseException::forFile('/proc/stat', 'Invalid CPU line format')
             );
