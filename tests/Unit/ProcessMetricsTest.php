@@ -21,7 +21,7 @@ class FakeProcessMetricsSource implements ProcessMetricsSource
 
     public function read(int $pid): Result
     {
-        if (!$this->shouldSucceed) {
+        if (! $this->shouldSucceed) {
             return Result::failure(new SystemMetricsException('Read failed'));
         }
 
@@ -56,7 +56,7 @@ class FakeProcessMetricsSource implements ProcessMetricsSource
 
     public function readProcessGroup(int $rootPid): Result
     {
-        if (!$this->shouldSucceed) {
+        if (! $this->shouldSucceed) {
             return Result::failure(new SystemMetricsException('Group read failed'));
         }
 
@@ -213,5 +213,150 @@ describe('ProcessMetrics', function () {
 
         expect(ProcessMetrics::activeTrackers())->toHaveCount(2);
         expect(ProcessMetrics::activeTrackers())->toContain('tracker-1', 'tracker-2');
+    });
+
+    it('propagates tracker start failure', function () {
+        $source = new FakeProcessMetricsSource(shouldSucceed: false);
+        ProcessMetrics::setSource($source);
+
+        $result = ProcessMetrics::start(1234);
+
+        expect($result->isFailure())->toBeTrue();
+        expect($result->getError())->toBeInstanceOf(SystemMetricsException::class);
+    });
+
+    it('propagates tracker sample failure', function () {
+        // Use a failing source that succeeds on start but fails on subsequent reads
+        $source = new class implements ProcessMetricsSource {
+            private int $callCount = 0;
+
+            public function read(int $pid): Result
+            {
+                $this->callCount++;
+                // First call succeeds (for start), subsequent calls fail
+                if ($this->callCount === 1) {
+                    return Result::success(
+                        new ProcessSnapshot(
+                            pid: $pid,
+                            parentPid: 1,
+                            resources: new ProcessResourceUsage(
+                                cpuTimes: new CpuTimes(1000, 0, 500, 0, 0, 0, 0, 0),
+                                memoryRssBytes: 1024000,
+                                memoryVmsBytes: 2048000,
+                                threadCount: 1,
+                                openFileDescriptors: 10
+                            ),
+                            timestamp: new DateTimeImmutable
+                        )
+                    );
+                }
+
+                return Result::failure(new SystemMetricsException('Sample failed'));
+            }
+
+            public function readProcessGroup(int $rootPid): Result
+            {
+                return Result::failure(new SystemMetricsException('Not implemented'));
+            }
+        };
+
+        ProcessMetrics::setSource($source);
+        $result = ProcessMetrics::start(1234);
+        $trackerId = $result->getValue();
+
+        $sampleResult = ProcessMetrics::sample($trackerId);
+
+        expect($sampleResult->isFailure())->toBeTrue();
+        expect($sampleResult->getError())->toBeInstanceOf(SystemMetricsException::class);
+    });
+
+    it('propagates tracker delta failure', function () {
+        // Use a failing source that succeeds on start but fails on subsequent reads
+        $source = new class implements ProcessMetricsSource {
+            private int $callCount = 0;
+
+            public function read(int $pid): Result
+            {
+                $this->callCount++;
+                // First call succeeds (for start), subsequent calls fail
+                if ($this->callCount === 1) {
+                    return Result::success(
+                        new ProcessSnapshot(
+                            pid: $pid,
+                            parentPid: 1,
+                            resources: new ProcessResourceUsage(
+                                cpuTimes: new CpuTimes(1000, 0, 500, 0, 0, 0, 0, 0),
+                                memoryRssBytes: 1024000,
+                                memoryVmsBytes: 2048000,
+                                threadCount: 1,
+                                openFileDescriptors: 10
+                            ),
+                            timestamp: new DateTimeImmutable
+                        )
+                    );
+                }
+
+                return Result::failure(new SystemMetricsException('Delta failed'));
+            }
+
+            public function readProcessGroup(int $rootPid): Result
+            {
+                return Result::failure(new SystemMetricsException('Not implemented'));
+            }
+        };
+
+        ProcessMetrics::setSource($source);
+        $result = ProcessMetrics::start(1234);
+        $trackerId = $result->getValue();
+
+        $deltaResult = ProcessMetrics::delta($trackerId);
+
+        expect($deltaResult->isFailure())->toBeTrue();
+        expect($deltaResult->getError())->toBeInstanceOf(SystemMetricsException::class);
+    });
+
+    it('propagates tracker stop failure', function () {
+        // Use a failing source that succeeds on start but fails on subsequent reads
+        $source = new class implements ProcessMetricsSource {
+            private int $callCount = 0;
+
+            public function read(int $pid): Result
+            {
+                $this->callCount++;
+                // First call succeeds (for start), subsequent calls fail
+                if ($this->callCount === 1) {
+                    return Result::success(
+                        new ProcessSnapshot(
+                            pid: $pid,
+                            parentPid: 1,
+                            resources: new ProcessResourceUsage(
+                                cpuTimes: new CpuTimes(1000, 0, 500, 0, 0, 0, 0, 0),
+                                memoryRssBytes: 1024000,
+                                memoryVmsBytes: 2048000,
+                                threadCount: 1,
+                                openFileDescriptors: 10
+                            ),
+                            timestamp: new DateTimeImmutable
+                        )
+                    );
+                }
+
+                return Result::failure(new SystemMetricsException('Stop failed'));
+            }
+
+            public function readProcessGroup(int $rootPid): Result
+            {
+                return Result::failure(new SystemMetricsException('Not implemented'));
+            }
+        };
+
+        ProcessMetrics::setSource($source);
+        $result = ProcessMetrics::start(1234);
+        $trackerId = $result->getValue();
+
+        $stopResult = ProcessMetrics::stop($trackerId);
+
+        expect($stopResult->isFailure())->toBeTrue();
+        expect($stopResult->getError())->toBeInstanceOf(SystemMetricsException::class);
     });
 });

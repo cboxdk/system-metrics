@@ -20,7 +20,7 @@ class FakeProcessMetricsSourceForAction implements ProcessMetricsSource
 
     public function read(int $pid): Result
     {
-        if (!$this->shouldSucceed) {
+        if (! $this->shouldSucceed) {
             return Result::failure(new SystemMetricsException('Read failed'));
         }
 

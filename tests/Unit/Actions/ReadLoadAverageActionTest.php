@@ -17,7 +17,8 @@ describe('ReadLoadAverageAction', function () {
     });
 
     it('can execute with custom source', function () {
-        $mockSource = new class implements LoadAverageSource {
+        $mockSource = new class implements LoadAverageSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -42,7 +43,8 @@ describe('ReadLoadAverageAction', function () {
     });
 
     it('propagates source errors', function () {
-        $mockSource = new class implements LoadAverageSource {
+        $mockSource = new class implements LoadAverageSource
+        {
             public function read(): Result
             {
                 return Result::failure(
@@ -59,7 +61,8 @@ describe('ReadLoadAverageAction', function () {
     });
 
     it('handles zero load values', function () {
-        $mockSource = new class implements LoadAverageSource {
+        $mockSource = new class implements LoadAverageSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -83,7 +86,8 @@ describe('ReadLoadAverageAction', function () {
     });
 
     it('handles high load values', function () {
-        $mockSource = new class implements LoadAverageSource {
+        $mockSource = new class implements LoadAverageSource
+        {
             public function read(): Result
             {
                 return Result::success(

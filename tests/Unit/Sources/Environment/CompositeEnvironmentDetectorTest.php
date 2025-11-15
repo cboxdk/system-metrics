@@ -29,7 +29,8 @@ describe('CompositeEnvironmentDetector', function () {
     });
 
     it('uses injected detector when provided', function () {
-        $mockDetector = new class implements EnvironmentDetector {
+        $mockDetector = new class implements EnvironmentDetector
+        {
             public function detect(): Result
             {
                 return Result::success(
@@ -78,7 +79,8 @@ describe('CompositeEnvironmentDetector', function () {
     });
 
     it('delegates detection to underlying detector', function () {
-        $mockDetector = new class implements EnvironmentDetector {
+        $mockDetector = new class implements EnvironmentDetector
+        {
             public function detect(): Result
             {
                 return Result::success(
@@ -126,7 +128,8 @@ describe('CompositeEnvironmentDetector', function () {
     });
 
     it('propagates errors from underlying detector', function () {
-        $mockDetector = new class implements EnvironmentDetector {
+        $mockDetector = new class implements EnvironmentDetector
+        {
             public function detect(): Result
             {
                 return Result::failure(

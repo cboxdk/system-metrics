@@ -21,7 +21,7 @@ class FakeGroupProcessMetricsSource implements ProcessMetricsSource
 
     public function read(int $pid): Result
     {
-        if (!$this->shouldSucceed) {
+        if (! $this->shouldSucceed) {
             return Result::failure(new SystemMetricsException('Read failed'));
         }
 
@@ -52,7 +52,7 @@ class FakeGroupProcessMetricsSource implements ProcessMetricsSource
 
     public function readProcessGroup(int $rootPid): Result
     {
-        if (!$this->shouldSucceed) {
+        if (! $this->shouldSucceed) {
             return Result::failure(new SystemMetricsException('Group read failed'));
         }
 

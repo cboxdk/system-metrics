@@ -21,7 +21,8 @@ describe('CompositeProcessMetricsSource', function () {
     });
 
     it('uses injected source when provided', function () {
-        $mockSource = new class implements ProcessMetricsSource {
+        $mockSource = new class implements ProcessMetricsSource
+        {
             public function read(int $pid): Result
             {
                 return Result::success(
@@ -74,7 +75,8 @@ describe('CompositeProcessMetricsSource', function () {
     });
 
     it('delegates read to underlying source', function () {
-        $mockSource = new class implements ProcessMetricsSource {
+        $mockSource = new class implements ProcessMetricsSource
+        {
             public function read(int $pid): Result
             {
                 return Result::success(
@@ -116,7 +118,8 @@ describe('CompositeProcessMetricsSource', function () {
     });
 
     it('propagates errors from underlying source', function () {
-        $mockSource = new class implements ProcessMetricsSource {
+        $mockSource = new class implements ProcessMetricsSource
+        {
             public function read(int $pid): Result
             {
                 return Result::failure(

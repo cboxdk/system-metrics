@@ -20,7 +20,8 @@ describe('CompositeCpuMetricsSource', function () {
     });
 
     it('uses injected source when provided', function () {
-        $mockSource = new class implements CpuMetricsSource {
+        $mockSource = new class implements CpuMetricsSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -51,7 +52,8 @@ describe('CompositeCpuMetricsSource', function () {
     });
 
     it('delegates read to underlying source', function () {
-        $mockSource = new class implements CpuMetricsSource {
+        $mockSource = new class implements CpuMetricsSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -75,7 +77,8 @@ describe('CompositeCpuMetricsSource', function () {
     });
 
     it('propagates errors from underlying source', function () {
-        $mockSource = new class implements CpuMetricsSource {
+        $mockSource = new class implements CpuMetricsSource
+        {
             public function read(): Result
             {
                 return Result::failure(

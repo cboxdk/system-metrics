@@ -18,7 +18,8 @@ describe('CompositeLoadAverageSource', function () {
     });
 
     it('uses injected source when provided', function () {
-        $mockSource = new class implements LoadAverageSource {
+        $mockSource = new class implements LoadAverageSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -42,7 +43,8 @@ describe('CompositeLoadAverageSource', function () {
     });
 
     it('delegates read to underlying source', function () {
-        $mockSource = new class implements LoadAverageSource {
+        $mockSource = new class implements LoadAverageSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -63,7 +65,8 @@ describe('CompositeLoadAverageSource', function () {
     });
 
     it('propagates errors from underlying source', function () {
-        $mockSource = new class implements LoadAverageSource {
+        $mockSource = new class implements LoadAverageSource
+        {
             public function read(): Result
             {
                 return Result::failure(

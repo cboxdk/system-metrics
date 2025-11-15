@@ -18,7 +18,8 @@ describe('CompositeMemoryMetricsSource', function () {
     });
 
     it('uses injected source when provided', function () {
-        $mockSource = new class implements MemoryMetricsSource {
+        $mockSource = new class implements MemoryMetricsSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -47,7 +48,8 @@ describe('CompositeMemoryMetricsSource', function () {
     });
 
     it('delegates read to underlying source', function () {
-        $mockSource = new class implements MemoryMetricsSource {
+        $mockSource = new class implements MemoryMetricsSource
+        {
             public function read(): Result
             {
                 return Result::success(
@@ -74,7 +76,8 @@ describe('CompositeMemoryMetricsSource', function () {
     });
 
     it('propagates errors from underlying source', function () {
-        $mockSource = new class implements MemoryMetricsSource {
+        $mockSource = new class implements MemoryMetricsSource
+        {
             public function read(): Result
             {
                 return Result::failure(
