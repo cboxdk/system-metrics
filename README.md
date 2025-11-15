@@ -71,27 +71,26 @@ use PHPeek\SystemMetrics\SystemMetrics;
 $env = SystemMetrics::environment()->getValue();
 
 // OS Info
-echo $env->os->family->value;      // OsFamily::Linux
-echo $env->os->name;               // "Ubuntu"
-echo $env->os->version;            // "22.04"
+echo "OS Family: " . $env->os->family->value . "\n";      // OsFamily::Linux
+echo "OS Name: " . $env->os->name . "\n";                  // "Ubuntu"
+echo "OS Version: " . $env->os->version . "\n";            // "22.04"
 
 // Architecture
-echo $env->architecture->kind->value;    // "x86_64" or "arm64"
-echo $env->architecture->raw;            // Raw architecture string
+echo "Architecture: " . $env->architecture->kind->value . "\n";  // "x86_64" or "arm64"
+echo "Raw Architecture: " . $env->architecture->raw . "\n";      // Raw architecture string
 
 // Virtualization
-echo $env->virtualization->type->value;  // "bare_metal", "virtual_machine", "unknown"
-var_dump($env->virtualization->vendor);  // "KVM", "VMware", null
-var_dump($env->virtualization->rawIdentifier); // Raw hypervisor identifier or null
+echo "Virtualization Type: " . $env->virtualization->type->value . "\n";  // "bare_metal", "virtual_machine"
+echo "Virtualization Vendor: " . ($env->virtualization->vendor ?? 'none') . "\n";  // "KVM", "VMware", null
 
 // Container Detection
-var_dump($env->containerization->insideContainer); // true/false
-echo $env->containerization->type->value;          // "docker", "kubernetes", "none"
+echo "Inside Container: " . ($env->containerization->insideContainer ? 'yes' : 'no') . "\n";
+echo "Container Type: " . $env->containerization->type->value . "\n";  // "docker", "kubernetes", "none"
 
 // Cgroups
-echo $env->cgroup->version->value;  // "v1", "v2", "none", "unknown"
-var_dump($env->cgroup->cpuPath);    // "/sys/fs/cgroup/cpu" or null
-var_dump($env->cgroup->memoryPath); // "/sys/fs/cgroup/memory" or null
+echo "Cgroup Version: " . $env->cgroup->version->value . "\n";  // "v1", "v2", "none", "unknown"
+echo "Cgroup CPU Path: " . ($env->cgroup->cpuPath ?? 'none') . "\n";
+echo "Cgroup Memory Path: " . ($env->cgroup->memoryPath ?? 'none') . "\n";
 ```
 
 ### ✅ CPU Metrics
@@ -104,15 +103,15 @@ use PHPeek\SystemMetrics\SystemMetrics;
 $cpu = SystemMetrics::cpu()->getValue();
 
 // Total CPU time across all cores
-echo $cpu->total->user;      // Time in user mode
-echo $cpu->total->system;    // Time in kernel mode
-echo $cpu->total->idle;      // Idle time
-echo $cpu->total->iowait;    // Waiting for I/O (Linux only)
-echo $cpu->total->total();   // Sum of all time
-echo $cpu->total->busy();    // Total - idle
+echo "User Time: " . $cpu->total->user . " ticks\n";
+echo "System Time: " . $cpu->total->system . " ticks\n";
+echo "Idle Time: " . $cpu->total->idle . " ticks\n";
+echo "IO Wait: " . $cpu->total->iowait . " ticks\n";  // Linux only
+echo "Total Time: " . $cpu->total->total() . " ticks\n";
+echo "Busy Time: " . $cpu->total->busy() . " ticks\n";
 
 // Per-core metrics
-echo $cpu->coreCount();      // Number of CPU cores
+echo "CPU Cores: " . $cpu->coreCount() . "\n";
 foreach ($cpu->perCore as $core) {
     echo "Core {$core->coreIndex}: {$core->times->user} ticks\n";
 }
@@ -129,23 +128,23 @@ use PHPeek\SystemMetrics\SystemMetrics;
 
 $mem = SystemMetrics::memory()->getValue();
 
-// Physical Memory
-echo $mem->totalBytes;           // Total physical RAM
-echo $mem->freeBytes;            // Completely unused memory
-echo $mem->availableBytes;       // Free + reclaimable (best indicator)
-echo $mem->usedBytes;            // Actually in use
-echo $mem->buffersBytes;         // Buffer cache (Linux)
-echo $mem->cachedBytes;          // Page cache (Linux)
+// Physical Memory (bytes)
+echo "Total RAM: " . round($mem->totalBytes / 1024**3, 2) . " GB\n";
+echo "Free: " . round($mem->freeBytes / 1024**3, 2) . " GB\n";
+echo "Available: " . round($mem->availableBytes / 1024**3, 2) . " GB\n";
+echo "Used: " . round($mem->usedBytes / 1024**3, 2) . " GB\n";
+echo "Buffers: " . round($mem->buffersBytes / 1024**2, 2) . " MB\n";  // Linux
+echo "Cached: " . round($mem->cachedBytes / 1024**3, 2) . " GB\n";   // Linux
 
 // Calculated Percentages
-echo $mem->usedPercentage();     // Used / total * 100
-echo $mem->availablePercentage(); // Available / total * 100
+echo "Memory Usage: " . round($mem->usedPercentage(), 1) . "%\n";
+echo "Memory Available: " . round($mem->availablePercentage(), 1) . "%\n";
 
 // Swap Memory
-echo $mem->swapTotalBytes;       // Total swap space
-echo $mem->swapFreeBytes;        // Free swap
-echo $mem->swapUsedBytes;        // Used swap
-echo $mem->swapUsedPercentage(); // Swap usage %
+echo "Swap Total: " . round($mem->swapTotalBytes / 1024**3, 2) . " GB\n";
+echo "Swap Free: " . round($mem->swapFreeBytes / 1024**3, 2) . " GB\n";
+echo "Swap Used: " . round($mem->swapUsedBytes / 1024**3, 2) . " GB\n";
+echo "Swap Usage: " . round($mem->swapUsedPercentage(), 1) . "%\n";
 ```
 
 ### ✅ Load Average
@@ -158,17 +157,17 @@ use PHPeek\SystemMetrics\SystemMetrics;
 $load = SystemMetrics::loadAverage()->getValue();
 
 // Raw load average values (number of processes in run queue)
-echo $load->oneMinute;       // 2.45
-echo $load->fiveMinutes;     // 1.80
-echo $load->fifteenMinutes;  // 1.20
+echo "Load Average (1 min): " . $load->oneMinute . "\n";
+echo "Load Average (5 min): " . $load->fiveMinutes . "\n";
+echo "Load Average (15 min): " . $load->fifteenMinutes . "\n";
 
 // Normalize by core count for capacity percentage
 $cpu = SystemMetrics::cpu()->getValue();
 $normalized = $load->normalized($cpu);
 
-echo $normalized->oneMinute;              // 0.306 (on 8-core system)
-echo $normalized->oneMinutePercentage();  // 30.6% capacity
-echo $normalized->coreCount;              // 8
+echo "\nNormalized Load (1 min): " . round($normalized->oneMinute, 3) . "\n";
+echo "CPU Capacity (1 min): " . round($normalized->oneMinutePercentage(), 1) . "%\n";
+echo "CPU Cores: " . $normalized->coreCount . "\n";
 ```
 
 **What is Load Average?**
