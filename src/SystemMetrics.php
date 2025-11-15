@@ -6,11 +6,13 @@ namespace PHPeek\SystemMetrics;
 
 use PHPeek\SystemMetrics\Actions\DetectEnvironmentAction;
 use PHPeek\SystemMetrics\Actions\ReadCpuMetricsAction;
+use PHPeek\SystemMetrics\Actions\ReadLoadAverageAction;
 use PHPeek\SystemMetrics\Actions\ReadMemoryMetricsAction;
 use PHPeek\SystemMetrics\Actions\SystemOverviewAction;
 use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
 use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use PHPeek\SystemMetrics\DTO\Result;
 use PHPeek\SystemMetrics\DTO\SystemOverview;
@@ -58,6 +60,18 @@ final class SystemMetrics
         $action = new ReadMemoryMetricsAction(
             SystemMetricsConfig::getMemoryMetricsSource()
         );
+
+        return $action->execute();
+    }
+
+    /**
+     * Read system load average.
+     *
+     * @return Result<LoadAverageSnapshot>
+     */
+    public static function loadAverage(): Result
+    {
+        $action = new ReadLoadAverageAction;
 
         return $action->execute();
     }

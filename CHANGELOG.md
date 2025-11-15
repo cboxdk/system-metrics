@@ -5,6 +5,38 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.0 - 2025-01-XX
+
+### Added
+- **Load Average Metrics**: System load average support without requiring delta calculations
+  - `SystemMetrics::loadAverage()` facade method for instant load metrics
+  - `LoadAverageSnapshot`: Raw load average values (1, 5, 15 minute intervals)
+  - `NormalizedLoadAverage`: Load normalized by core count with percentage helpers
+  - Helper methods: `oneMinutePercentage()`, `fiveMinutesPercentage()`, `fifteenMinutesPercentage()`
+  - `normalized(CpuSnapshot)` method for capacity percentage calculation
+  - Linux support via `/proc/loadavg` parsing
+  - macOS support via `sysctl vm.loadavg` command
+  - Composite source with automatic platform detection
+  - `ReadLoadAverageAction` for load average retrieval
+  - `LinuxProcLoadavgParser` and `MacOsSysctlLoadavgParser`
+  - `LinuxProcLoadAverageSource`, `MacOsSysctlLoadAverageSource`, `CompositeLoadAverageSource`
+  - `LoadAverageSource` contract interface
+- 28 new comprehensive unit tests for load average (299 total tests, 723 assertions)
+
+### Changed
+- Updated README with Load Average section including usage examples and interpretation guide
+- Added `/proc/loadavg` to Linux permission requirements documentation
+- Added `sysctl vm.loadavg` to macOS command list in documentation
+
+### Technical Details
+- PHPStan Level 9 compliance maintained (0 errors)
+- All DTOs use readonly classes for immutability
+- Railway-oriented programming with Result<T> pattern
+- Load average values are raw counters (number of processes in run queue)
+- Normalization divides by core count to show system capacity (0-1.0 scale)
+- Percentage helpers multiply normalized values by 100 for easier interpretation
+- Graceful handling of zero core count edge case
+
 ## 1.1.0 - 2025-01-XX
 
 ### Added

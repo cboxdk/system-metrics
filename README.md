@@ -140,6 +140,42 @@ $mem->swapUsedBytes;        // Used swap
 $mem->swapUsedPercentage(); // Swap usage %
 ```
 
+### ✅ Load Average
+
+Get system load average without needing delta calculations:
+
+```php
+$load = SystemMetrics::loadAverage()->getValue();
+
+// Raw load average values (number of processes in run queue)
+$load->oneMinute;       // 2.45
+$load->fiveMinutes;     // 1.80
+$load->fifteenMinutes;  // 1.20
+
+// Normalize by core count for capacity percentage
+$cpu = SystemMetrics::cpu()->getValue();
+$normalized = $load->normalized($cpu);
+
+$normalized->oneMinute;              // 0.306 (on 8-core system)
+$normalized->oneMinutePercentage();  // 30.6% capacity
+$normalized->coreCount;              // 8
+```
+
+**What is Load Average?**
+
+Load average represents the number of processes in the run queue (runnable + waiting for CPU). On Linux, it also includes processes in uninterruptible I/O wait.
+
+- **Raw values** are absolute numbers (e.g., 4.0 means 4 processes waiting)
+- **Normalized values** divide by core count to show capacity (e.g., 4.0 / 8 cores = 0.5 = 50%)
+- **Percentage helpers** multiply by 100 for easier interpretation (50% capacity)
+
+**Interpretation:**
+- `< 1.0` (< 100%): System has spare capacity
+- `= 1.0` (= 100%): System is at full capacity
+- `> 1.0` (> 100%): System is overloaded, processes are queuing
+
+**Note:** Load average ≠ CPU usage percentage. A system with high I/O wait can have high load but low CPU usage.
+
 ### ✅ Process-Level Monitoring
 
 Monitor resource usage for individual processes or process groups:
@@ -240,6 +276,7 @@ The library reads from `/proc` and `/sys` filesystems:
 # Required read access (usually world-readable)
 /proc/meminfo           # Memory metrics
 /proc/stat              # CPU metrics
+/proc/loadavg           # Load average
 /proc/cpuinfo          # CPU architecture
 /proc/self/cgroup      # Container detection
 /sys/hypervisor/type   # Virtualization detection
@@ -257,6 +294,7 @@ The library executes these commands:
 ```bash
 sysctl -n kern.cp_time      # CPU metrics (may fail on Apple Silicon)
 sysctl -n kern.cp_times     # Per-core CPU (may fail on Apple Silicon)
+sysctl -n vm.loadavg        # Load average
 sysctl -n hw.memsize        # Total RAM
 sysctl -n hw.ncpu           # CPU count
 vm_stat                     # Memory statistics
