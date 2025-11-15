@@ -10,6 +10,7 @@ use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
 use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
 use PHPeek\SystemMetrics\DTO\Result;
 use PHPeek\SystemMetrics\Exceptions\ParseException;
+use PHPeek\SystemMetrics\Support\SystemInfo;
 
 /**
  * Parses /proc/{pid}/stat format for process metrics.
@@ -76,8 +77,9 @@ final class LinuxProcPidStatParser
         $vsize = (int) $fields[20]; // Field 23
         $rss = (int) $fields[21];   // Field 24 (in pages)
 
-        // Convert RSS from pages to bytes (page size is typically 4096)
-        $rssBytes = $rss * 4096;
+        // Convert RSS from pages to bytes using actual system page size
+        // This is critical on ARM64 (16KB pages), s390x, or hugepage systems
+        $rssBytes = $rss * SystemInfo::getPageSize();
 
         $cpuTimes = new CpuTimes(
             user: $utime,
@@ -90,12 +92,15 @@ final class LinuxProcPidStatParser
             steal: 0
         );
 
+        // Count open file descriptors from /proc/{pid}/fd/
+        $openFds = $this->countFileDescriptors($pid);
+
         $resources = new ProcessResourceUsage(
             cpuTimes: $cpuTimes,
             memoryRssBytes: $rssBytes,
             memoryVmsBytes: $vsize,
             threadCount: $numThreads,
-            openFileDescriptors: 0  // Would need to read /proc/{pid}/fd/
+            openFileDescriptors: $openFds
         );
 
         return Result::success(new ProcessSnapshot(
@@ -104,5 +109,27 @@ final class LinuxProcPidStatParser
             resources: $resources,
             timestamp: new DateTimeImmutable
         ));
+    }
+
+    /**
+     * Count open file descriptors for a process.
+     *
+     * @return int Number of open file descriptors, or 0 if unable to read
+     */
+    private function countFileDescriptors(int $pid): int
+    {
+        $fdDir = "/proc/{$pid}/fd";
+
+        if (! is_dir($fdDir) || ! is_readable($fdDir)) {
+            return 0;
+        }
+
+        $files = @scandir($fdDir);
+        if ($files === false) {
+            return 0;
+        }
+
+        // Filter out '.' and '..' entries
+        return count(array_filter($files, fn($file) => $file !== '.' && $file !== '..'));
     }
 }

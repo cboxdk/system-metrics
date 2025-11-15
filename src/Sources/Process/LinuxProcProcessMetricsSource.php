@@ -75,11 +75,28 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
     /**
      * Find all child PIDs recursively.
      *
+     * Optimized O(N) algorithm: scans /proc once to build parent→children map,
+     * then traverses recursively without re-scanning.
+     *
      * @return int[]
      */
     private function findChildPids(int $parentPid): array
     {
-        $children = [];
+        // Build parent→children map in a single O(N) scan
+        $parentToChildren = $this->buildProcessTree();
+
+        // Recursively collect all descendants
+        return $this->collectDescendants($parentPid, $parentToChildren);
+    }
+
+    /**
+     * Build a map of parent PID to array of child PIDs.
+     *
+     * @return array<int, int[]>
+     */
+    private function buildProcessTree(): array
+    {
+        $parentToChildren = [];
 
         // Read /proc directory to find all processes
         $procDirs = @glob('/proc/[0-9]*', GLOB_ONLYDIR);
@@ -89,11 +106,8 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
 
         foreach ($procDirs as $procDir) {
             $pid = (int) basename($procDir);
-            if ($pid === $parentPid) {
-                continue;  // Skip parent
-            }
 
-            // Read /proc/{pid}/stat to check parent PID
+            // Read /proc/{pid}/stat to get parent PID
             $statResult = $this->fileReader->read("{$procDir}/stat");
             if ($statResult->isFailure()) {
                 continue;  // Process may have exited
@@ -116,15 +130,37 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
 
             $ppid = (int) $fields[1];  // Field 4
 
-            if ($ppid === $parentPid) {
-                $children[] = $pid;
-
-                // Recursively find grandchildren
-                $grandchildren = $this->findChildPids($pid);
-                $children = array_merge($children, $grandchildren);
+            // Add this PID to its parent's children list
+            if (! isset($parentToChildren[$ppid])) {
+                $parentToChildren[$ppid] = [];
             }
+            $parentToChildren[$ppid][] = $pid;
         }
 
-        return $children;
+        return $parentToChildren;
+    }
+
+    /**
+     * Recursively collect all descendant PIDs from the process tree.
+     *
+     * @param array<int, int[]> $parentToChildren
+     * @return int[]
+     */
+    private function collectDescendants(int $parentPid, array $parentToChildren): array
+    {
+        $descendants = [];
+
+        // Get direct children
+        $children = $parentToChildren[$parentPid] ?? [];
+
+        foreach ($children as $childPid) {
+            $descendants[] = $childPid;
+
+            // Recursively collect grandchildren
+            $grandchildren = $this->collectDescendants($childPid, $parentToChildren);
+            $descendants = array_merge($descendants, $grandchildren);
+        }
+
+        return $descendants;
     }
 }

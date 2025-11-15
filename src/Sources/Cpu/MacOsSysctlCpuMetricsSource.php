@@ -51,38 +51,18 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
     }
 
     /**
-     * Create a minimal CPU result for systems where sysctl data is unavailable.
+     * Create a failure result for systems where sysctl data is unavailable.
      *
      * @return Result<CpuSnapshot>
      */
     private function createMinimalResult(): Result
     {
-        // Get CPU count as fallback information
-        $ncpuResult = $this->processRunner->execute('sysctl -n hw.ncpu');
-        $coreCount = $ncpuResult->isSuccess() ? (int) trim($ncpuResult->getValue()) : 1;
-
-        $emptyTimes = new CpuTimes(
-            user: 0,
-            nice: 0,
-            system: 0,
-            idle: 0,
-            iowait: 0,
-            irq: 0,
-            softirq: 0,
-            steal: 0,
+        /** @var Result<CpuSnapshot> */
+        return Result::failure(
+            new \PHPeek\SystemMetrics\Exceptions\SystemMetricsException(
+                'kern.cp_time and kern.cp_times are not available on this system. '
+                . 'These sysctls are deprecated and no longer exposed on modern macOS/Apple Silicon.'
+            )
         );
-
-        $perCore = [];
-        for ($i = 0; $i < $coreCount; $i++) {
-            $perCore[] = new CpuCoreTimes(
-                coreIndex: $i,
-                times: $emptyTimes
-            );
-        }
-
-        return Result::success(new CpuSnapshot(
-            total: $emptyTimes,
-            perCore: $perCore,
-        ));
     }
 }

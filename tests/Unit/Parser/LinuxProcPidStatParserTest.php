@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use PHPeek\SystemMetrics\Exceptions\ParseException;
 use PHPeek\SystemMetrics\Support\Parser\LinuxProcPidStatParser;
+use PHPeek\SystemMetrics\Support\SystemInfo;
 
 it('can parse /proc/{pid}/stat content', function () {
     $parser = new LinuxProcPidStatParser;
@@ -22,7 +23,7 @@ it('can parse /proc/{pid}/stat content', function () {
     expect($snapshot->resources->cpuTimes->system)->toBe(75);
     expect($snapshot->resources->threadCount)->toBe(4);
     expect($snapshot->resources->memoryVmsBytes)->toBe(104857600);
-    expect($snapshot->resources->memoryRssBytes)->toBe(10485760); // 2560 pages * 4096
+    expect($snapshot->resources->memoryRssBytes)->toBe(2560 * SystemInfo::getPageSize()); // 2560 pages
 });
 
 it('handles process names with spaces', function () {
@@ -90,8 +91,8 @@ it('converts RSS from pages to bytes correctly', function () {
     $result = $parser->parse($content, 1234);
 
     expect($result->isSuccess())->toBeTrue();
-    // 5000 pages * 4096 bytes/page = 20,480,000 bytes
-    expect($result->getValue()->resources->memoryRssBytes)->toBe(20480000);
+    // 5000 pages * actual page size
+    expect($result->getValue()->resources->memoryRssBytes)->toBe(5000 * SystemInfo::getPageSize());
 });
 
 it('handles zero CPU times', function () {
@@ -135,14 +136,14 @@ it('handles multi-threaded process', function () {
 it('handles large memory values', function () {
     $parser = new LinuxProcPidStatParser;
 
-    // vsize=2GB, rss=500MB (122880 pages * 4096 = 503316480 bytes)
+    // vsize=2GB, rss=122880 pages
     $content = '1234 (memory-hog) S 1 1234 1234 0 -1 4194560 50000 0 0 0 1000 500 0 0 20 0 8 0 123456 2147483648 122880 18446744073709551615 0 0 0 0 0 0 0 0 0 0 0 0 17 0 0 0 0 0 0';
 
     $result = $parser->parse($content, 1234);
 
     expect($result->isSuccess())->toBeTrue();
     expect($result->getValue()->resources->memoryVmsBytes)->toBe(2147483648);
-    expect($result->getValue()->resources->memoryRssBytes)->toBe(503316480);
+    expect($result->getValue()->resources->memoryRssBytes)->toBe(122880 * SystemInfo::getPageSize());
 });
 
 it('sets openFileDescriptors to zero', function () {

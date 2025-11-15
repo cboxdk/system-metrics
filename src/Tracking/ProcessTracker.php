@@ -208,15 +208,19 @@ final class ProcessTracker
         $totalRss = $group->aggregateMemoryRss();
         $totalVms = $group->aggregateMemoryVms();
 
-        // Sum CPU times from all processes
+        // Sum CPU times, threads, and file descriptors from all processes
         $totalUserTime = $group->root->resources->cpuTimes->user;
         $totalSystemTime = $group->root->resources->cpuTimes->system;
         $totalThreads = $group->root->resources->threadCount;
+        $totalFds = $group->root->resources->openFileDescriptors;
+        $processCount = 1; // Root process
 
         foreach ($group->children as $child) {
             $totalUserTime += $child->resources->cpuTimes->user;
             $totalSystemTime += $child->resources->cpuTimes->system;
             $totalThreads += $child->resources->threadCount;
+            $totalFds += $child->resources->openFileDescriptors;
+            $processCount++;
         }
 
         $aggregatedCpu = new CpuTimes(
@@ -235,7 +239,8 @@ final class ProcessTracker
             memoryRssBytes: $totalRss,
             memoryVmsBytes: $totalVms,
             threadCount: $totalThreads,
-            openFileDescriptors: 0
+            openFileDescriptors: $totalFds,
+            processCount: $processCount
         );
 
         return new ProcessSnapshot(

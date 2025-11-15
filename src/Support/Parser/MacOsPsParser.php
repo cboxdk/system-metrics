@@ -78,12 +78,15 @@ final class MacOsPsParser
             steal: 0
         );
 
+        // Count open file descriptors using lsof
+        $openFds = $this->countFileDescriptors($pid);
+
         $resources = new ProcessResourceUsage(
             cpuTimes: $cpuTimes,
             memoryRssBytes: $rssBytes,
             memoryVmsBytes: $vszBytes,
             threadCount: 1,  // ps doesn't provide thread count easily
-            openFileDescriptors: 0  // Would need lsof
+            openFileDescriptors: $openFds
         );
 
         return Result::success(new ProcessSnapshot(
@@ -95,30 +98,68 @@ final class MacOsPsParser
     }
 
     /**
-     * Parse time string from ps output (HH:MM:SS or MM:SS.CC) into seconds.
+     * Count open file descriptors for a process using lsof.
+     *
+     * @return int Number of open file descriptors, or 0 if unable to determine
+     */
+    private function countFileDescriptors(int $pid): int
+    {
+        // Use lsof to count file descriptors
+        // -p PID: specify process
+        // -n: no hostname resolution (faster)
+        // -P: no port name resolution (faster)
+        $command = "lsof -p {$pid} -n -P 2>/dev/null | tail -n +2 | wc -l";
+        $output = @shell_exec($command);
+
+        if ($output === null || $output === false) {
+            return 0;
+        }
+
+        return max(0, (int) trim($output));
+    }
+
+    /**
+     * Parse time string from ps output into seconds.
+     *
+     * Formats supported:
+     * - DD-HH:MM:SS (long-lived processes, e.g., "1-12:34:56")
+     * - HH:MM:SS (e.g., "12:34:56")
+     * - MM:SS.CC (e.g., "34:56.78")
      */
     private function parseTimeString(string $time): float
     {
         // Remove centiseconds if present (e.g., "00:01:23.45" -> "00:01:23")
+        $centiseconds = 0.0;
         if (str_contains($time, '.')) {
             $parts = explode('.', $time);
             $time = $parts[0];
             $centiseconds = isset($parts[1]) ? (float) $parts[1] / 100 : 0.0;
-        } else {
-            $centiseconds = 0.0;
+        }
+
+        // Check for DD-HH:MM:SS format (days-hours:minutes:seconds)
+        $days = 0;
+        if (str_contains($time, '-')) {
+            $dayParts = explode('-', $time, 2);
+            $days = (int) $dayParts[0];
+            $time = $dayParts[1];
         }
 
         $components = explode(':', $time);
         $count = count($components);
 
+        $seconds = 0.0;
+
         if ($count === 3) {
             // HH:MM:SS format
-            return ((int) $components[0] * 3600) + ((int) $components[1] * 60) + (int) $components[2] + $centiseconds;
+            $seconds = ((int) $components[0] * 3600) + ((int) $components[1] * 60) + (int) $components[2];
         } elseif ($count === 2) {
             // MM:SS format
-            return ((int) $components[0] * 60) + (int) $components[1] + $centiseconds;
+            $seconds = ((int) $components[0] * 60) + (int) $components[1];
         }
 
-        return 0.0;
+        // Add days converted to seconds
+        $seconds += $days * 86400;
+
+        return $seconds + $centiseconds;
     }
 }

@@ -46,7 +46,9 @@ final class LinuxMeminfoParser
         $swapTotal *= 1024;
         $swapFree *= 1024;
 
-        $used = $total - $free - $buffers - $cached;
+        // Use MemAvailable for more accurate used memory calculation
+        // MemAvailable is a kernel-provided estimate of memory available for starting new applications
+        $used = $total - $available;
         $swapUsed = $swapTotal - $swapFree;
 
         return Result::success(new MemorySnapshot(

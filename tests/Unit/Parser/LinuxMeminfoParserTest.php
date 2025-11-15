@@ -48,8 +48,8 @@ MEMINFO;
         expect($result->isSuccess())->toBeTrue();
 
         $snapshot = $result->getValue();
-        // usedBytes = total - free - buffers - cached
-        $expectedUsed = (16384000 - 8192000 - 512000 - 2048000) * 1024;
+        // usedBytes = total - available (more accurate than total - free - buffers - cached)
+        $expectedUsed = (16384000 - 10240000) * 1024;
         expect($snapshot->usedBytes)->toBe($expectedUsed);
 
         // swapUsed = swapTotal - swapFree
