@@ -143,7 +143,7 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
     /**
      * Recursively collect all descendant PIDs from the process tree.
      *
-     * @param array<int, int[]> $parentToChildren
+     * @param  array<int, int[]>  $parentToChildren
      * @return int[]
      */
     private function collectDescendants(int $parentPid, array $parentToChildren): array

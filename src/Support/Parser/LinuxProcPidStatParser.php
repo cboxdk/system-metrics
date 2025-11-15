@@ -130,6 +130,6 @@ final class LinuxProcPidStatParser
         }
 
         // Filter out '.' and '..' entries
-        return count(array_filter($files, fn($file) => $file !== '.' && $file !== '..'));
+        return count(array_filter($files, fn ($file) => $file !== '.' && $file !== '..'));
     }
 }

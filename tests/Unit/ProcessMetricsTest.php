@@ -227,7 +227,8 @@ describe('ProcessMetrics', function () {
 
     it('propagates tracker sample failure', function () {
         // Use a failing source that succeeds on start but fails on subsequent reads
-        $source = new class implements ProcessMetricsSource {
+        $source = new class implements ProcessMetricsSource
+        {
             private int $callCount = 0;
 
             public function read(int $pid): Result
@@ -272,7 +273,8 @@ describe('ProcessMetrics', function () {
 
     it('propagates tracker delta failure', function () {
         // Use a failing source that succeeds on start but fails on subsequent reads
-        $source = new class implements ProcessMetricsSource {
+        $source = new class implements ProcessMetricsSource
+        {
             private int $callCount = 0;
 
             public function read(int $pid): Result
@@ -317,7 +319,8 @@ describe('ProcessMetrics', function () {
 
     it('propagates tracker stop failure', function () {
         // Use a failing source that succeeds on start but fails on subsequent reads
-        $source = new class implements ProcessMetricsSource {
+        $source = new class implements ProcessMetricsSource
+        {
             private int $callCount = 0;
 
             public function read(int $pid): Result

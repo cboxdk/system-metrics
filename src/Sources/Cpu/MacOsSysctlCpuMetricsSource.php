@@ -10,7 +10,6 @@ use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuCoreTimes;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
 use PHPeek\SystemMetrics\Support\Parser\MacOsSysctlParser;
 use PHPeek\SystemMetrics\Support\ProcessRunner;
 
@@ -81,7 +80,7 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
             /** @var Result<CpuSnapshot> */
             return Result::failure(
                 new \PHPeek\SystemMetrics\Exceptions\ParseException(
-                    'Unable to parse top CPU output: ' . $output
+                    'Unable to parse top CPU output: '.$output
                 )
             );
         }
