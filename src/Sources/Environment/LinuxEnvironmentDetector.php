@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPeek\SystemMetrics\Sources\Environment;
 
 use PHPeek\SystemMetrics\Contracts\EnvironmentDetector;
+use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
 use PHPeek\SystemMetrics\DTO\Environment\Architecture;
 use PHPeek\SystemMetrics\DTO\Environment\ArchitectureKind;
 use PHPeek\SystemMetrics\DTO\Environment\Cgroup;
@@ -26,7 +27,7 @@ use PHPeek\SystemMetrics\Support\FileReader;
 final class LinuxEnvironmentDetector implements EnvironmentDetector
 {
     public function __construct(
-        private readonly FileReader $fileReader = new FileReader,
+        private readonly FileReaderInterface $fileReader = new FileReader,
     ) {}
 
     public function detect(): Result
