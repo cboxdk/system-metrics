@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__initial_instructions",
+      "mcp__serena__get_current_config",
+      "mcp__serena__activate_project",
+      "mcp__serena__list_dir",
+      "mcp__serena__get_symbols_overview",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(php:*)",
+      "Bash(sysctl:*)",
+      "Bash(composer test:*)",
+      "Bash(composer format:*)",
+      "Bash(composer test-coverage:*)",
+      "mcp__serena__find_symbol",
+      "mcp__serena__list_memories",
+      "mcp__serena__think_about_collected_information",
+      "Bash(find:*)",
+      "Bash(vendor/bin/pest:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(cat:*)",
+      "Bash(composer require:*)",
+      "Bash(vendor/bin/phpstan analyse:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
