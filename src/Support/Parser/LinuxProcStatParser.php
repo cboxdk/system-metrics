@@ -36,7 +36,10 @@ final class LinuxProcStatParser
             if (str_starts_with($line, 'cpu ')) {
                 $result = $this->parseCpuLine($line);
                 if ($result->isFailure()) {
-                    return Result::failure($result->getError());
+                    $error = $result->getError();
+                    assert($error !== null);
+
+                    return Result::failure($error);
                 }
                 $total = $result->getValue();
 
@@ -48,7 +51,10 @@ final class LinuxProcStatParser
                 $coreIndex = (int) $matches[1];
                 $result = $this->parseCpuLine($line);
                 if ($result->isFailure()) {
-                    return Result::failure($result->getError());
+                    $error = $result->getError();
+                    assert($error !== null);
+
+                    return Result::failure($error);
                 }
                 $perCore[] = new CpuCoreTimes(
                     coreIndex: $coreIndex,

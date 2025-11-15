@@ -77,9 +77,10 @@ final readonly class Result
     public function getValue(): mixed
     {
         if ($this->isFailure()) {
-            throw $this->error;
+            throw $this->getErrorAsserted();
         }
 
+        /** @phpstan-ignore return.type */
         return $this->value;
     }
 
@@ -93,6 +94,7 @@ final readonly class Result
      */
     public function getValueOr(mixed $default): mixed
     {
+        /** @phpstan-ignore return.type */
         return $this->isSuccess() ? $this->value : $default;
     }
 
@@ -105,6 +107,19 @@ final readonly class Result
     }
 
     /**
+     * Get the error, guaranteed non-null (use after isFailure() check).
+     *
+     * @internal
+     */
+    private function getErrorAsserted(): SystemMetricsException
+    {
+        assert($this->error !== null, 'Failure result must have an error');
+
+        return $this->error;
+    }
+
+
+    /**
      * Map the value if successful using the provided callback.
      *
      * @template U
@@ -115,9 +130,10 @@ final readonly class Result
     public function map(callable $mapper): self
     {
         if ($this->isFailure()) {
-            return self::failure($this->error);
+            return self::failure($this->getErrorAsserted());
         }
 
+        /** @phpstan-ignore argument.type */
         return self::success($mapper($this->value));
     }
 
@@ -130,6 +146,7 @@ final readonly class Result
     public function onSuccess(callable $callback): self
     {
         if ($this->isSuccess()) {
+            /** @phpstan-ignore argument.type */
             $callback($this->value);
         }
 
@@ -145,7 +162,7 @@ final readonly class Result
     public function onFailure(callable $callback): self
     {
         if ($this->isFailure()) {
-            $callback($this->error);
+            $callback($this->getErrorAsserted());
         }
 
         return $this;

@@ -24,19 +24,28 @@ final class MacOsVmStatMemoryMetricsSource implements MemoryMetricsSource
         // Get vm_stat output
         $vmStatResult = $this->processRunner->execute('vm_stat');
         if ($vmStatResult->isFailure()) {
-            return Result::failure($vmStatResult->getError());
+            $error = $vmStatResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         // Get total physical memory
         $hwMemsizeResult = $this->processRunner->execute('sysctl -n hw.memsize');
         if ($hwMemsizeResult->isFailure()) {
-            return Result::failure($hwMemsizeResult->getError());
+            $error = $hwMemsizeResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         // Get page size
         $pageSizeResult = $this->processRunner->execute('sysctl -n vm.pagesize');
         if ($pageSizeResult->isFailure()) {
-            return Result::failure($pageSizeResult->getError());
+            $error = $pageSizeResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         $pageSize = (int) trim($pageSizeResult->getValue());

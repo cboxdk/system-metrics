@@ -109,12 +109,18 @@ final class MacOsSysctlParser
     {
         $totalResult = $this->parseCpTime($cpTime);
         if ($totalResult->isFailure()) {
-            return Result::failure($totalResult->getError());
+            $error = $totalResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         $perCoreResult = $this->parseCpTimes($cpTimes);
         if ($perCoreResult->isFailure()) {
-            return Result::failure($perCoreResult->getError());
+            $error = $perCoreResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         return Result::success(new CpuSnapshot(

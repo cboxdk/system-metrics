@@ -27,17 +27,26 @@ final class SystemOverviewAction
     {
         $environmentResult = $this->environmentAction->execute();
         if ($environmentResult->isFailure()) {
-            return Result::failure($environmentResult->getError());
+            $error = $environmentResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         $cpuResult = $this->cpuAction->execute();
         if ($cpuResult->isFailure()) {
-            return Result::failure($cpuResult->getError());
+            $error = $cpuResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         $memoryResult = $this->memoryAction->execute();
         if ($memoryResult->isFailure()) {
-            return Result::failure($memoryResult->getError());
+            $error = $memoryResult->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         return Result::success(new SystemOverview(

@@ -25,7 +25,10 @@ final class LinuxProcMeminfoMemoryMetricsSource implements MemoryMetricsSource
         $result = $this->fileReader->read('/proc/meminfo');
 
         if ($result->isFailure()) {
-            return Result::failure($result->getError());
+            $error = $result->getError();
+            assert($error !== null);
+
+            return Result::failure($error);
         }
 
         return $this->parser->parse($result->getValue());
