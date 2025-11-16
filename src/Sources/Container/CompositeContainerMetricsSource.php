@@ -9,7 +9,6 @@ use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
 use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
 use PHPeek\SystemMetrics\DTO\Result;
 use PHPeek\SystemMetrics\Support\OsDetector;
-use PHPeek\SystemMetrics\Support\Parser\CgroupParser;
 
 /**
  * Composite container metrics source with automatic OS detection.

@@ -7,7 +7,6 @@ namespace PHPeek\SystemMetrics\Sources\Container;
 use PHPeek\SystemMetrics\Contracts\ContainerMetricsSource;
 use PHPeek\SystemMetrics\DTO\Result;
 use PHPeek\SystemMetrics\Support\Parser\CgroupParser;
-use PHPeek\SystemMetrics\Support\SystemInfo;
 
 /**
  * Read container metrics from Linux cgroups (v1 and v2).

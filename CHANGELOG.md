@@ -5,6 +5,30 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.5.0 - 2025-01-XX
+
+### Added
+- **System Uptime Metrics**: Track system uptime since last boot
+  - `SystemMetrics::uptime()` facade method
+  - `UptimeSnapshot` DTO with boot time, total seconds, and timestamp
+  - Helper methods: `days()`, `hours()`, `minutes()`, `totalHours()`, `totalMinutes()`, `humanReadable()`
+  - Linux support via `/proc/uptime` parsing
+  - macOS support via `sysctl kern.boottime`
+  - `LinuxProcUptimeParser` and `MacOsSysctlBoottimeParser`
+  - `LinuxProcUptimeSource`, `MacOsSysctlUptimeSource`, `CompositeUptimeSource`
+  - `ReadUptimeAction` for uptime retrieval
+  - 13 comprehensive unit tests for uptime
+
+### Changed
+- Updated README with System Uptime section including examples and use cases
+
+### Technical Details
+- PHPStan Level 9 compliance maintained (0 errors)
+- Human-readable format: "5 days, 3 hours, 42 minutes"
+- Proper singular/plural forms ("1 day" vs "2 days")
+- Immutable readonly DTO
+- Railway-oriented programming with Result<T> pattern
+
 ## 1.4.0 - 2025-01-XX
 
 ### Added

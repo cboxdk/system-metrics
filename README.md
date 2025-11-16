@@ -379,6 +379,40 @@ Load average represents the number of processes in the run queue (runnable + wai
 
 **Note:** Load average ≠ CPU usage percentage. A system with high I/O wait can have high load but low CPU usage.
 
+### ✅ System Uptime
+
+Track how long the system has been running since last boot:
+
+```php
+use PHPeek\SystemMetrics\SystemMetrics;
+
+$uptime = SystemMetrics::uptime()->getValue();
+
+// Basic uptime information
+echo "Boot time: " . $uptime->bootTime->format('Y-m-d H:i:s') . "\n";
+echo "Current time: " . $uptime->timestamp->format('Y-m-d H:i:s') . "\n";
+echo "Total seconds: " . $uptime->totalSeconds . "\n";
+
+// Human-readable format
+echo "\nUptime: " . $uptime->humanReadable() . "\n";
+// Output: "5 days, 3 hours, 42 minutes"
+
+// Component breakdown
+echo "\nDays: " . $uptime->days() . "\n";
+echo "Hours (remaining): " . $uptime->hours() . "\n";
+echo "Minutes (remaining): " . $uptime->minutes() . "\n";
+
+// Decimal representations
+echo "\nTotal hours: " . round($uptime->totalHours(), 2) . "\n";
+echo "Total minutes: " . round($uptime->totalMinutes(), 2) . "\n";
+```
+
+**Use Cases:**
+- Monitor system stability (reboots)
+- Track server uptime for SLAs
+- Detect unexpected restarts
+- Calculate uptime percentages for reliability metrics
+
 ### ✅ Storage Metrics
 
 Get filesystem and disk I/O statistics:

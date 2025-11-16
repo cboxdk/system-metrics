@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PHPeek\SystemMetrics\Support\Parser;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
 use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
+use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
 use PHPeek\SystemMetrics\DTO\Result;
 
 /**

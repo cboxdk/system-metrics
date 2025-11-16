@@ -105,7 +105,7 @@ composer test-coverage
 - **Strict types**: All files must declare `declare(strict_types=1)`
 - **PSR-4** autoloading
 - **PSR-12** code style (enforced by Laravel Pint)
-- **PHPStan Level 5** compliance (no errors)
+- **PHPStan Level 9** compliance (no errors)
 
 ### Architecture Principles
 

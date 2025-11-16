@@ -40,7 +40,6 @@ final readonly class Result
      *
      * @template U
      *
-     * @param  SystemMetricsException  $error
      * @return Result<U>
      *
      * @phpstan-ignore method.templateTypeNotInParameter
