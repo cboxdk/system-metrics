@@ -41,18 +41,20 @@ describe('CgroupParser', function () {
         $parser = new CgroupParser;
         $result = $parser->parse(8.0);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            // On systems without cgroups, all values should be null
-            if ($limits->cgroupVersion === CgroupVersion::NONE) {
-                expect($limits->cpuQuota)->toBeNull();
-                expect($limits->memoryLimitBytes)->toBeNull();
-                expect($limits->cpuUsageCores)->toBeNull();
-                expect($limits->memoryUsageBytes)->toBeNull();
-                expect($limits->cpuThrottledCount)->toBeNull();
-                expect($limits->oomKillCount)->toBeNull();
-            }
+        // On systems without cgroups, all values should be null
+        if ($limits->cgroupVersion === CgroupVersion::NONE) {
+            expect($limits->cpuQuota)->toBeNull();
+            expect($limits->memoryLimitBytes)->toBeNull();
+            expect($limits->cpuUsageCores)->toBeNull();
+            expect($limits->memoryUsageBytes)->toBeNull();
+            expect($limits->cpuThrottledCount)->toBeNull();
+            expect($limits->oomKillCount)->toBeNull();
+        } else {
+            // On systems with cgroups, verify cgroupVersion is valid
+            expect($limits->cgroupVersion)->toBeIn([CgroupVersion::V1, CgroupVersion::V2]);
         }
     });
 
@@ -61,13 +63,15 @@ describe('CgroupParser', function () {
         $hostCores = 4.0;
         $result = $parser->parse($hostCores);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            // If CPU quota is set, it should not exceed host cores
-            if ($limits->cpuQuota !== null) {
-                expect($limits->cpuQuota)->toBeLessThanOrEqual($hostCores);
-            }
+        // If CPU quota is set, it should not exceed host cores
+        if ($limits->cpuQuota !== null) {
+            expect($limits->cpuQuota)->toBeLessThanOrEqual($hostCores);
+        } else {
+            // On systems without quota limits, expect null
+            expect($limits->cpuQuota)->toBeNull();
         }
     });
 
@@ -75,13 +79,15 @@ describe('CgroupParser', function () {
         $parser = new CgroupParser;
         $result = $parser->parse(8.0);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            if ($limits->cpuQuota !== null) {
-                expect($limits->cpuQuota)->toBeFloat();
-                expect($limits->cpuQuota)->toBeGreaterThan(0.0);
-            }
+        if ($limits->cpuQuota !== null) {
+            expect($limits->cpuQuota)->toBeFloat();
+            expect($limits->cpuQuota)->toBeGreaterThan(0.0);
+        } else {
+            // On systems without CPU quota, expect null
+            expect($limits->cpuQuota)->toBeNull();
         }
     });
 
@@ -89,13 +95,15 @@ describe('CgroupParser', function () {
         $parser = new CgroupParser;
         $result = $parser->parse(8.0);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            if ($limits->memoryLimitBytes !== null) {
-                expect($limits->memoryLimitBytes)->toBeInt();
-                expect($limits->memoryLimitBytes)->toBeGreaterThan(0);
-            }
+        if ($limits->memoryLimitBytes !== null) {
+            expect($limits->memoryLimitBytes)->toBeInt();
+            expect($limits->memoryLimitBytes)->toBeGreaterThan(0);
+        } else {
+            // On systems without memory limits, expect null
+            expect($limits->memoryLimitBytes)->toBeNull();
         }
     });
 
@@ -103,13 +111,15 @@ describe('CgroupParser', function () {
         $parser = new CgroupParser;
         $result = $parser->parse(8.0);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            if ($limits->cpuUsageCores !== null) {
-                expect($limits->cpuUsageCores)->toBeFloat();
-                expect($limits->cpuUsageCores)->toBeGreaterThanOrEqual(0.0);
-            }
+        if ($limits->cpuUsageCores !== null) {
+            expect($limits->cpuUsageCores)->toBeFloat();
+            expect($limits->cpuUsageCores)->toBeGreaterThanOrEqual(0.0);
+        } else {
+            // On systems without CPU usage tracking, expect null
+            expect($limits->cpuUsageCores)->toBeNull();
         }
     });
 
@@ -117,13 +127,15 @@ describe('CgroupParser', function () {
         $parser = new CgroupParser;
         $result = $parser->parse(8.0);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            if ($limits->memoryUsageBytes !== null) {
-                expect($limits->memoryUsageBytes)->toBeInt();
-                expect($limits->memoryUsageBytes)->toBeGreaterThanOrEqual(0);
-            }
+        if ($limits->memoryUsageBytes !== null) {
+            expect($limits->memoryUsageBytes)->toBeInt();
+            expect($limits->memoryUsageBytes)->toBeGreaterThanOrEqual(0);
+        } else {
+            // On systems without memory usage tracking, expect null
+            expect($limits->memoryUsageBytes)->toBeNull();
         }
     });
 
@@ -131,13 +143,15 @@ describe('CgroupParser', function () {
         $parser = new CgroupParser;
         $result = $parser->parse(8.0);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            if ($limits->cpuThrottledCount !== null) {
-                expect($limits->cpuThrottledCount)->toBeInt();
-                expect($limits->cpuThrottledCount)->toBeGreaterThanOrEqual(0);
-            }
+        if ($limits->cpuThrottledCount !== null) {
+            expect($limits->cpuThrottledCount)->toBeInt();
+            expect($limits->cpuThrottledCount)->toBeGreaterThanOrEqual(0);
+        } else {
+            // On systems without throttle tracking, expect null
+            expect($limits->cpuThrottledCount)->toBeNull();
         }
     });
 
@@ -145,13 +159,15 @@ describe('CgroupParser', function () {
         $parser = new CgroupParser;
         $result = $parser->parse(8.0);
 
-        if ($result->isSuccess()) {
-            $limits = $result->getValue();
+        expect($result->isSuccess())->toBeTrue();
+        $limits = $result->getValue();
 
-            if ($limits->oomKillCount !== null) {
-                expect($limits->oomKillCount)->toBeInt();
-                expect($limits->oomKillCount)->toBeGreaterThanOrEqual(0);
-            }
+        if ($limits->oomKillCount !== null) {
+            expect($limits->oomKillCount)->toBeInt();
+            expect($limits->oomKillCount)->toBeGreaterThanOrEqual(0);
+        } else {
+            // On systems without OOM tracking, expect null
+            expect($limits->oomKillCount)->toBeNull();
         }
     });
 
