@@ -127,7 +127,7 @@ PHP;
             'Memory usage should increase or maintain during stress'
         );
     })->skip(
-        ! function_exists('stress-ng'),
+        ! DockerHelper::hasStressNg('cgroupv1-target'),
         'stress-ng not available in container'
     );
 

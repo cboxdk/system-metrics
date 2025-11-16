@@ -73,7 +73,7 @@ describe('Docker CgroupV2 - CPU Throttling', function () {
             'Throttling count should increase when exceeding CPU quota'
         );
     })->skip(
-        ! function_exists('stress-ng'),
+        ! DockerHelper::hasStressNg('cgroupv2-target'),
         'stress-ng not available'
     );
 
@@ -199,7 +199,7 @@ PHP;
             'Core count should remain constant'
         );
     })->skip(
-        ! function_exists('stress-ng'),
+        ! DockerHelper::hasStressNg('cgroupv2-target'),
         'stress-ng not available'
     );
 });
