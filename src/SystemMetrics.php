@@ -8,12 +8,16 @@ use PHPeek\SystemMetrics\Actions\DetectEnvironmentAction;
 use PHPeek\SystemMetrics\Actions\ReadCpuMetricsAction;
 use PHPeek\SystemMetrics\Actions\ReadLoadAverageAction;
 use PHPeek\SystemMetrics\Actions\ReadMemoryMetricsAction;
+use PHPeek\SystemMetrics\Actions\ReadNetworkMetricsAction;
+use PHPeek\SystemMetrics\Actions\ReadStorageMetricsAction;
 use PHPeek\SystemMetrics\Actions\SystemOverviewAction;
 use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
 use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
 use PHPeek\SystemMetrics\DTO\Result;
 use PHPeek\SystemMetrics\DTO\SystemOverview;
 
@@ -72,6 +76,30 @@ final class SystemMetrics
     public static function loadAverage(): Result
     {
         $action = new ReadLoadAverageAction;
+
+        return $action->execute();
+    }
+
+    /**
+     * Read storage metrics.
+     *
+     * @return Result<StorageSnapshot>
+     */
+    public static function storage(): Result
+    {
+        $action = new ReadStorageMetricsAction;
+
+        return $action->execute();
+    }
+
+    /**
+     * Read network metrics.
+     *
+     * @return Result<NetworkSnapshot>
+     */
+    public static function network(): Result
+    {
+        $action = new ReadNetworkMetricsAction;
 
         return $action->execute();
     }
