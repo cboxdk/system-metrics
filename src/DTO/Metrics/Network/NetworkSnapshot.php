@@ -10,7 +10,7 @@ namespace PHPeek\SystemMetrics\DTO\Metrics\Network;
 final readonly class NetworkSnapshot
 {
     /**
-     * @param NetworkInterface[] $interfaces
+     * @param  NetworkInterface[]  $interfaces
      */
     public function __construct(
         public array $interfaces,

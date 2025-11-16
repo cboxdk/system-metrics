@@ -20,8 +20,8 @@ final class LinuxProcNetTcpParser
      * 0A = LISTEN
      * 06 = TIME_WAIT
      *
-     * @param string $tcpContent Content from /proc/net/tcp
-     * @param string $udpContent Content from /proc/net/udp
+     * @param  string  $tcpContent  Content from /proc/net/tcp
+     * @param  string  $udpContent  Content from /proc/net/udp
      * @return Result<NetworkConnectionStats>
      */
     public function parse(string $tcpContent, string $udpContent): Result

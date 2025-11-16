@@ -10,8 +10,8 @@ namespace PHPeek\SystemMetrics\DTO\Metrics\Storage;
 final readonly class StorageSnapshot
 {
     /**
-     * @param MountPoint[] $mountPoints
-     * @param DiskIOStats[] $diskIO
+     * @param  MountPoint[]  $mountPoints
+     * @param  DiskIOStats[]  $diskIO
      */
     public function __construct(
         public array $mountPoints,
