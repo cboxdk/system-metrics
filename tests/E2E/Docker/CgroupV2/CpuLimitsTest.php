@@ -196,7 +196,7 @@ PHP;
             'CPU busy time should increase during stress test'
         );
     })->skip(
-        ! function_exists('stress-ng'),
+        ! DockerHelper::hasStressNg('cgroupv2-target'),
         'stress-ng not available in container'
     );
 

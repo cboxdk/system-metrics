@@ -41,7 +41,8 @@
       "Bash(done)",
       "Bash(composer dump-autoload:*)",
       "Bash(composer remove:*)",
-      "Bash(composer analyse:*)"
+      "Bash(composer analyse:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

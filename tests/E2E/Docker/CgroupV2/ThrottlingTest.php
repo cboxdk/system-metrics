@@ -73,7 +73,7 @@ describe('Docker CgroupV2 - CPU Throttling', function () {
             'Throttling count should increase when exceeding CPU quota'
         );
     })->skip(
-        ! function_exists('stress-ng'),
+        ! DockerHelper::hasStressNg('cgroupv2-target'),
         'stress-ng not available'
     );
 
@@ -107,10 +107,11 @@ describe('Docker CgroupV2 - CPU Throttling', function () {
             // some avg10=0.00 avg60=0.00 avg300=0.00 total=0
             // full avg10=0.00 avg60=0.00 avg300=0.00 total=0
 
-            expect($cpuPressure)->toContain('some', 'Should contain "some" pressure line');
+            // Check if content matches expected pattern (case-insensitive and flexible whitespace)
+            expect($cpuPressure)->toMatch('/some\s+avg10=/i', 'Should contain "some" pressure line with avg10');
 
             // Parse values to ensure they're valid
-            if (preg_match('/some avg10=([\d.]+)/', $cpuPressure, $match)) {
+            if (preg_match('/some\s+avg10=([\d.]+)/i', $cpuPressure, $match)) {
                 $avg10 = (float) $match[1];
                 expect($avg10)->toBeGreaterThanOrEqual(0.0, 'Pressure avg10 >= 0');
                 expect($avg10)->toBeLessThanOrEqual(100.0, 'Pressure avg10 <= 100');
@@ -198,7 +199,7 @@ PHP;
             'Core count should remain constant'
         );
     })->skip(
-        ! function_exists('stress-ng'),
+        ! DockerHelper::hasStressNg('cgroupv2-target'),
         'stress-ng not available'
     );
 });

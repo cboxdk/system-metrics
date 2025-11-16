@@ -104,6 +104,20 @@ class DockerHelper
     }
 
     /**
+     * Check if stress-ng is available in container.
+     */
+    public static function hasStressNg(string $container): bool
+    {
+        try {
+            self::exec($container, 'which stress-ng');
+
+            return true;
+        } catch (RuntimeException $e) {
+            return false;
+        }
+    }
+
+    /**
      * Run stress test in container (CPU load).
      */
     public static function stressCpu(
