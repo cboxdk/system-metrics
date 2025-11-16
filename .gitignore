@@ -31,3 +31,7 @@ psalm.xml
 testbench.yaml
 /docs
 /coverage
+
+# Local Development
+.claude/settings.local.json
+.serena/
