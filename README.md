@@ -126,8 +126,8 @@ echo "=== STORAGE ===\n";
 foreach ($storage->mountPoints as $mount) {
     if ($mount->totalBytes > 0) {
         echo "Mount: {$mount->mountPoint} ({$mount->device})\n";
-        echo "  Type: {$mount->fileSystemType->value}\n";
-        echo "  Size: " . round($mount->totalBytes() / 1024**3, 2) . " GB\n";
+        echo "  Type: {$mount->fsType->value}\n";
+        echo "  Size: " . round($mount->totalBytes / 1024**3, 2) . " GB\n";
         echo "  Used: " . round($mount->usedPercentage(), 1) . "%\n";
     }
 }
@@ -142,8 +142,8 @@ echo "=== NETWORK ===\n";
 foreach ($network->interfaces as $iface) {
     if ($iface->stats->totalBytes() > 0) {
         echo "Interface: {$iface->name} ({$iface->type->value})\n";
-        echo "  Sent: " . round($iface->stats->txBytes / 1024**2, 2) . " MB\n";
-        echo "  Received: " . round($iface->stats->rxBytes / 1024**2, 2) . " MB\n";
+        echo "  Sent: " . round($iface->stats->bytesSent / 1024**2, 2) . " MB\n";
+        echo "  Received: " . round($iface->stats->bytesReceived / 1024**2, 2) . " MB\n";
         echo "  Errors: {$iface->stats->totalErrors()}\n";
     }
 }
