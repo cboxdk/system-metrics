@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: metrics-test
+
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: metrics-quota
+  namespace: metrics-test
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "2Gi"
+    limits.cpu: "4"
+    limits.memory: "4Gi"
+    pods: "10"

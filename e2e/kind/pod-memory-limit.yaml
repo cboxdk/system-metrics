@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: php-metrics-memory-test
+  namespace: metrics-test
+spec:
+  containers:
+    - name: php-test
+      image: php:8.3-cli
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          cd /workspace
+          # Allocate memory up to limit
+          php -r '
+          $data = [];
+          for ($i = 0; $i < 200; $i++) {
+              $data[] = str_repeat("x", 1024 * 1024); // 1MB
+              usleep(100000);
+          }
+          sleep(3600);'
+      resources:
+        requests:
+          memory: "128Mi"
+        limits:
+          memory: "256Mi"
+      volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+          readOnly: true
+  volumes:
+    - name: workspace
+      hostPath:
+        path: /workspace
+        type: Directory
+  restartPolicy: Never

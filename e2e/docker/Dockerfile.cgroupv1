@@ -1,0 +1,22 @@
+FROM ubuntu:20.04
+
+# Ensure cgroup v1
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    && add-apt-repository ppa:ondrej/php \
+    && apt-get update && apt-get install -y \
+    php8.3-cli \
+    php8.3-xml \
+    php8.3-mbstring \
+    stress-ng \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Verify cgroup v1
+RUN test -f /proc/self/cgroup || exit 1
+
+WORKDIR /workspace
+
+CMD ["/bin/bash", "-c", "tail -f /dev/null"]

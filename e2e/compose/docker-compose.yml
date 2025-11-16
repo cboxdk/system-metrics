@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # Test runner service - executes Pest tests
+  test-runner:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.test-runner
+    volumes:
+      - ../..:/workspace:ro  # Mount project read-only
+      - ./results:/results  # Write test results
+    working_dir: /workspace
+    command: tail -f /dev/null  # Keep alive for exec
+    networks:
+      - test-network
+
+  # Ubuntu 20.04 with cgroup v1
+  cgroupv1-target:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.cgroupv1
+    volumes:
+      - ../..:/workspace:ro
+    cpus: 0.5
+    mem_limit: 256m
+    mem_reservation: 128m
+    networks:
+      - test-network
+    cap_add:
+      - SYS_ADMIN  # Required for cgroup access
+    security_opt:
+      - apparmor:unconfined
+
+  # Ubuntu 22.04 with cgroup v2
+  cgroupv2-target:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.cgroupv2
+    volumes:
+      - ../..:/workspace:ro
+    cpus: 1.0
+    mem_limit: 512m
+    mem_reservation: 256m
+    networks:
+      - test-network
+    cap_add:
+      - SYS_ADMIN
+
+  # Stress testing container
+  stress-test:
+    image: alpine:latest
+    volumes:
+      - ../docker/stress-test.sh:/stress-test.sh:ro
+    entrypoint: ["/bin/sh", "/stress-test.sh"]
+    cpus: 0.2
+    mem_limit: 128m
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
