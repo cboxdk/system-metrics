@@ -17,6 +17,7 @@ use PHPeek\SystemMetrics\Actions\SystemOverviewAction;
 use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
 use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
+use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuDelta;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
@@ -150,6 +151,65 @@ final class SystemMetrics
         $action = new ReadContainerMetricsAction;
 
         return $action->execute();
+    }
+
+    /**
+     * Measure CPU usage percentage over a specific time interval.
+     *
+     * This is a convenience method that handles the two-snapshot requirement
+     * automatically by waiting between measurements.
+     *
+     * ⚠️  This method blocks execution during the interval. For non-blocking usage,
+     * use CpuSnapshot::calculateDelta() with manual snapshots.
+     *
+     * @param  float  $intervalSeconds  Time to wait between snapshots (default: 1.0, min: 0.1)
+     * @return Result<CpuDelta>
+     *
+     * @example Quick measurement (1 second)
+     * ```php
+     * $result = SystemMetrics::cpuUsage();
+     * $delta = $result->getValue();
+     * echo "CPU Usage: " . round($delta->usagePercentage(), 1) . "%\n";
+     * ```
+     *
+     * @example Longer measurement (5 seconds, more accurate)
+     * ```php
+     * $result = SystemMetrics::cpuUsage(5.0);
+     * $delta = $result->getValue();
+     * echo "CPU Usage: " . round($delta->usagePercentage(), 1) . "%\n";
+     * echo "Normalized: " . round($delta->normalizedUsagePercentage(), 1) . "%\n";
+     * ```
+     */
+    public static function cpuUsage(float $intervalSeconds = 1.0): Result
+    {
+        // Ensure minimum interval
+        $intervalSeconds = max(0.1, $intervalSeconds);
+
+        // Take first snapshot
+        $result1 = self::cpu();
+        if ($result1->isFailure()) {
+            /** @var Result<CpuDelta> */
+            return $result1;
+        }
+
+        // Wait for interval
+        $microSeconds = (int) ($intervalSeconds * 1_000_000);
+        usleep($microSeconds);
+
+        // Take second snapshot
+        $result2 = self::cpu();
+        if ($result2->isFailure()) {
+            /** @var Result<CpuDelta> */
+            return $result2;
+        }
+
+        // Calculate delta
+        $delta = CpuSnapshot::calculateDelta(
+            $result1->getValue(),
+            $result2->getValue()
+        );
+
+        return Result::success($delta);
     }
 
     /**
