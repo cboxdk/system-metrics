@@ -54,4 +54,55 @@ final readonly class StorageSnapshot
 
         return ($this->usedBytes() / $total) * 100;
     }
+
+    /**
+     * Find mount point containing the given path.
+     * Returns the most specific mount (longest matching prefix).
+     */
+    public function findMountPoint(string $path): ?MountPoint
+    {
+        $matches = [];
+
+        foreach ($this->mountPoints as $mount) {
+            if (str_starts_with($path, $mount->mountPoint)) {
+                $matches[] = $mount;
+            }
+        }
+
+        if (empty($matches)) {
+            return null;
+        }
+
+        // Sort by mount point length descending (most specific first)
+        usort($matches, fn (MountPoint $a, MountPoint $b) => strlen($b->mountPoint) - strlen($a->mountPoint));
+
+        return $matches[0];
+    }
+
+    /**
+     * Find mount point by device name.
+     */
+    public function findDevice(string $device): ?MountPoint
+    {
+        foreach ($this->mountPoints as $mount) {
+            if ($mount->device === $device) {
+                return $mount;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Find all mount points of a given filesystem type.
+     *
+     * @return MountPoint[]
+     */
+    public function findByFilesystemType(FileSystemType $type): array
+    {
+        return array_values(array_filter(
+            $this->mountPoints,
+            fn (MountPoint $mp) => $mp->fsType === $type
+        ));
+    }
 }
