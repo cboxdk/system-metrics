@@ -66,6 +66,7 @@ Get a complete snapshot of all available system metrics:
 ```php
 use PHPeek\SystemMetrics\SystemMetrics;
 use PHPeek\SystemMetrics\ProcessMetrics;
+use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 
 // ============================================
 // ENVIRONMENT DETECTION
@@ -91,6 +92,36 @@ echo "System Time: {$cpu->total->system} ticks\n";
 echo "Idle Time: {$cpu->total->idle} ticks\n";
 echo "Total Time: {$cpu->total->total()} ticks\n";
 echo "Busy Time: {$cpu->total->busy()} ticks\n\n";
+
+// ============================================
+// CPU USAGE PERCENTAGE (Delta Calculation)
+// ============================================
+// ⚠️ IMPORTANT: CPU percentage requires TWO snapshots!
+// Use the convenience method for automatic measurement:
+$cpuDelta = SystemMetrics::cpuUsage(1.0)->getValue(); // Wait 1 second
+
+echo "=== CPU USAGE ===\n";
+echo "Overall Usage: " . round($cpuDelta->usagePercentage(), 1) . "%\n";
+echo "Normalized (per-core avg): " . round($cpuDelta->normalizedUsagePercentage(), 1) . "%\n";
+echo "User Mode: " . round($cpuDelta->userPercentage(), 1) . "%\n";
+echo "System Mode: " . round($cpuDelta->systemPercentage(), 1) . "%\n";
+echo "Idle: " . round($cpuDelta->idlePercentage(), 1) . "%\n";
+echo "I/O Wait: " . round($cpuDelta->iowaitPercentage(), 1) . "%\n\n";
+
+// Per-core analysis
+if ($busiest = $cpuDelta->busiestCore()) {
+    echo "Busiest Core: #{$busiest->coreIndex} at " . round($busiest->usagePercentage(), 1) . "%\n";
+}
+if ($idlest = $cpuDelta->idlestCore()) {
+    echo "Idlest Core: #{$idlest->coreIndex} at " . round($idlest->usagePercentage(), 1) . "%\n\n";
+}
+
+// Manual two-snapshot approach (non-blocking):
+$snap1 = SystemMetrics::cpu()->getValue();
+sleep(2); // Your code can do work here
+$snap2 = SystemMetrics::cpu()->getValue();
+$delta = CpuSnapshot::calculateDelta($snap1, $snap2);
+echo "Manual Delta: " . round($delta->usagePercentage(), 1) . "%\n\n";
 
 // ============================================
 // MEMORY METRICS

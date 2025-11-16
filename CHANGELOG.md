@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-11-16
 
 ### Added
+- **CPU Usage Percentage**: Calculate CPU usage percentage over time intervals
+  - `SystemMetrics::cpuUsage(float $intervalSeconds = 1.0)` facade method for automatic measurement
+  - `CpuSnapshot::calculateDelta(CpuSnapshot $before, CpuSnapshot $after)` for manual two-snapshot calculation
+  - `CpuDelta` DTO with comprehensive percentage calculations:
+    - `usagePercentage()` - Overall CPU usage (0-100+, can exceed 100% on multi-core)
+    - `normalizedUsagePercentage()` - Per-core average usage (0-100%)
+    - `userPercentage()` - User-mode CPU time percentage
+    - `systemPercentage()` - System-mode (kernel) CPU time percentage
+    - `idlePercentage()` - Idle time percentage
+    - `iowaitPercentage()` - I/O wait time percentage
+    - `coreUsagePercentage(int $coreIndex)` - Usage for specific core
+    - `busiestCore()` - Get busiest core during interval
+    - `idlestCore()` - Get least busy core during interval
+  - `CpuCoreDelta` DTO for per-core delta calculations
+  - ⚠️ Important: CPU percentage requires TWO snapshots with time elapsed between them
+  - Convenience method blocks execution; manual method allows non-blocking patterns
+  - 15 comprehensive unit tests for CPU delta calculations
+
 - **System Uptime Metrics**: Track system uptime since last boot
   - `SystemMetrics::uptime()` facade method
   - `UptimeSnapshot` DTO with boot time, total seconds, and timestamp
@@ -84,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Zero headroom when at or over capacity
 - Immutable readonly DTOs throughout
 - Railway-oriented programming with Result<T> pattern
-- 603 total tests, 1486 assertions
+- 618 total tests, 1514 assertions (15 new CPU delta tests)
 
 - **Container Metrics (Cgroups)**: Full Docker/Kubernetes resource monitoring
   - `SystemMetrics::container()` facade method for container metrics
@@ -194,7 +212,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PSR-4 autoloading
 - Laravel Pint for code style enforcement
 - Pest v4 for testing framework
-- 603 tests with 1486 assertions (100% pass rate)
+- 618 tests with 1514 assertions (100% pass rate)
 
 ### Platform Support
 - **Linux**: Full support via /proc and /sys filesystems
