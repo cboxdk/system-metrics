@@ -5,10 +5,6 @@ declare(strict_types=1);
 use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
 
 describe('Kubernetes - Resource Quotas', function () {
-    beforeAll(function () {
-        KindHelper::ensureCluster();
-        KindHelper::deployTestPods();
-    });
 
     it('validates namespace resource quota exists', function () {
         $output = KindHelper::kubectl('get resourcequota metrics-quota -n metrics-test -o json');

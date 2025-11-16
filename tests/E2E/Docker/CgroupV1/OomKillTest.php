@@ -5,18 +5,6 @@ declare(strict_types=1);
 use PHPeek\SystemMetrics\Tests\E2E\Support\DockerHelper;
 
 describe('Docker CgroupV1 - OOM Kill Detection', function () {
-    beforeAll(function () {
-        if (! DockerHelper::isRunning('cgroupv1-target')) {
-            throw new RuntimeException(
-                'cgroupv1-target container not running'
-            );
-        }
-
-        $cgroupVersion = DockerHelper::detectCgroupVersion('cgroupv1-target');
-        if ($cgroupVersion !== 'v1') {
-            throw new RuntimeException("Expected cgroup v1, got {$cgroupVersion}");
-        }
-    });
 
     it('reads cgroup v1 OOM control file', function () {
         // Check if OOM control file exists

@@ -5,10 +5,6 @@ declare(strict_types=1);
 use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
 
 describe('Kubernetes - CPU Throttling', function () {
-    beforeAll(function () {
-        KindHelper::ensureCluster();
-        KindHelper::deployTestPods();
-    });
 
     it('detects CPU limits enforced by Kubernetes', function () {
         // Pod has 500m (0.5 CPU) limit

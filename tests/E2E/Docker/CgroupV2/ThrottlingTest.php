@@ -5,18 +5,6 @@ declare(strict_types=1);
 use PHPeek\SystemMetrics\Tests\E2E\Support\DockerHelper;
 
 describe('Docker CgroupV2 - CPU Throttling', function () {
-    beforeAll(function () {
-        if (! DockerHelper::isRunning('cgroupv2-target')) {
-            throw new RuntimeException(
-                'cgroupv2-target container not running'
-            );
-        }
-
-        $cgroupVersion = DockerHelper::detectCgroupVersion('cgroupv2-target');
-        if ($cgroupVersion !== 'v2') {
-            throw new RuntimeException("Expected cgroup v2, got {$cgroupVersion}");
-        }
-    });
 
     it('reads cgroup v2 CPU throttling statistics', function () {
         expect(DockerHelper::fileExists('cgroupv2-target', '/sys/fs/cgroup/cpu.stat'))

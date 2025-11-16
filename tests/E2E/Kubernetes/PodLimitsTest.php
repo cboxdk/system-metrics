@@ -6,18 +6,7 @@ use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
 use PHPeek\SystemMetrics\Tests\E2E\Support\MetricsValidator;
 
 describe('Kubernetes - Pod Resource Limits', function () {
-    beforeAll(function () {
-        // Ensure Kind cluster exists
-        KindHelper::ensureCluster();
 
-        // Deploy test pods
-        KindHelper::deployTestPods();
-    });
-
-    afterAll(function () {
-        // Cleanup is optional, leave resources for manual inspection
-        // KindHelper::cleanup();
-    });
 
     it('detects CPU limits in Kubernetes pod', function () {
         $code = <<<'PHP'

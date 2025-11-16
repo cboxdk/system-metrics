@@ -21,9 +21,13 @@ class DockerHelper
         $output = [];
         $returnCode = 0;
 
+        // Use docker compose exec to resolve service names
+        $composeFile = __DIR__ . '/../../../e2e/compose/docker-compose.yml';
+
         exec(
             sprintf(
-                'docker exec %s sh -c %s 2>&1',
+                'docker compose -f %s exec -T %s sh -c %s 2>&1',
+                escapeshellarg($composeFile),
                 escapeshellarg($container),
                 escapeshellarg($command)
             ),
@@ -59,10 +63,12 @@ class DockerHelper
      */
     public static function getContainerId(string $serviceName): string
     {
+        $composeFile = __DIR__ . '/../../../e2e/compose/docker-compose.yml';
         $output = [];
         exec(
             sprintf(
-                'docker ps -q -f name=%s',
+                'docker compose -f %s ps -q %s',
+                escapeshellarg($composeFile),
                 escapeshellarg($serviceName)
             ),
             $output
@@ -176,10 +182,12 @@ class DockerHelper
      */
     public static function isRunning(string $container): bool
     {
+        $composeFile = __DIR__ . '/../../../e2e/compose/docker-compose.yml';
         $output = [];
         exec(
             sprintf(
-                'docker ps -q -f name=%s',
+                'docker compose -f %s ps -q %s',
+                escapeshellarg($composeFile),
                 escapeshellarg($container)
             ),
             $output
@@ -193,11 +201,14 @@ class DockerHelper
      */
     public static function getStats(string $container): array
     {
+        // Get container ID first
+        $containerId = self::getContainerId($container);
+
         $output = [];
         exec(
             sprintf(
                 'docker stats %s --no-stream --format "{{json .}}"',
-                escapeshellarg($container)
+                escapeshellarg($containerId)
             ),
             $output
         );

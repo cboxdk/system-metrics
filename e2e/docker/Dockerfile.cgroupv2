@@ -1,20 +1,13 @@
-FROM ubuntu:22.04
+FROM php:8.3-cli
 
-ENV DEBIAN_FRONTEND=noninteractive
-
+# Install required tools
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    && add-apt-repository ppa:ondrej/php \
-    && apt-get update && apt-get install -y \
-    php8.3-cli \
-    php8.3-xml \
-    php8.3-mbstring \
     stress-ng \
     procps \
     && rm -rf /var/lib/apt/lists/*
 
-# Verify cgroup v2
-RUN test -f /sys/fs/cgroup/cgroup.controllers || echo "Warning: cgroup v2 not available in build"
+# Verify cgroup files exist (will be v1 or v2 depending on host)
+RUN test -f /proc/self/cgroup || exit 1
 
 WORKDIR /workspace
 

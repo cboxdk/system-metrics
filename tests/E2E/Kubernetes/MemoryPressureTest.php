@@ -5,10 +5,6 @@ declare(strict_types=1);
 use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
 
 describe('Kubernetes - Memory Pressure', function () {
-    beforeAll(function () {
-        KindHelper::ensureCluster();
-        KindHelper::deployTestPods();
-    });
 
     it('detects memory limits enforced by Kubernetes', function () {
         // Pod has 256Mi memory limit

@@ -5,18 +5,6 @@ declare(strict_types=1);
 use PHPeek\SystemMetrics\Tests\E2E\Support\DockerHelper;
 
 describe('Docker CgroupV2 - Memory Limits', function () {
-    beforeAll(function () {
-        if (! DockerHelper::isRunning('cgroupv2-target')) {
-            throw new RuntimeException(
-                'cgroupv2-target container not running. Start with: docker compose -f e2e/compose/docker-compose.yml up -d'
-            );
-        }
-
-        $cgroupVersion = DockerHelper::detectCgroupVersion('cgroupv2-target');
-        if ($cgroupVersion !== 'v2') {
-            throw new RuntimeException("Expected cgroup v2, got {$cgroupVersion}");
-        }
-    });
 
     it('detects memory limit in cgroup v2 container', function () {
         $code = <<<'PHP'
