@@ -8,6 +8,8 @@ on:
       - 'phpunit.xml.dist'
       - 'composer.json'
       - 'composer.lock'
+      - 'e2e/**'
+      - 'tests/E2E/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -16,7 +18,7 @@ concurrency:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 5
+    timeout-minutes: 10
     strategy:
       fail-fast: true
       matrix:
@@ -48,5 +50,28 @@ jobs:
       - name: List Installed Dependencies
         run: composer show -D
 
-      - name: Execute tests
-        run: vendor/bin/pest --ci
+      - name: Execute unit tests
+        run: vendor/bin/pest --ci tests/Unit/ tests/ExampleTest.php tests/ArchTest.php
+
+      - name: Start Docker containers for E2E tests
+        run: docker compose -f e2e/compose/docker-compose.yml up -d
+
+      - name: Wait for containers to be ready
+        run: sleep 5
+
+      - name: Execute E2E tests (Docker only)
+        run: vendor/bin/pest --ci tests/E2E/Docker/
+
+      - name: Stop Docker containers
+        if: always()
+        run: docker compose -f e2e/compose/docker-compose.yml down
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-${{ matrix.os }}-php${{ matrix.php }}-${{ matrix.stability }}
+          path: |
+            tests/**/*.log
+            e2e/compose/results/
+          retention-days: 7

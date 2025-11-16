@@ -1,0 +1,14 @@
+FROM php:8.3-cli
+
+# Install required tools
+RUN apt-get update && apt-get install -y \
+    stress-ng \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Verify cgroup files exist (will be v1 or v2 depending on host)
+RUN test -f /proc/self/cgroup || exit 1
+
+WORKDIR /workspace
+
+CMD ["/bin/bash", "-c", "tail -f /dev/null"]

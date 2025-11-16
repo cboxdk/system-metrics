@@ -1,0 +1,40 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: system-metrics-test
+
+# Multi-node cluster for realistic testing
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "testing=true"
+    extraMounts:
+      - hostPath: ../../
+        containerPath: /workspace
+        readOnly: true
+
+  - role: worker
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 30080
+        protocol: TCP
+    extraMounts:
+      - hostPath: ../../
+        containerPath: /workspace
+        readOnly: true
+
+  - role: worker
+    extraMounts:
+      - hostPath: ../../
+        containerPath: /workspace
+        readOnly: true
+
+# Configure resources for nodes
+kubeadmConfigPatches:
+  - |
+    kind: KubeletConfiguration
+    cpuManagerPolicy: static
+    cpuManagerReconcilePeriod: 5s

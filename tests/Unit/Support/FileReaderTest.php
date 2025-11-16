@@ -21,7 +21,8 @@ describe('FileReader', function () {
 
     it('returns failure for non-existent file', function () {
         $reader = new FileReader;
-        $result = $reader->read('/non/existent/file.txt');
+        // Use a whitelisted but non-existent path
+        $result = $reader->read('/proc/nonexistentfile12345');
 
         expect($result->isFailure())->toBeTrue();
         expect($result->getError())->toBeInstanceOf(FileNotFoundException::class);
@@ -158,7 +159,8 @@ describe('FileReader', function () {
 
     it('readLines propagates read failures', function () {
         $reader = new FileReader;
-        $result = $reader->readLines('/non/existent/file.txt');
+        // Use a whitelisted but non-existent path
+        $result = $reader->readLines('/proc/nonexistentfile12345');
 
         expect($result->isFailure())->toBeTrue();
         expect($result->getError())->toBeInstanceOf(FileNotFoundException::class);
@@ -178,6 +180,23 @@ describe('FileReader', function () {
 
     it('exists returns false for non-existent file', function () {
         $reader = new FileReader;
-        expect($reader->exists('/non/existent/file.txt'))->toBeFalse();
+        // Use a whitelisted but non-existent path
+        expect($reader->exists('/proc/nonexistentfile12345'))->toBeFalse();
+    });
+
+    it('rejects paths not in whitelist', function () {
+        $reader = new FileReader;
+        $result = $reader->read('/etc/passwd');
+
+        expect($result->isFailure())->toBeTrue();
+        expect($result->getError()->getMessage())->toContain('not whitelisted');
+    });
+
+    it('prevents directory traversal attacks', function () {
+        $reader = new FileReader;
+        $result = $reader->read('/proc/../etc/passwd');
+
+        expect($result->isFailure())->toBeTrue();
+        // Should fail because realpath resolves to /etc/passwd which isn't whitelisted
     });
 });

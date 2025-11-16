@@ -60,9 +60,9 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
      */
     private function readFromTop(): Result
     {
-        // Use top to get CPU usage: top -l 1 -n 0 | grep "CPU usage"
+        // Use top to get CPU usage (can't use pipes due to escapeshellcmd in ProcessRunner)
         // Output format: "CPU usage: 20.22% user, 15.63% sys, 64.14% idle"
-        $topResult = $this->processRunner->execute('top -l 1 -n 0 | grep "CPU usage"');
+        $topResult = $this->processRunner->execute('top -l 1 -n 0');
 
         if ($topResult->isFailure()) {
             /** @var Result<CpuSnapshot> */
@@ -73,14 +73,15 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
             );
         }
 
-        $output = trim($topResult->getValue());
+        $output = $topResult->getValue();
 
+        // Find the CPU usage line in the output
         // Parse: "CPU usage: 20.22% user, 15.63% sys, 64.14% idle"
-        if (! preg_match('/(\d+\.\d+)% user, (\d+\.\d+)% sys, (\d+\.\d+)% idle/', $output, $matches)) {
+        if (! preg_match('/CPU usage: (\d+\.\d+)% user, (\d+\.\d+)% sys, (\d+\.\d+)% idle/', $output, $matches)) {
             /** @var Result<CpuSnapshot> */
             return Result::failure(
                 new \PHPeek\SystemMetrics\Exceptions\ParseException(
-                    'Unable to parse top CPU output: '.$output
+                    'Unable to parse top CPU output (looking for "CPU usage:" line)'
                 )
             );
         }
