@@ -132,8 +132,8 @@ it('handles single sample', function () {
         cpuDelta: $cpu,
         memoryDeltaBytes: 0,
         durationSeconds: 0.0,
-        startTime: new DateTimeImmutable(),
-        endTime: new DateTimeImmutable()
+        startTime: new DateTimeImmutable,
+        endTime: new DateTimeImmutable
     );
 
     $stats = new ProcessStats(
@@ -177,7 +177,7 @@ it('handles process group with multiple processes', function () {
         cpuDelta: $cpu,
         memoryDeltaBytes: 10485760,
         durationSeconds: 30.0,
-        startTime: new DateTimeImmutable(),
+        startTime: new DateTimeImmutable,
         endTime: new DateTimeImmutable('+30 seconds')
     );
 
@@ -269,7 +269,7 @@ it('shows peak values are higher than or equal to current', function () {
         cpuDelta: $deltaCpu,
         memoryDeltaBytes: 5242880,
         durationSeconds: 60.0,
-        startTime: new DateTimeImmutable(),
+        startTime: new DateTimeImmutable,
         endTime: new DateTimeImmutable('+60 seconds')
     );
 
@@ -363,7 +363,7 @@ it('shows average values between current and peak', function () {
         cpuDelta: $deltaCpu,
         memoryDeltaBytes: 2097152,
         durationSeconds: 60.0,
-        startTime: new DateTimeImmutable(),
+        startTime: new DateTimeImmutable,
         endTime: new DateTimeImmutable('+60 seconds')
     );
 
@@ -406,8 +406,8 @@ it('handles zero duration', function () {
         cpuDelta: $cpu,
         memoryDeltaBytes: 0,
         durationSeconds: 0.0,
-        startTime: new DateTimeImmutable(),
-        endTime: new DateTimeImmutable()
+        startTime: new DateTimeImmutable,
+        endTime: new DateTimeImmutable
     );
 
     $stats = new ProcessStats(
@@ -448,7 +448,7 @@ it('is immutable', function () {
         cpuDelta: $cpu,
         memoryDeltaBytes: 1048576,
         durationSeconds: 60.0,
-        startTime: new DateTimeImmutable(),
+        startTime: new DateTimeImmutable,
         endTime: new DateTimeImmutable('+60 seconds')
     );
 
