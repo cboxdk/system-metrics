@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use DateTimeImmutable;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
 use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
 use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessStats;
 
@@ -64,11 +66,32 @@ it('can be instantiated with all values', function () {
         openFileDescriptors: 15
     );
 
+    $deltaCpu = new CpuTimes(
+        user: 300,
+        nice: 0,
+        system: 150,
+        idle: 0,
+        iowait: 0,
+        irq: 0,
+        softirq: 0,
+        steal: 0
+    );
+
+    $delta = new ProcessDelta(
+        pid: 1234,
+        cpuDelta: $deltaCpu,
+        memoryDeltaBytes: 5242880,
+        durationSeconds: 60.0,
+        startTime: new DateTimeImmutable('2024-01-01 00:00:00'),
+        endTime: new DateTimeImmutable('2024-01-01 00:01:00')
+    );
+
     $stats = new ProcessStats(
         pid: 1234,
         current: $current,
         peak: $peak,
         average: $average,
+        delta: $delta,
         sampleCount: 10,
         totalDurationSeconds: 60.0,
         processCount: 1
@@ -78,6 +101,7 @@ it('can be instantiated with all values', function () {
     expect($stats->current)->toBe($current);
     expect($stats->peak)->toBe($peak);
     expect($stats->average)->toBe($average);
+    expect($stats->delta)->toBe($delta);
     expect($stats->sampleCount)->toBe(10);
     expect($stats->totalDurationSeconds)->toBe(60.0);
     expect($stats->processCount)->toBe(1);
@@ -103,11 +127,21 @@ it('handles single sample', function () {
         openFileDescriptors: 10
     );
 
+    $delta = new ProcessDelta(
+        pid: 1234,
+        cpuDelta: $cpu,
+        memoryDeltaBytes: 0,
+        durationSeconds: 0.0,
+        startTime: new DateTimeImmutable(),
+        endTime: new DateTimeImmutable()
+    );
+
     $stats = new ProcessStats(
         pid: 1234,
         current: $resources,
         peak: $resources,
         average: $resources,
+        delta: $delta,
         sampleCount: 1,
         totalDurationSeconds: 0.0,
         processCount: 1
@@ -138,11 +172,21 @@ it('handles process group with multiple processes', function () {
         openFileDescriptors: 50
     );
 
+    $delta = new ProcessDelta(
+        pid: 1234,
+        cpuDelta: $cpu,
+        memoryDeltaBytes: 10485760,
+        durationSeconds: 30.0,
+        startTime: new DateTimeImmutable(),
+        endTime: new DateTimeImmutable('+30 seconds')
+    );
+
     $stats = new ProcessStats(
         pid: 1234,
         current: $resources,
         peak: $resources,
         average: $resources,
+        delta: $delta,
         sampleCount: 5,
         totalDurationSeconds: 30.0,
         processCount: 5 // Parent + 4 children
@@ -209,11 +253,32 @@ it('shows peak values are higher than or equal to current', function () {
         openFileDescriptors: 15
     );
 
+    $deltaCpu = new CpuTimes(
+        user: 300,
+        nice: 0,
+        system: 150,
+        idle: 0,
+        iowait: 0,
+        irq: 0,
+        softirq: 0,
+        steal: 0
+    );
+
+    $delta = new ProcessDelta(
+        pid: 1234,
+        cpuDelta: $deltaCpu,
+        memoryDeltaBytes: 5242880,
+        durationSeconds: 60.0,
+        startTime: new DateTimeImmutable(),
+        endTime: new DateTimeImmutable('+60 seconds')
+    );
+
     $stats = new ProcessStats(
         pid: 1234,
         current: $current,
         peak: $peak,
         average: $average,
+        delta: $delta,
         sampleCount: 10,
         totalDurationSeconds: 60.0
     );
@@ -282,11 +347,32 @@ it('shows average values between current and peak', function () {
         openFileDescriptors: 15
     );
 
+    $deltaCpu = new CpuTimes(
+        user: 300,
+        nice: 0,
+        system: 150,
+        idle: 0,
+        iowait: 0,
+        irq: 0,
+        softirq: 0,
+        steal: 0
+    );
+
+    $delta = new ProcessDelta(
+        pid: 1234,
+        cpuDelta: $deltaCpu,
+        memoryDeltaBytes: 2097152,
+        durationSeconds: 60.0,
+        startTime: new DateTimeImmutable(),
+        endTime: new DateTimeImmutable('+60 seconds')
+    );
+
     $stats = new ProcessStats(
         pid: 1234,
         current: $current,
         peak: $peak,
         average: $average,
+        delta: $delta,
         sampleCount: 10,
         totalDurationSeconds: 60.0
     );
@@ -315,11 +401,21 @@ it('handles zero duration', function () {
         openFileDescriptors: 10
     );
 
+    $delta = new ProcessDelta(
+        pid: 1234,
+        cpuDelta: $cpu,
+        memoryDeltaBytes: 0,
+        durationSeconds: 0.0,
+        startTime: new DateTimeImmutable(),
+        endTime: new DateTimeImmutable()
+    );
+
     $stats = new ProcessStats(
         pid: 1234,
         current: $resources,
         peak: $resources,
         average: $resources,
+        delta: $delta,
         sampleCount: 2,
         totalDurationSeconds: 0.0
     );
@@ -347,11 +443,21 @@ it('is immutable', function () {
         openFileDescriptors: 10
     );
 
+    $delta = new ProcessDelta(
+        pid: 1234,
+        cpuDelta: $cpu,
+        memoryDeltaBytes: 1048576,
+        durationSeconds: 60.0,
+        startTime: new DateTimeImmutable(),
+        endTime: new DateTimeImmutable('+60 seconds')
+    );
+
     $stats = new ProcessStats(
         pid: 1234,
         current: $resources,
         peak: $resources,
         average: $resources,
+        delta: $delta,
         sampleCount: 10,
         totalDurationSeconds: 60.0
     );

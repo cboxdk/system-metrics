@@ -123,7 +123,7 @@ final class ProcessTracker
         );
 
         // Calculate statistics
-        $stats = $this->calculateStats($allSnapshots, $endSnapshot);
+        $stats = $this->calculateStats($allSnapshots, $endSnapshot, $startSnapshot);
 
         // Reset state
         $this->startSnapshot = null;
@@ -285,7 +285,7 @@ final class ProcessTracker
      *
      * @param  ProcessSnapshot[]  $snapshots
      */
-    private function calculateStats(array $snapshots, ProcessSnapshot $current): ProcessStats
+    private function calculateStats(array $snapshots, ProcessSnapshot $current, ProcessSnapshot $start): ProcessStats
     {
         $count = count($snapshots);
 
@@ -332,6 +332,9 @@ final class ProcessTracker
         $last = $snapshots[$count - 1];
         $duration = $last->timestamp->getTimestamp() - $first->timestamp->getTimestamp();
 
+        // Calculate delta between start and end
+        $delta = $this->calculateDelta($start, $current);
+
         $peakCpu = new CpuTimes(
             user: $peakCpuUser,
             nice: 0,
@@ -375,6 +378,7 @@ final class ProcessTracker
             current: $current->resources,
             peak: $peakResources,
             average: $avgResources,
+            delta: $delta,
             sampleCount: $count,
             totalDurationSeconds: (float) $duration,
             processCount: 1  // For now, always 1 (even if tracking group)
