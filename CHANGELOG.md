@@ -5,6 +5,14 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.1.0 - 2025-11-18
+
+### What's Changed
+
+* Add ProcessDelta to ProcessStats and VirtualizationVendor enum by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/5
+
+**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.0.0...v1.1.0
+
 ## v1.0.0 - 2025-11-17
 
 ### What's Changed
@@ -24,8 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **CPU Usage Percentage**: Calculate CPU usage percentage over time intervals
   
   - `SystemMetrics::cpuUsage(float $intervalSeconds = 1.0)` facade method for automatic measurement
+    
   - `CpuSnapshot::calculateDelta(CpuSnapshot $before, CpuSnapshot $after)` for manual two-snapshot calculation
+    
   - `CpuDelta` DTO with comprehensive percentage calculations:
+    
     - `usagePercentage()` - Overall CPU usage (0-100+, can exceed 100% on multi-core)
     - `normalizedUsagePercentage()` - Per-core average usage (0-100%)
     - `userPercentage()` - User-mode CPU time percentage
@@ -37,9 +48,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `idlestCore()` - Get least busy core during interval
     
   - `CpuCoreDelta` DTO for per-core delta calculations
+    
   - ⚠️ Important: CPU percentage requires TWO snapshots with time elapsed between them
+    
   - Convenience method blocks execution; manual method allows non-blocking patterns
+    
   - 15 comprehensive unit tests for CPU delta calculations
+    
   
 - **System Uptime Metrics**: Track system uptime since last boot
   
@@ -56,6 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **DX Finder Methods**: Developer experience enhancements for targeted metric access
   
   - **CpuSnapshot Finders**: Find specific CPU cores with smart filtering
+    
     - `findCore(int $coreIndex)` - Find specific core by index
     - `findBusyCores(float $threshold)` - Find cores above busy threshold
     - `findIdleCores(float $threshold)` - Find cores above idle threshold
@@ -63,53 +79,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `idlestCore()` - Get core with lowest busy percentage
     
   - **StorageSnapshot Finders**: Find specific mount points and filesystem types
+    
     - `findMountPoint(string $path)` - Find mount containing path (most specific match)
     - `findDevice(string $device)` - Find mount by device name
     - `findByFilesystemType(FileSystemType $type)` - Find all mounts by filesystem type
     
   - **NetworkSnapshot Finders**: Find specific network interfaces with filtering
+    
     - `findInterface(string $name)` - Find interface by exact name
     - `findByType(NetworkInterfaceType $type)` - Find interfaces by type
     - `findActiveInterfaces()` - Find all interfaces that are up
     - `findByMacAddress(string $mac)` - Find interface by MAC address
     
   - 46 comprehensive unit tests for all finder methods
+    
   
 - **Unified Limits API**: Single source for resource limits regardless of environment
   
   - `SystemMetrics::limits()` facade method for unified limits and current usage
+    
   - `SystemLimits` DTO with complete resource limits and current consumption
+    
   - `LimitSource` enum: HOST (bare metal/VM), CGROUP_V1, CGROUP_V2
+    
   - **Scaling Decision Helpers**:
+    
     - `availableCpuCores()` - Calculate available CPU cores for scaling
     - `availableMemoryBytes()` - Calculate available memory for scaling
     - `canScaleCpu(int $additionalCores)` - Check if can scale CPU by amount
     - `canScaleMemory(int $additionalBytes)` - Check if can scale memory by amount
     
   - **Utilization Helpers**:
+    
     - `cpuUtilization()` - CPU usage as percentage (0-100+)
     - `memoryUtilization()` - Memory usage as percentage (0-100+)
     - `swapUtilization()` - Swap usage as percentage (null if no swap)
     
   - **Headroom Helpers**:
+    
     - `cpuHeadroom()` - CPU headroom percentage (100 - utilization)
     - `memoryHeadroom()` - Memory headroom percentage (100 - utilization)
     
   - **Pressure Detection**:
+    
     - `isMemoryPressure(float $threshold = 80.0)` - Detect memory pressure
     - `isCpuPressure(float $threshold = 80.0)` - Detect CPU pressure
     
   - **Environment Detection**:
+    
     - `isContainerized()` - Check if running in container (cgroup v1/v2)
     
   - `CompositeSystemLimitsSource` with intelligent decision logic:
+    
     - Checks if running in container with cgroup limits first
     - Uses cgroup limits if available (container-aware)
     - Falls back to host limits (bare metal/VM)
     - Integrates with ContainerMetricsSource, CpuMetricsSource, MemoryMetricsSource
     
   - `ReadSystemLimitsAction` for limits retrieval
+    
   - 25 comprehensive unit tests for SystemLimits
+    
   
 
 ### Changed
