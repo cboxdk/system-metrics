@@ -1,3 +1,9 @@
+---
+title: "Composite Sources with Fallbacks"
+description: "Graceful degradation when system APIs are unavailable using the Composite pattern"
+weight: 54
+---
+
 # Composite Sources with Fallbacks
 
 Graceful degradation when system APIs are unavailable.
@@ -90,5 +96,5 @@ All these would slot into the composite pattern transparently.
 
 ## Related Documentation
 
-- [Platform Support](../platform-support/comparison.md) - Platform differences
-- [Custom Implementations](../advanced-usage/custom-implementations.md) - Add your own sources
+- [Platform Support](../platform-support/comparison) - Platform differences
+- [Custom Implementations](../advanced-usage/custom-implementations) - Add your own sources

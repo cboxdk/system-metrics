@@ -1,3 +1,9 @@
+---
+title: "Network Metrics"
+description: "Get network interface statistics and connection information"
+weight: 17
+---
+
 # Network Metrics
 
 Get network interface statistics and connection information.
@@ -78,4 +84,4 @@ foreach ($snap2->interfaces as $i => $iface) {
 
 ## Related Documentation
 
-- [System Overview](system-overview.md)
+- [System Overview](system-overview)

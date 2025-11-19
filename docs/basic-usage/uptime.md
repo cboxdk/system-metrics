@@ -1,3 +1,9 @@
+---
+title: "System Uptime"
+description: "Track how long the system has been running since last boot"
+weight: 15
+---
+
 # System Uptime
 
 Track how long the system has been running since last boot.
@@ -60,4 +66,4 @@ echo "Uptime: " . round($uptimePercent, 2) . "%\n";
 
 ## Related Documentation
 
-- [System Overview](system-overview.md)
+- [System Overview](system-overview)

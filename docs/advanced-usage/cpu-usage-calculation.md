@@ -1,3 +1,9 @@
+---
+title: "CPU Usage Calculation"
+description: "Deep dive into calculating CPU usage percentages from raw time counters"
+weight: 33
+---
+
 # CPU Usage Calculation
 
 Deep dive into calculating CPU usage percentages from raw time counters.
@@ -174,6 +180,6 @@ while (true) {
 
 ## Related Documentation
 
-- [CPU Metrics](../basic-usage/cpu-metrics.md) - Raw CPU counters
-- [Load Average](../basic-usage/load-average.md) - System load metrics
-- [Process Metrics](process-metrics.md) - Per-process CPU tracking
+- [CPU Metrics](../basic-usage/cpu-metrics) - Raw CPU counters
+- [Load Average](../basic-usage/load-average) - System load metrics
+- [Process Metrics](process-metrics) - Per-process CPU tracking

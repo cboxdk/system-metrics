@@ -1,3 +1,9 @@
+---
+title: "Custom Implementations"
+description: "Create custom metric sources for caching, alternative data sources, or testing"
+weight: 35
+---
+
 # Custom Implementations
 
 Create custom metric sources for caching, alternative data sources, or testing.
@@ -267,6 +273,6 @@ SystemMetricsConfig::setNetworkMetricsSource($customNetworkSource);
 
 ## Related Documentation
 
-- [Error Handling](error-handling.md) - Result<T> pattern
-- [Architecture: Design Principles](../architecture/design-principles.md) - Interface-driven design
-- [API Reference](../api-reference.md) - All interfaces and DTOs
+- [Error Handling](error-handling) - Result<T> pattern
+- [Architecture: Design Principles](../architecture/design-principles) - Interface-driven design
+- [API Reference](../api-reference) - All interfaces and DTOs

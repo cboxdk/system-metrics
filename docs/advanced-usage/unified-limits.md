@@ -1,3 +1,9 @@
+---
+title: "Unified Limits API"
+description: "Get actual resource limits and current usage regardless of environment (bare metal, VM, or container)"
+weight: 32
+---
+
 # Unified Limits API
 
 Get actual resource limits and current usage regardless of environment (bare metal, VM, or container).
@@ -169,6 +175,6 @@ The API automatically selects the appropriate source:
 
 ## Related Documentation
 
-- [Container Metrics](container-metrics.md) - Detailed cgroup metrics
-- [CPU Metrics](../basic-usage/cpu-metrics.md)
-- [Memory Metrics](../basic-usage/memory-metrics.md)
+- [Container Metrics](container-metrics) - Detailed cgroup metrics
+- [CPU Metrics](../basic-usage/cpu-metrics)
+- [Memory Metrics](../basic-usage/memory-metrics)

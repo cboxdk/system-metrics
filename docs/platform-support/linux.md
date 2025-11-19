@@ -1,3 +1,9 @@
+---
+title: "Linux Platform Support"
+description: "Complete Linux platform implementation details for all distributions"
+weight: 72
+---
+
 # Linux Platform Support
 
 Complete Linux platform implementation details.
@@ -114,6 +120,6 @@ Tested on:
 
 ## Related Documentation
 
-- [macOS Support](macos.md)
-- [Platform Comparison](comparison.md)
-- [Container Metrics](../advanced-usage/container-metrics.md)
+- [macOS Support](macos)
+- [Platform Comparison](comparison)
+- [Container Metrics](../advanced-usage/container-metrics)

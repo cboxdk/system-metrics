@@ -1,3 +1,9 @@
+---
+title: "API Reference"
+description: "Complete API documentation for all public methods and classes in PHPeek System Metrics"
+weight: 80
+---
+
 # API Reference
 
 Complete API documentation for all public methods.
@@ -263,11 +269,11 @@ Set custom memory metrics source.
 ### `SystemMetricsConfig::setEnvironmentDetector(EnvironmentDetector $detector): void`
 Set custom environment detector.
 
-See [Custom Implementations](advanced-usage/custom-implementations.md) for details.
+See [Custom Implementations](advanced-usage/custom-implementations) for details.
 
 ## Related Documentation
 
-- [Quick Start](quickstart.md) - Get started quickly
-- [Basic Usage](basic-usage/system-overview.md) - Common usage patterns
-- [Error Handling](advanced-usage/error-handling.md) - Result<T> pattern
-- [Custom Implementations](advanced-usage/custom-implementations.md) - Extend the library
+- [Quick Start](quickstart) - Get started quickly
+- [Basic Usage](basic-usage/system-overview) - Common usage patterns
+- [Error Handling](advanced-usage/error-handling) - Result<T> pattern
+- [Custom Implementations](advanced-usage/custom-implementations) - Extend the library

@@ -1,3 +1,9 @@
+---
+title: "Process Metrics"
+description: "Monitor resource usage for individual processes or process groups"
+weight: 36
+---
+
 # Process Metrics
 
 Monitor resource usage for individual processes or process groups.
@@ -141,6 +147,6 @@ echo "Memory delta: " . round($stats->delta->memoryDeltaBytes / 1024**2, 2) . " 
 
 ## Related Documentation
 
-- [System Overview](../basic-usage/system-overview.md)
-- [CPU Metrics](../basic-usage/cpu-metrics.md)
-- [Memory Metrics](../basic-usage/memory-metrics.md)
+- [System Overview](../basic-usage/system-overview)
+- [CPU Metrics](../basic-usage/cpu-metrics)
+- [Memory Metrics](../basic-usage/memory-metrics)

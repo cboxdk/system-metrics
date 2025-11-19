@@ -1,3 +1,9 @@
+---
+title: "Introduction"
+description: "Modern PHP library for accessing low-level system metrics from Linux and macOS with type-safe API and zero dependencies"
+weight: 1
+---
+
 # Introduction
 
 **PHPeek System Metrics** is a modern PHP library for accessing low-level system metrics from Linux and macOS platforms. Get real-time CPU, memory, storage, network, and container metrics in pure PHP—no extensions, no dependencies, just clean type-safe access to system data.
@@ -102,23 +108,23 @@ Track CPU usage deltas, identify bottlenecks, analyze I/O patterns, monitor netw
 
 ## Quick Links
 
-- [Installation](installation.md) - Get started with Composer
-- [Quick Start](quickstart.md) - 30-second working example
-- [Basic Usage](basic-usage/system-overview.md) - Common metrics and examples
-- [Advanced Features](advanced-usage/container-metrics.md) - Container metrics, process tracking, custom implementations
-- [Architecture](architecture/design-principles.md) - Design philosophy and patterns
-- [API Reference](api-reference.md) - Complete method documentation
+- [Installation](installation) - Get started with Composer
+- [Quick Start](quickstart) - 30-second working example
+- [Basic Usage](basic-usage/system-overview) - Common metrics and examples
+- [Advanced Features](advanced-usage/container-metrics) - Container metrics, process tracking, custom implementations
+- [Architecture](architecture/design-principles) - Design philosophy and patterns
+- [API Reference](api-reference) - Complete method documentation
 
 ## Next Steps
 
-1. **[Install the package](installation.md)** via Composer
-2. **[Try the quick start example](quickstart.md)** to see it in action
-3. **[Explore specific metrics](basic-usage/system-overview.md)** you need for your application
-4. **[Learn about error handling](advanced-usage/error-handling.md)** with the Result<T> pattern
+1. **[Install the package](installation)** via Composer
+2. **[Try the quick start example](quickstart)** to see it in action
+3. **[Explore specific metrics](basic-usage/system-overview)** you need for your application
+4. **[Learn about error handling](advanced-usage/error-handling)** with the Result<T> pattern
 
 ## Support
 
 - **GitHub Issues**: [Report bugs or request features](https://github.com/gophpeek/system-metrics/issues)
 - **Documentation**: You're reading it!
-- **Contributing**: See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines
-- **Security**: Report vulnerabilities via [SECURITY.md](../SECURITY.md)
+- **Contributing**: See CONTRIBUTING.md for guidelines
+- **Security**: Report vulnerabilities via SECURITY.md

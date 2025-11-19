@@ -1,3 +1,9 @@
+---
+title: "Environment Detection"
+description: "Detect OS, architecture, virtualization, containers, and cgroup configuration"
+weight: 11
+---
+
 # Environment Detection
 
 Detect operating system information, architecture, virtualization, containers, and cgroup configuration.
@@ -291,7 +297,7 @@ SystemMetrics::clearEnvironmentCache();
 - Limited container detection (mostly returns `ContainerType::NONE`)
 - Simplified virtualization detection
 
-See [Platform Support](../platform-support/comparison.md) for detailed comparison.
+See [Platform Support](../platform-support/comparison) for detailed comparison.
 
 ## Use Cases
 
@@ -337,7 +343,7 @@ match ($env->architecture->kind) {
 
 ## Related Documentation
 
-- [Container Metrics](../advanced-usage/container-metrics.md) - Cgroup limits and usage
-- [Unified Limits API](../advanced-usage/unified-limits.md) - Environment-aware resource limits
-- [Platform Support: Linux](../platform-support/linux.md) - Linux-specific details
-- [Platform Support: macOS](../platform-support/macos.md) - macOS-specific details
+- [Container Metrics](../advanced-usage/container-metrics) - Cgroup limits and usage
+- [Unified Limits API](../advanced-usage/unified-limits) - Environment-aware resource limits
+- [Platform Support: Linux](../platform-support/linux) - Linux-specific details
+- [Platform Support: macOS](../platform-support/macos) - macOS-specific details

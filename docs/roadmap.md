@@ -1,3 +1,9 @@
+---
+title: "Roadmap"
+description: "Future features and planned improvements for PHPeek System Metrics library"
+weight: 90
+---
+
 # Roadmap
 
 Future features and planned improvements.
@@ -108,6 +114,6 @@ See [CHANGELOG.md](../CHANGELOG.md) for complete version history.
 
 ## Related Documentation
 
-- [Introduction](introduction.md) - Current features
+- [Introduction](introduction) - Current features
 - [Contributing](../CONTRIBUTING.md) - How to contribute
 - [GitHub Issues](https://github.com/gophpeek/system-metrics/issues) - Report bugs or request features

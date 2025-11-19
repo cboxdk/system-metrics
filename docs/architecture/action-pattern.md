@@ -1,3 +1,9 @@
+---
+title: "Action Pattern"
+description: "Small, focused use case implementations with dependency injection"
+weight: 53
+---
+
 # Action Pattern
 
 Small, focused use case implementations.
@@ -112,9 +118,9 @@ Users typically use the facade, but can instantiate actions directly for depende
 - `SystemOverviewAction` - Complete system snapshot
 - And more...
 
-See [API Reference](../api-reference.md) for complete list.
+See [API Reference](../api-reference) for complete list.
 
 ## Related Documentation
 
-- [Design Principles](design-principles.md) - Overall architecture
-- [Custom Implementations](../advanced-usage/custom-implementations.md) - Inject custom sources
+- [Design Principles](design-principles) - Overall architecture
+- [Custom Implementations](../advanced-usage/custom-implementations) - Inject custom sources
