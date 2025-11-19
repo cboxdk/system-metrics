@@ -1,3 +1,9 @@
+---
+title: "Installation"
+description: "Install PHPeek System Metrics via Composer and verify your environment meets the requirements"
+weight: 2
+---
+
 # Installation
 
 ## Requirements
@@ -105,7 +111,7 @@ SystemMetricsConfig::setMemoryMetricsSource(new YourCustomMemorySource());
 SystemMetricsConfig::setEnvironmentDetector(new YourCustomDetector());
 ```
 
-See [Custom Implementations](advanced-usage/custom-implementations.md) for details.
+See [Custom Implementations](advanced-usage/custom-implementations) for details.
 
 ### Optional: Clear Environment Cache
 
@@ -165,7 +171,7 @@ $cpu = SystemMetrics::cpu()->getValue();
 
 This is expected behavior—modern macOS deprecated the `kern.cp_time` sysctl. The library gracefully returns zero values rather than failing. For CPU monitoring on macOS, consider using system tools like `top` or `Activity Monitor`.
 
-See [Platform Support: macOS](platform-support/macos.md) for details.
+See [Platform Support: macOS](platform-support/macos) for details.
 
 ### Unsupported Operating System
 
@@ -202,11 +208,11 @@ composer analyse
 composer format
 ```
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for full development guidelines.
+See CONTRIBUTING.md for full development guidelines.
 
 ## Next Steps
 
-- **[Quick Start Guide](quickstart.md)** - See a working example in 30 seconds
-- **[Basic Usage](basic-usage/system-overview.md)** - Explore available metrics
-- **[Error Handling](advanced-usage/error-handling.md)** - Learn the Result<T> pattern
-- **[API Reference](api-reference.md)** - Complete method documentation
+- **[Quick Start Guide](quickstart)** - See a working example in 30 seconds
+- **[Basic Usage](basic-usage/system-overview)** - Explore available metrics
+- **[Error Handling](advanced-usage/error-handling)** - Learn the Result<T> pattern
+- **[API Reference](api-reference)** - Complete method documentation

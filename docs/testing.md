@@ -1,3 +1,9 @@
+---
+title: "Testing"
+description: "Guide to running tests and understanding test coverage for PHPeek System Metrics"
+weight: 85
+---
+
 # Testing
 
 Guide to running tests and understanding test coverage.
@@ -170,4 +176,4 @@ GitHub Actions runs:
 ## Related Documentation
 
 - [Contributing](../CONTRIBUTING.md) - Contribution guidelines
-- [Architecture](architecture/design-principles.md) - Design principles
+- [Architecture](architecture/design-principles) - Design principles

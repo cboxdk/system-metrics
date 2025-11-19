@@ -1,3 +1,9 @@
+---
+title: "Design Principles"
+description: "Core architectural philosophy and design decisions behind PHPeek System Metrics"
+weight: 51
+---
+
 # Design Principles
 
 Core architectural philosophy and design decisions behind PHPeek System Metrics.
@@ -47,7 +53,7 @@ readonly class CpuSnapshot {
 - Predictable behavior
 - Clear ownership semantics
 
-See [Immutable DTOs](immutable-dtos.md) for details.
+See [Immutable DTOs](immutable-dtos) for details.
 
 ## Result Pattern
 
@@ -66,7 +72,7 @@ if ($result->isSuccess()) {
 - Functional programming style
 - Type-safe error propagation
 
-See [Result Pattern](result-pattern.md) for details.
+See [Result Pattern](result-pattern) for details.
 
 ## Interface-Driven
 
@@ -84,7 +90,7 @@ interface CpuMetricsSource {
 - Testable with stubs
 - Clear contracts
 
-See [Custom Implementations](../advanced-usage/custom-implementations.md).
+See [Custom Implementations](../advanced-usage/custom-implementations).
 
 ## Action Pattern
 
@@ -104,12 +110,12 @@ class ReadCpuMetricsAction {
 - Clear boundaries
 - Composable
 
-See [Action Pattern](action-pattern.md) for details.
+See [Action Pattern](action-pattern) for details.
 
 ## Related Documentation
 
-- [Result Pattern](result-pattern.md)
-- [Composite Sources](composite-sources.md)
-- [Immutable DTOs](immutable-dtos.md)
-- [Action Pattern](action-pattern.md)
-- [Performance Caching](performance-caching.md)
+- [Result Pattern](result-pattern)
+- [Composite Sources](composite-sources)
+- [Immutable DTOs](immutable-dtos)
+- [Action Pattern](action-pattern)
+- [Performance Caching](performance-caching)

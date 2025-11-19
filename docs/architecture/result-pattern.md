@@ -1,3 +1,9 @@
+---
+title: "Result<T> Pattern"
+description: "Explicit error handling without exceptions for production reliability"
+weight: 52
+---
+
 # Result<T> Pattern
 
 Explicit error handling without exceptions.
@@ -98,5 +104,5 @@ if ($result->isFailure()) {
 
 ## Related Documentation
 
-- [Error Handling](../advanced-usage/error-handling.md) - Complete guide
-- [API Reference](../api-reference.md) - All Result<T> methods
+- [Error Handling](../advanced-usage/error-handling) - Complete guide
+- [API Reference](../api-reference) - All Result<T> methods

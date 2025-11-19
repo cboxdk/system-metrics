@@ -1,3 +1,9 @@
+---
+title: "Performance Caching"
+description: "Automatic static data caching for optimal performance with environment detection"
+weight: 56
+---
+
 # Performance Caching
 
 Automatic static data caching for optimal performance.
@@ -108,6 +114,6 @@ Alternative approaches considered:
 
 ## Related Documentation
 
-- [Introduction](../introduction.md) - Performance characteristics
-- [Environment Detection](../basic-usage/environment-detection.md) - What gets cached
-- [Design Principles](design-principles.md) - Architectural decisions
+- [Introduction](../introduction) - Performance characteristics
+- [Environment Detection](../basic-usage/environment-detection) - What gets cached
+- [Design Principles](design-principles) - Architectural decisions

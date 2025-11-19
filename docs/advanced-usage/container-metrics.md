@@ -1,3 +1,9 @@
+---
+title: "Container Metrics (Cgroups)"
+description: "Get container resource limits and usage when running in Docker/Kubernetes"
+weight: 31
+---
+
 # Container Metrics (Cgroups)
 
 Get container resource limits and usage when running in Docker/Kubernetes.
@@ -135,5 +141,5 @@ if ($container->isCpuThrottled()) {
 
 ## Related Documentation
 
-- [Unified Limits API](unified-limits.md) - Environment-aware resource limits
-- [Environment Detection](../basic-usage/environment-detection.md) - Container detection
+- [Unified Limits API](unified-limits) - Environment-aware resource limits
+- [Environment Detection](../basic-usage/environment-detection) - Container detection

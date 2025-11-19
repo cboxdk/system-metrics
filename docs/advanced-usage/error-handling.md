@@ -1,3 +1,9 @@
+---
+title: "Error Handling with Result<T>"
+description: "Master the Result<T> pattern for explicit error handling without exceptions"
+weight: 34
+---
+
 # Error Handling with Result<T>
 
 Master the Result<T> pattern for explicit error handling without exceptions.
@@ -249,5 +255,5 @@ $result = Result::failure(new FileNotFoundException('/proc/stat'));
 
 ## Related Documentation
 
-- [API Reference](../api-reference.md) - All return types
-- [Custom Implementations](custom-implementations.md) - Creating custom sources
+- [API Reference](../api-reference) - All return types
+- [Custom Implementations](custom-implementations) - Creating custom sources

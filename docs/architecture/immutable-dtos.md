@@ -1,3 +1,9 @@
+---
+title: "Immutable DTOs"
+description: "All data transfer objects are readonly value objects preventing state mutation"
+weight: 55
+---
+
 # Immutable DTOs
 
 All data transfer objects are readonly value objects.
@@ -143,5 +149,5 @@ readonly class CpuTimes {
 
 ## Related Documentation
 
-- [Design Principles](design-principles.md) - Overall architecture
-- [API Reference](../api-reference.md) - All DTOs
+- [Design Principles](design-principles) - Overall architecture
+- [API Reference](../api-reference) - All DTOs

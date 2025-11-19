@@ -1,3 +1,9 @@
+---
+title: "Load Average"
+description: "Get system load average without needing delta calculations"
+weight: 14
+---
+
 # Load Average
 
 Get system load average without needing delta calculations.
@@ -61,5 +67,5 @@ if ($normalized->oneMinutePercentage() > 80) {
 
 ## Related Documentation
 
-- [CPU Metrics](cpu-metrics.md)
-- [System Overview](system-overview.md)
+- [CPU Metrics](cpu-metrics)
+- [System Overview](system-overview)

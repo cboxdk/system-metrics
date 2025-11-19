@@ -1,3 +1,9 @@
+---
+title: "macOS Platform Support"
+description: "macOS platform implementation details and limitations on Intel and Apple Silicon"
+weight: 73
+---
+
 # macOS Platform Support
 
 macOS platform implementation details and limitations.
@@ -125,6 +131,6 @@ If running production PHP on macOS (rare):
 
 ## Related Documentation
 
-- [Linux Support](linux.md)
-- [Platform Comparison](comparison.md)
-- [Environment Detection](../basic-usage/environment-detection.md)
+- [Linux Support](linux)
+- [Platform Comparison](comparison)
+- [Environment Detection](../basic-usage/environment-detection)

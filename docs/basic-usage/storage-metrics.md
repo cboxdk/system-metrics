@@ -1,3 +1,9 @@
+---
+title: "Storage Metrics"
+description: "Get filesystem usage and disk I/O statistics"
+weight: 16
+---
+
 # Storage Metrics
 
 Get filesystem usage and disk I/O statistics.
@@ -64,4 +70,4 @@ foreach ($storage->mountPoints as $mount) {
 
 ## Related Documentation
 
-- [System Overview](system-overview.md)
+- [System Overview](system-overview)
