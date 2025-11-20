@@ -5,6 +5,14 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.5.0 - 2025-11-20
+
+### What's Changed
+
+* feat(freebsd): Add comprehensive FreeBSD FFI support by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/9
+
+**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.4.0...v1.5.0
+
 ## v1.4.0 - 2025-11-20
 
 ### What's Changed
@@ -18,37 +26,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **FreeBSD FFI Metrics - Native sysctl Support**: Full FreeBSD support via sysctlbyname() and statfs()
-
+  
   **CPU Metrics** (`sysctlbyname()` via FFI):
+  
   - System-wide CPU times via `kern.cp_time` (user, nice, system, interrupt, idle)
   - Per-core CPU times via `kern.cp_times` for all cores
   - Native FFI calls to libc sysctlbyname()
   - New `FreeBSDSysctlCpuMetricsSource`
-
+  
   **Memory Metrics** (`sysctlbyname()` via FFI):
+  
   - Physical memory stats via `hw.physmem` and `vm.stats.vm.v_*` sysctls
   - Page-based memory accounting (total, free, inactive, cache, wired)
   - Swap information via `vm.swap_total` and `vm.swap_reserved`
   - New `FreeBSDSysctlMemoryMetricsSource`
-
+  
   **Uptime** (`sysctlbyname()` via FFI):
+  
   - Boot time via `kern.boottime` timeval structure
   - Precise uptime calculation
   - New `FreeBSDSysctlUptimeSource`
-
+  
   **Storage Metrics** (`getmntinfo()` + `statfs()` via FFI):
+  
   - Enumerate mounted filesystems via `getmntinfo()`
   - Detailed stats per mount point via `statfs()`
   - Supports UFS, ZFS, NFS, FAT32, NTFS, ext2/3/4, tmpfs
   - Includes inode statistics
   - New `FreeBSDStatfsStorageMetricsSource`
   - Added `FileSystemType::UFS` enum case
-
+  
   **OS Detection**:
+  
   - Added `OsDetector::isBSD()`, `isFreeBSD()`, `isOpenBSD()`, `isNetBSD()`
   - Updated `OsDetector::isSupported()` to include BSD variants
   - BSD family detection via `PHP_OS_FAMILY === 'BSD'`
-
+  
 - **macOS FFI Metrics - Complete CLI Elimination**: All macOS metrics now use native FFI calls
   
   **CPU Metrics** (`host_processor_info()`):
@@ -91,30 +104,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Includes inode statistics (total, used, free) in single call
   - `FallbackStorageMetricsSource` for graceful degradation when FFI unavailable
   
-
 - **Windows FFI Metrics - Native Win32 API Support**: All Windows metrics now use native FFI calls to kernel32.dll
-
+  
   **Memory Metrics** (`GlobalMemoryStatusEx()`):
+  
   - Fast native Win32 API (no WMI queries, no PowerShell)
   - Single call returns complete memory statistics via `MEMORYSTATUSEX` structure
   - Physical memory (total, available, used)
   - Virtual memory/page file statistics
   - New `WindowsFFIMemoryMetricsSource`
-
+  
   **Uptime** (`GetTickCount64()`):
+  
   - Native millisecond-precision uptime since boot
   - Single Win32 API call (no WMI, no command execution)
   - Calculates boot time from current time minus uptime
   - New `WindowsFFIUptimeSource`
-
+  
   **CPU Metrics** (`GetSystemTimes()`):
+  
   - Native system-wide CPU time via FILETIME structures
   - Converts Windows FILETIME (100ns intervals since 1601) to consistent tick format
   - System, user, and idle time tracking
   - New `WindowsFFICpuMetricsSource`
   - Note: Per-core metrics not available from `GetSystemTimes()` (returns empty `perCore` array)
-
+  
   **Storage Metrics** (`GetDiskFreeSpaceEx()` + volume enumeration):
+  
   - Fast native Win32 volume APIs (no WMI)
   - Enumerates drive letters (A-Z), filters by drive type
   - Skips removable/network drives, focuses on fixed disks
@@ -122,8 +138,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Detects filesystem type via `GetVolumeInformationA()` (NTFS, FAT32, etc.)
   - New `WindowsFFIStorageMetricsSource`
   - Note: Inode statistics not applicable on Windows (NTFS uses MFT records differently)
-
+  
   **Environment Detection** (Registry via FFI):
+  
   - Virtualization detection via Windows Registry (advapi32.dll)
   - Detects Hyper-V, VMware, VirtualBox, KVM/QEMU
   - Registry access via `RegOpenKeyExA()` and `RegQueryValueExA()`
@@ -136,6 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - New `WindowsEnvironmentDetector`
   - Added `OsFamily::Windows` enum case
   - Added `ArchitectureKind::X86` enum case for 32-bit Windows
+  
 
 ### Changed
 
