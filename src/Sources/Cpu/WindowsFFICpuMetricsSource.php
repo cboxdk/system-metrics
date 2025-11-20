@@ -43,8 +43,31 @@ final class WindowsFFICpuMetricsSource implements CpuMetricsSource
 
             // Initialize FILETIME structures
             $idleTime = $ffi->new('FILETIME');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($idleTime === null) {
+                /** @var Result<CpuSnapshot> */
+                return Result::failure(
+                    new SystemMetricsException('Failed to allocate FFI memory')
+                );
+            }
+
             $kernelTime = $ffi->new('FILETIME');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($kernelTime === null) {
+                /** @var Result<CpuSnapshot> */
+                return Result::failure(
+                    new SystemMetricsException('Failed to allocate FFI memory')
+                );
+            }
+
             $userTime = $ffi->new('FILETIME');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($userTime === null) {
+                /** @var Result<CpuSnapshot> */
+                return Result::failure(
+                    new SystemMetricsException('Failed to allocate FFI memory')
+                );
+            }
 
             // Call GetSystemTimes
             $result = $ffi->GetSystemTimes( // @phpstan-ignore method.notFound (FFI methods defined via cdef)

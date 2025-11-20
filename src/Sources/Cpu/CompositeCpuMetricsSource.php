@@ -48,6 +48,10 @@ final class CompositeCpuMetricsSource implements CpuMetricsSource
             return new WindowsFFICpuMetricsSource;
         }
 
+        if (OsDetector::isFreeBSD()) {
+            return new FreeBSDSysctlCpuMetricsSource;
+        }
+
         throw UnsupportedOperatingSystemException::forOs(OsDetector::getFamily());
     }
 }

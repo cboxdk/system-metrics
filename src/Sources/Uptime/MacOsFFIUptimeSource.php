@@ -40,6 +40,14 @@ final class MacOsFFIUptimeSource implements UptimeSource
 
             // timeval structure: { long tv_sec; int tv_usec; }
             $boottime = $ffi->new('struct timeval');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($boottime === null) {
+                /** @var Result<UptimeSnapshot> */
+                return Result::failure(
+                    new SystemMetricsException('Failed to allocate memory for boottime structure')
+                );
+            }
+
             $size = $ffi->new('size_t');
             $size->cdata = // @phpstan-ignore property.notFound
                 FFI::sizeof($boottime);

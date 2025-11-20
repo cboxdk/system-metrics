@@ -118,8 +118,31 @@ final class WindowsFFIStorageMetricsSource implements StorageMetricsSource
             $ffi = $this->getFFI();
 
             $freeBytesAvailable = $ffi->new('unsigned long long');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($freeBytesAvailable === null) {
+                /** @var Result<array{total: int, available: int, used: int}> */
+                return Result::failure(
+                    new SystemMetricsException('Failed to allocate memory for freeBytesAvailable')
+                );
+            }
+
             $totalBytes = $ffi->new('unsigned long long');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($totalBytes === null) {
+                /** @var Result<array{total: int, available: int, used: int}> */
+                return Result::failure(
+                    new SystemMetricsException('Failed to allocate memory for totalBytes')
+                );
+            }
+
             $totalFreeBytes = $ffi->new('unsigned long long');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($totalFreeBytes === null) {
+                /** @var Result<array{total: int, available: int, used: int}> */
+                return Result::failure(
+                    new SystemMetricsException('Failed to allocate memory for totalFreeBytes')
+                );
+            }
 
             // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             $result = $ffi->GetDiskFreeSpaceExA(
@@ -165,10 +188,34 @@ final class WindowsFFIStorageMetricsSource implements StorageMetricsSource
             $ffi = $this->getFFI();
 
             $fileSystemName = $ffi->new('char[256]');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($fileSystemName === null) {
+                return FileSystemType::OTHER;
+            }
+
             $volumeName = $ffi->new('char[256]');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($volumeName === null) {
+                return FileSystemType::OTHER;
+            }
+
             $volumeSerialNumber = $ffi->new('unsigned int');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($volumeSerialNumber === null) {
+                return FileSystemType::OTHER;
+            }
+
             $maximumComponentLength = $ffi->new('unsigned int');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($maximumComponentLength === null) {
+                return FileSystemType::OTHER;
+            }
+
             $fileSystemFlags = $ffi->new('unsigned int');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($fileSystemFlags === null) {
+                return FileSystemType::OTHER;
+            }
 
             // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             $result = $ffi->GetVolumeInformationA(

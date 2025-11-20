@@ -25,6 +25,9 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         php: [8.3, 8.4]
         stability: [prefer-lowest, prefer-stable]
+        exclude:
+          # FreeBSD not available in GitHub Actions, use FreeBSD Docker container instead
+          # See e2e-tests job for FreeBSD testing via Docker
 
     name: Unit Tests - P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 

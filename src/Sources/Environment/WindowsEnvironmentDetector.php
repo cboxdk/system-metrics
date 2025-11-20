@@ -284,6 +284,10 @@ final class WindowsEnvironmentDetector implements EnvironmentDetector
             $ffi = $this->getFFI();
 
             $hKey = $ffi->new('unsigned long');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($hKey === null) {
+                return null;
+            }
 
             // Open registry key
             // @phpstan-ignore method.notFound (FFI methods defined via cdef)
@@ -301,7 +305,16 @@ final class WindowsEnvironmentDetector implements EnvironmentDetector
 
             // Query value size
             $dataSize = $ffi->new('unsigned long');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($dataSize === null) {
+                return null;
+            }
+
             $dataType = $ffi->new('unsigned long');
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($dataType === null) {
+                return null;
+            }
 
             // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             $result = $ffi->RegQueryValueExA(
@@ -325,6 +338,10 @@ final class WindowsEnvironmentDetector implements EnvironmentDetector
             // @phpstan-ignore property.notFound (FFI struct properties defined via cdef)
             $bufferSize = (int) $dataSize->cdata;
             $buffer = $ffi->new("char[{$bufferSize}]");
+            // @phpstan-ignore identical.alwaysFalse (FFI returns CData|null in some environments)
+            if ($buffer === null) {
+                return null;
+            }
 
             // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             $result = $ffi->RegQueryValueExA(

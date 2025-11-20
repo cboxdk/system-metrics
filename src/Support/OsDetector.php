@@ -34,6 +34,38 @@ final class OsDetector
     }
 
     /**
+     * Check if the current OS is FreeBSD.
+     */
+    public static function isFreeBSD(): bool
+    {
+        return PHP_OS_FAMILY === 'BSD' && stripos(php_uname('s'), 'freebsd') !== false;
+    }
+
+    /**
+     * Check if the current OS is OpenBSD.
+     */
+    public static function isOpenBSD(): bool
+    {
+        return PHP_OS_FAMILY === 'BSD' && stripos(php_uname('s'), 'openbsd') !== false;
+    }
+
+    /**
+     * Check if the current OS is NetBSD.
+     */
+    public static function isNetBSD(): bool
+    {
+        return PHP_OS_FAMILY === 'BSD' && stripos(php_uname('s'), 'netbsd') !== false;
+    }
+
+    /**
+     * Check if the current OS is any BSD variant.
+     */
+    public static function isBSD(): bool
+    {
+        return PHP_OS_FAMILY === 'BSD';
+    }
+
+    /**
      * Get the OS family string.
      */
     public static function getFamily(): string
@@ -42,10 +74,10 @@ final class OsDetector
     }
 
     /**
-     * Check if the current OS is supported (Linux, macOS, or Windows).
+     * Check if the current OS is supported (Linux, macOS, Windows, or BSD).
      */
     public static function isSupported(): bool
     {
-        return self::isLinux() || self::isMacOs() || self::isWindows();
+        return self::isLinux() || self::isMacOs() || self::isWindows() || self::isBSD();
     }
 }
