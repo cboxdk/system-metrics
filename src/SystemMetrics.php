@@ -205,7 +205,7 @@ final class SystemMetrics
      * $result = SystemMetrics::cpuUsage(5.0);
      * $delta = $result->getValue();
      * echo "CPU Usage: " . round($delta->usagePercentage(), 1) . "%\n";
-     * echo "Normalized: " . round($delta->normalizedUsagePercentage(), 1) . "%\n";
+     * echo "Per Core: " . round($delta->usagePercentagePerCore(), 1) . "%\n";
      * ```
      */
     public static function cpuUsage(float $intervalSeconds = 1.0): Result

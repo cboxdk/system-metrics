@@ -35,14 +35,41 @@ final readonly class CpuDelta
     ) {}
 
     /**
-     * Calculate overall CPU usage percentage (0-100+).
+     * Calculate total system CPU usage percentage (0-100).
      *
-     * Can exceed 100% on multi-core systems when multiple cores are utilized.
-     * For example, 200% means 2 cores fully utilized.
+     * Returns the average CPU usage across all cores, normalized to 0-100%.
+     * This matches what system monitors like Activity Monitor display.
      *
-     * Formula: (busy_ticks_delta / total_ticks_delta) * 100
+     * Example: On a 16-core system with 445.6% raw usage, this returns 27.85%
+     * (445.6% / 16 cores = 27.85% average system load).
+     *
+     * Formula: (busy_ticks_delta / total_ticks_delta) * 100 / core_count
+     *
+     * @see usagePercentagePerCore() For per-core average utilization
      */
     public function usagePercentage(): float
+    {
+        if (empty($this->perCoreDelta)) {
+            return 0.0;
+        }
+
+        return $this->usagePercentagePerCore() * count($this->perCoreDelta);
+    }
+
+    /**
+     * Calculate average CPU usage per core (0-100).
+     *
+     * Returns the average utilization of individual CPU cores.
+     * This is useful for understanding per-core load distribution.
+     *
+     * Example: On a 16-core system with 27.85% total usage, this returns 1.74%
+     * (27.85% / 16 cores = 1.74% per-core average).
+     *
+     * Formula: (busy_ticks_delta / total_ticks_delta) * 100 / core_count
+     *
+     * @see usagePercentage() For total system load (0-100%)
+     */
+    public function usagePercentagePerCore(): float
     {
         if ($this->durationSeconds === 0.0) {
             return 0.0;
@@ -51,28 +78,13 @@ final readonly class CpuDelta
         $deltaTotal = $this->totalDelta->total();
         $deltaBusy = $this->totalDelta->busy();
 
-        if ($deltaTotal === 0) {
+        if ($deltaTotal === 0 || empty($this->perCoreDelta)) {
             return 0.0;
         }
 
-        return ($deltaBusy / $deltaTotal) * 100.0;
-    }
+        $rawPercentage = ($deltaBusy / $deltaTotal) * 100.0;
 
-    /**
-     * Calculate CPU usage percentage normalized by core count (0-100).
-     *
-     * This divides the total usage by number of cores to show average
-     * per-core utilization. Always returns 0-100%.
-     *
-     * Formula: usagePercentage() / core_count
-     */
-    public function normalizedUsagePercentage(): float
-    {
-        if (empty($this->perCoreDelta)) {
-            return 0.0;
-        }
-
-        return $this->usagePercentage() / count($this->perCoreDelta);
+        return $rawPercentage / count($this->perCoreDelta);
     }
 
     /**

@@ -4,23 +4,7 @@ use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuCoreDelta;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuDelta;
 use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 
-it('calculates overall CPU usage percentage correctly', function () {
-    $delta = new CpuDelta(
-        totalDelta: new CpuTimes(
-            user: 15, nice: 0, system: 5, idle: 80,
-            iowait: 0, irq: 0, softirq: 0, steal: 0
-        ),
-        perCoreDelta: [],
-        durationSeconds: 1.0,
-        startTime: new DateTimeImmutable('2024-01-01 10:00:00'),
-        endTime: new DateTimeImmutable('2024-01-01 10:00:01')
-    );
-
-    // busy = 15+5 = 20, total = 100, usage = 20%
-    expect($delta->usagePercentage())->toBe(20.0);
-});
-
-it('calculates normalized usage percentage', function () {
+it('calculates total system CPU usage percentage correctly (0-100%)', function () {
     $delta = new CpuDelta(
         totalDelta: new CpuTimes(
             user: 40, nice: 0, system: 10, idle: 150,
@@ -35,8 +19,29 @@ it('calculates normalized usage percentage', function () {
         endTime: new DateTimeImmutable('2024-01-01 10:00:01')
     );
 
-    // usage = 50/200 * 100 = 25%, normalized = 25/2 = 12.5%
-    expect($delta->normalizedUsagePercentage())->toBe(12.5);
+    // total busy = 50, total ticks = 200, raw = 25%
+    // 2 cores, so normalized total = 25%
+    expect($delta->usagePercentage())->toBe(25.0);
+});
+
+it('calculates per-core average usage percentage', function () {
+    $delta = new CpuDelta(
+        totalDelta: new CpuTimes(
+            user: 40, nice: 0, system: 10, idle: 150,
+            iowait: 0, irq: 0, softirq: 0, steal: 0
+        ),
+        perCoreDelta: [
+            new CpuCoreDelta(0, new CpuTimes(20, 0, 5, 75, 0, 0, 0, 0)),
+            new CpuCoreDelta(1, new CpuTimes(20, 0, 5, 75, 0, 0, 0, 0)),
+        ],
+        durationSeconds: 1.0,
+        startTime: new DateTimeImmutable('2024-01-01 10:00:00'),
+        endTime: new DateTimeImmutable('2024-01-01 10:00:01')
+    );
+
+    // total busy = 50, total ticks = 200, raw = 25%
+    // per-core = 25% / 2 = 12.5%
+    expect($delta->usagePercentagePerCore())->toBe(12.5);
 });
 
 it('calculates user percentage correctly', function () {
@@ -198,7 +203,7 @@ it('returns null for busiest/idlest when no cores', function () {
     expect($delta->idlestCore())->toBeNull();
 });
 
-it('returns zero normalized percentage when no cores', function () {
+it('returns zero usage percentage when no cores', function () {
     $delta = new CpuDelta(
         totalDelta: new CpuTimes(100, 0, 0, 300, 0, 0, 0, 0),
         perCoreDelta: [],
@@ -207,10 +212,11 @@ it('returns zero normalized percentage when no cores', function () {
         endTime: new DateTimeImmutable('2024-01-01 10:00:01')
     );
 
-    expect($delta->normalizedUsagePercentage())->toBe(0.0);
+    expect($delta->usagePercentage())->toBe(0.0);
+    expect($delta->usagePercentagePerCore())->toBe(0.0);
 });
 
-it('handles high CPU usage (>100%)', function () {
+it('handles fully utilized multi-core system', function () {
     // Multi-core system with both cores fully utilized
     $delta = new CpuDelta(
         totalDelta: new CpuTimes(
@@ -226,9 +232,10 @@ it('handles high CPU usage (>100%)', function () {
         endTime: new DateTimeImmutable('2024-01-01 10:00:01')
     );
 
-    // 200% usage on 2-core system
+    // Both cores 100% busy: total system usage = 100%
     expect($delta->usagePercentage())->toBe(100.0);
-    expect($delta->normalizedUsagePercentage())->toBe(50.0);
+    // Per-core average: 100% / 2 = 50%
+    expect($delta->usagePercentagePerCore())->toBe(50.0);
 });
 
 it('is immutable', function () {
