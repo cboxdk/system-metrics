@@ -15,6 +15,7 @@ enum FileSystemType: string
     case XFS = 'xfs';
     case BTRFS = 'btrfs';
     case ZFS = 'zfs';
+    case UFS = 'ufs';
     case APFS = 'apfs';
     case HFS = 'hfs';
     case HFS_PLUS = 'hfs+';
@@ -42,6 +43,7 @@ enum FileSystemType: string
             'xfs' => self::XFS,
             'btrfs' => self::BTRFS,
             'zfs' => self::ZFS,
+            'ufs', 'ffs' => self::UFS,
             'apfs' => self::APFS,
             'hfs' => self::HFS,
             'hfs+', 'hfsplus' => self::HFS_PLUS,

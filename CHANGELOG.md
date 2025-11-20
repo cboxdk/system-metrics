@@ -17,6 +17,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **FreeBSD FFI Metrics - Native sysctl Support**: Full FreeBSD support via sysctlbyname() and statfs()
+
+  **CPU Metrics** (`sysctlbyname()` via FFI):
+  - System-wide CPU times via `kern.cp_time` (user, nice, system, interrupt, idle)
+  - Per-core CPU times via `kern.cp_times` for all cores
+  - Native FFI calls to libc sysctlbyname()
+  - New `FreeBSDSysctlCpuMetricsSource`
+
+  **Memory Metrics** (`sysctlbyname()` via FFI):
+  - Physical memory stats via `hw.physmem` and `vm.stats.vm.v_*` sysctls
+  - Page-based memory accounting (total, free, inactive, cache, wired)
+  - Swap information via `vm.swap_total` and `vm.swap_reserved`
+  - New `FreeBSDSysctlMemoryMetricsSource`
+
+  **Uptime** (`sysctlbyname()` via FFI):
+  - Boot time via `kern.boottime` timeval structure
+  - Precise uptime calculation
+  - New `FreeBSDSysctlUptimeSource`
+
+  **Storage Metrics** (`getmntinfo()` + `statfs()` via FFI):
+  - Enumerate mounted filesystems via `getmntinfo()`
+  - Detailed stats per mount point via `statfs()`
+  - Supports UFS, ZFS, NFS, FAT32, NTFS, ext2/3/4, tmpfs
+  - Includes inode statistics
+  - New `FreeBSDStatfsStorageMetricsSource`
+  - Added `FileSystemType::UFS` enum case
+
+  **OS Detection**:
+  - Added `OsDetector::isBSD()`, `isFreeBSD()`, `isOpenBSD()`, `isNetBSD()`
+  - Updated `OsDetector::isSupported()` to include BSD variants
+  - BSD family detection via `PHP_OS_FAMILY === 'BSD'`
+
 - **macOS FFI Metrics - Complete CLI Elimination**: All macOS metrics now use native FFI calls
   
   **CPU Metrics** (`host_processor_info()`):

@@ -43,6 +43,10 @@ final class CompositeMemoryMetricsSource implements MemoryMetricsSource
             return new WindowsFFIMemoryMetricsSource;
         }
 
+        if (OsDetector::isFreeBSD()) {
+            return new FreeBSDSysctlMemoryMetricsSource;
+        }
+
         throw UnsupportedOperatingSystemException::forOs(OsDetector::getFamily());
     }
 }

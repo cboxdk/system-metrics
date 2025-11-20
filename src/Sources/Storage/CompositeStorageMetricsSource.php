@@ -18,6 +18,7 @@ final class CompositeStorageMetricsSource implements StorageMetricsSource
         private readonly ?StorageMetricsSource $linuxSource = null,
         private readonly ?StorageMetricsSource $macosSource = null,
         private readonly ?StorageMetricsSource $windowsSource = null,
+        private readonly ?StorageMetricsSource $freebsdSource = null,
     ) {}
 
     public function read(): Result
@@ -28,6 +29,7 @@ final class CompositeStorageMetricsSource implements StorageMetricsSource
             'Linux' => $this->getLinuxSource()->read(),
             'Darwin' => $this->getMacosSource()->read(),
             'Windows' => $this->getWindowsSource()->read(),
+            'BSD' => $this->getFreeBSDSource()->read(),
             default => Result::failure(
                 new SystemMetricsException("Unsupported OS family: {$osFamily}")
             ),
@@ -50,5 +52,10 @@ final class CompositeStorageMetricsSource implements StorageMetricsSource
     private function getWindowsSource(): StorageMetricsSource
     {
         return $this->windowsSource ?? new WindowsFFIStorageMetricsSource;
+    }
+
+    private function getFreeBSDSource(): StorageMetricsSource
+    {
+        return $this->freebsdSource ?? new FreeBSDStatfsStorageMetricsSource;
     }
 }
