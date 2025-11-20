@@ -35,11 +35,13 @@ final class FallbackCpuMetricsSource implements CpuMetricsSource
             }
 
             // Collect error for debugging
+            $error = $result->getError();
+            assert($error !== null);
             $errors[] = sprintf(
                 'Source %d (%s): %s',
                 $index,
                 $source::class,
-                $result->getError()->getMessage()
+                $error->getMessage()
             );
         }
 

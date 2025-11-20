@@ -116,7 +116,8 @@ final class LinuxStatfsStorageMetricsSource implements StorageMetricsSource
 
             // Get filesystem statistics via statfs64()
             $stats = $ffi->new('struct statfs64');
-            $result = $ffi->statfs64($mountPoint, FFI::addr($stats));
+            $result = $ffi->statfs64( // @phpstan-ignore method.notFound (FFI methods defined via cdef)
+                $mountPoint, FFI::addr($stats));
 
             if ($result !== 0) {
                 // statfs failed (permission denied, etc.) - skip this mount
@@ -124,10 +125,10 @@ final class LinuxStatfsStorageMetricsSource implements StorageMetricsSource
             }
 
             // Extract filesystem stats
-            $blockSize = (int) $stats->f_bsize;
-            $totalBlocks = (int) $stats->f_blocks;
-            $freeBlocks = (int) $stats->f_bfree;
-            $availableBlocks = (int) $stats->f_bavail; // Available to non-root users
+            $blockSize = (int) $stats->f_bsize; // @phpstan-ignore property.notFound
+            $totalBlocks = (int) $stats->f_blocks; // @phpstan-ignore property.notFound
+            $freeBlocks = (int) $stats->f_bfree; // @phpstan-ignore property.notFound
+            $availableBlocks = (int) $stats->f_bavail; // @phpstan-ignore property.notFound
 
             $totalBytes = $totalBlocks * $blockSize;
             $freeBytes = $freeBlocks * $blockSize;
@@ -135,8 +136,8 @@ final class LinuxStatfsStorageMetricsSource implements StorageMetricsSource
             $usedBytes = $totalBytes - $freeBytes;
 
             // Inode statistics
-            $totalInodes = (int) $stats->f_files;
-            $freeInodes = (int) $stats->f_ffree;
+            $totalInodes = (int) $stats->f_files; // @phpstan-ignore property.notFound
+            $freeInodes = (int) $stats->f_ffree; // @phpstan-ignore property.notFound
             $usedInodes = $totalInodes - $freeInodes;
 
             $mountPoints[] = new MountPoint(

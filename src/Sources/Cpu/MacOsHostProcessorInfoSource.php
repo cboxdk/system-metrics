@@ -55,17 +55,19 @@ final class MacOsHostProcessorInfoSource implements CpuMetricsSource
         try {
             $ffi = $this->getFFI();
 
+            // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             $host = $ffi->mach_host_self();
             $processor_count = $ffi->new('natural_t');
             $processor_info_addr = $ffi->new('vm_address_t');
             $processor_info_count = $ffi->new('natural_t');
 
+            // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             $kr = $ffi->host_processor_info(
                 $host,
                 self::PROCESSOR_CPU_LOAD_INFO,
-                FFI::addr($processor_count),
-                FFI::addr($processor_info_addr),
-                FFI::addr($processor_info_count)
+                \FFI::addr($processor_count),
+                \FFI::addr($processor_info_addr),
+                \FFI::addr($processor_info_count)
             );
 
             if ($kr !== 0) {
@@ -75,8 +77,11 @@ final class MacOsHostProcessorInfoSource implements CpuMetricsSource
                 );
             }
 
+            // @phpstan-ignore property.notFound (FFI properties defined via cdef)
             $num_cpus = $processor_count->cdata;
+            // @phpstan-ignore property.notFound
             $info_count = $processor_info_count->cdata;
+            // @phpstan-ignore property.notFound
             $data_addr = $processor_info_addr->cdata;
 
             // Read CPU data from kernel memory using FFI::memcpy
@@ -88,8 +93,8 @@ final class MacOsHostProcessorInfoSource implements CpuMetricsSource
             $snapshot = $this->parseSnapshot($data, $num_cpus);
 
             // Cleanup kernel memory
-            $ffi->vm_deallocate(
-                $ffi->mach_task_self_,
+            $ffi->vm_deallocate( // @phpstan-ignore method.notFound
+                $ffi->mach_task_self_, // @phpstan-ignore property.notFound
                 $data_addr,
                 $info_count * 4
             );
@@ -110,7 +115,7 @@ final class MacOsHostProcessorInfoSource implements CpuMetricsSource
     /**
      * Parse CPU snapshot from raw data.
      *
-     * @param  \FFI\CData<int[]>  $data  Raw CPU data array (4 values per core)
+     * @param  \FFI\CData  $data  Raw CPU data array (4 values per core)
      * @param  int  $num_cpus  Number of CPU cores
      */
     private function parseSnapshot(\FFI\CData $data, int $num_cpus): CpuSnapshot

@@ -44,12 +44,12 @@ final class MacOsHostStatisticsMemorySource implements MemoryMetricsSource
         try {
             $ffi = $this->getFFI();
 
-            $host = $ffi->mach_host_self();
+            $host = $ffi->mach_host_self(); // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             $vm_info = $ffi->new('vm_statistics64_data_t');
             $count = $ffi->new('mach_msg_type_number_t');
-            $count->cdata = self::VM_STATISTICS64_COUNT;
+            $count->cdata = self::VM_STATISTICS64_COUNT; // @phpstan-ignore property.notFound
 
-            $kr = $ffi->host_statistics64(
+            $kr = $ffi->host_statistics64( // @phpstan-ignore method.notFound
                 $host,
                 self::HOST_VM_INFO64,
                 FFI::addr($vm_info),
@@ -89,12 +89,19 @@ final class MacOsHostStatisticsMemorySource implements MemoryMetricsSource
     private function parseSnapshot(\FFI\CData $vm_info, int $totalBytes, int $pageSize): MemorySnapshot
     {
         // Extract memory statistics from vm_statistics64_data_t
+        // @phpstan-ignore property.notFound (FFI struct properties defined via cdef)
         $freePages = $vm_info->free_count;
+        // @phpstan-ignore property.notFound
         $activePages = $vm_info->active_count;
+        // @phpstan-ignore property.notFound
         $inactivePages = $vm_info->inactive_count;
+        // @phpstan-ignore property.notFound
         $wiredPages = $vm_info->wire_count;
+        // @phpstan-ignore property.notFound
         $speculativePages = $vm_info->speculative_count;
+        // @phpstan-ignore property.notFound
         $compressedPages = $vm_info->compressor_page_count;
+        // @phpstan-ignore property.notFound
         $purgeable = $vm_info->purgeable_count;
 
         // Calculate memory values in bytes
@@ -138,11 +145,12 @@ final class MacOsHostStatisticsMemorySource implements MemoryMetricsSource
     private function getPhysicalMemory(FFI $ffi): int
     {
         $size = $ffi->new('size_t');
-        $size->cdata = 8; // uint64_t size
+        // @phpstan-ignore property.notFound (uint64_t size)
+        $size->cdata = 8;
 
         $memsize = $ffi->new('uint64_t');
 
-        $result = $ffi->sysctlbyname(
+        $result = $ffi->sysctlbyname( // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             'hw.memsize',
             FFI::addr($memsize),
             FFI::addr($size),
@@ -154,7 +162,7 @@ final class MacOsHostStatisticsMemorySource implements MemoryMetricsSource
             throw new SystemMetricsException('Failed to get hw.memsize via sysctlbyname');
         }
 
-        return (int) $memsize->cdata;
+        return (int) $memsize->cdata; // @phpstan-ignore property.notFound
     }
 
     /**
@@ -163,11 +171,12 @@ final class MacOsHostStatisticsMemorySource implements MemoryMetricsSource
     private function getPageSize(FFI $ffi): int
     {
         $size = $ffi->new('size_t');
-        $size->cdata = 8; // uint64_t size
+        // @phpstan-ignore property.notFound (uint64_t size)
+        $size->cdata = 8;
 
         $pagesize = $ffi->new('uint64_t');
 
-        $result = $ffi->sysctlbyname(
+        $result = $ffi->sysctlbyname( // @phpstan-ignore method.notFound (FFI methods defined via cdef)
             'vm.pagesize',
             FFI::addr($pagesize),
             FFI::addr($size),
@@ -180,7 +189,7 @@ final class MacOsHostStatisticsMemorySource implements MemoryMetricsSource
             return 4096;
         }
 
-        return (int) $pagesize->cdata;
+        return (int) $pagesize->cdata; // @phpstan-ignore property.notFound
     }
 
     /**

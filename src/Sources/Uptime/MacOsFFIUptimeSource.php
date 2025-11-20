@@ -41,9 +41,11 @@ final class MacOsFFIUptimeSource implements UptimeSource
             // timeval structure: { long tv_sec; int tv_usec; }
             $boottime = $ffi->new('struct timeval');
             $size = $ffi->new('size_t');
-            $size->cdata = FFI::sizeof($boottime);
+            $size->cdata = // @phpstan-ignore property.notFound
+                FFI::sizeof($boottime);
 
-            $result = $ffi->sysctlbyname(
+            $result = $ffi->sysctlbyname( // @phpstan-ignore method.notFound (FFI methods defined via cdef)
+                
                 'kern.boottime',
                 FFI::addr($boottime),
                 FFI::addr($size),
@@ -59,7 +61,7 @@ final class MacOsFFIUptimeSource implements UptimeSource
             }
 
             // Extract boot timestamp
-            $bootTimestamp = (int) $boottime->tv_sec;
+            $bootTimestamp = (int) $boottime->tv_sec; // @phpstan-ignore property.notFound
             $currentTime = new DateTimeImmutable;
             $bootTime = new DateTimeImmutable('@'.$bootTimestamp);
             $uptimeSeconds = $currentTime->getTimestamp() - $bootTimestamp;
