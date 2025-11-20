@@ -51,7 +51,7 @@ final class CompositeLoadAverageSource implements LoadAverageSource
         }
 
         if (OsDetector::isMacOs()) {
-            return new MacOsSysctlLoadAverageSource;
+            return new MacOsFFILoadAverageSource;
         }
 
         return null;
