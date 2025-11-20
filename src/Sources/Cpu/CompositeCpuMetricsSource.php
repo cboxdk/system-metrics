@@ -33,7 +33,15 @@ final class CompositeCpuMetricsSource implements CpuMetricsSource
         }
 
         if (OsDetector::isMacOs()) {
-            return new MacOsSysctlCpuMetricsSource;
+            // Priority order for macOS:
+            // 1. host_processor_info() via FFI (fast, accurate, modern)
+            // 2. sysctl kern.cp_time (fallback for older systems or FFI unavailable)
+            // 3. MinimalCpuMetricsSource (last resort - returns zeros)
+            return new FallbackCpuMetricsSource([
+                new MacOsHostProcessorInfoSource,
+                new MacOsSysctlCpuMetricsSource,
+                new MinimalCpuMetricsSource,
+            ]);
         }
 
         throw UnsupportedOperatingSystemException::forOs(OsDetector::getFamily());
