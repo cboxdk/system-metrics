@@ -66,6 +66,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **macOS**: 100% native FFI (CPU, memory, load, uptime all via Mach/BSD APIs)
   - **Linux**: 100% pure /proc + FFI (storage via statfs64(), all others via /proc filesystem)
 
+## v1.3.0 - 2025-11-19
+
+### What's Changed
+
+* Docs/add documentation structure by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/7
+
+**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.2.0...v1.3.0
+
+## v1.2.0 - 2025-11-18
+
+### What's Changed
+
+* Add comprehensive documentation structure by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/6
+
+**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.1.0...v1.2.0
+
 ## v1.1.0 - 2025-11-18
 
 ### What's Changed
