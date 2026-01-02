@@ -5,6 +5,33 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.6.0 - 2026-01-02
+
+### What's Changed
+
+#### New Features
+
+- **PHP 8.5 Support**: Added PHP 8.5 to CI test matrix for early compatibility testing
+
+#### Security Improvements
+
+- **FileReader Windows Whitelist**: Added Windows-specific path patterns to security whitelist
+- **ProcessRunner Hardening**: Improved command handling across platforms
+
+#### Bug Fixes
+
+- Fixed PHPStan configuration issues
+- Fixed cross-platform test compatibility (Windows/macOS/Linux)
+- Fixed risky tests that didn't make assertions on Windows
+
+#### Testing
+
+- All 660+ tests pass across PHP 8.3, 8.4, and 8.5
+- Full CI coverage on Ubuntu, macOS, and Windows
+- E2E tests in Docker containers
+
+**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.5.0...v1.6.0
+
 ## v1.5.0 - 2025-11-20
 
 ### What's Changed
