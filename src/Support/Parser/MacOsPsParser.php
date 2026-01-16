@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser;
+namespace Cbox\SystemMetrics\Support\Parser;
 
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 use DateTimeImmutable;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
 
 /**
  * Parses macOS ps command output for process metrics.

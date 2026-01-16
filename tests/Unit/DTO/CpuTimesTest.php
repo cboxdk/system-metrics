@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 
 describe('CpuTimes', function () {
     it('can be instantiated with all values', function () {

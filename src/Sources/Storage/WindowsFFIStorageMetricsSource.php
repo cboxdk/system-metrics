@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Storage;
+namespace Cbox\SystemMetrics\Sources\Storage;
 
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use FFI;
-use PHPeek\SystemMetrics\Contracts\StorageMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
 
 /**
  * Read storage metrics from Windows using GetDiskFreeSpaceEx() and GetVolumeInformation() via FFI.

@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Environment;
+namespace Cbox\SystemMetrics\Sources\Environment;
 
+use Cbox\SystemMetrics\Contracts\EnvironmentDetector;
+use Cbox\SystemMetrics\DTO\Environment\Architecture;
+use Cbox\SystemMetrics\DTO\Environment\ArchitectureKind;
+use Cbox\SystemMetrics\DTO\Environment\Cgroup;
+use Cbox\SystemMetrics\DTO\Environment\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Environment\Containerization;
+use Cbox\SystemMetrics\DTO\Environment\ContainerType;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
+use Cbox\SystemMetrics\DTO\Environment\Kernel;
+use Cbox\SystemMetrics\DTO\Environment\OperatingSystem;
+use Cbox\SystemMetrics\DTO\Environment\OsFamily;
+use Cbox\SystemMetrics\DTO\Environment\Virtualization;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationType;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor;
+use Cbox\SystemMetrics\DTO\Result;
 use FFI;
-use PHPeek\SystemMetrics\Contracts\EnvironmentDetector;
-use PHPeek\SystemMetrics\DTO\Environment\Architecture;
-use PHPeek\SystemMetrics\DTO\Environment\ArchitectureKind;
-use PHPeek\SystemMetrics\DTO\Environment\Cgroup;
-use PHPeek\SystemMetrics\DTO\Environment\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Environment\Containerization;
-use PHPeek\SystemMetrics\DTO\Environment\ContainerType;
-use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
-use PHPeek\SystemMetrics\DTO\Environment\Kernel;
-use PHPeek\SystemMetrics\DTO\Environment\OperatingSystem;
-use PHPeek\SystemMetrics\DTO\Environment\OsFamily;
-use PHPeek\SystemMetrics\DTO\Environment\Virtualization;
-use PHPeek\SystemMetrics\DTO\Environment\VirtualizationType;
-use PHPeek\SystemMetrics\DTO\Environment\VirtualizationVendor;
-use PHPeek\SystemMetrics\DTO\Result;
 
 /**
  * Detects environment information on Windows systems using FFI.

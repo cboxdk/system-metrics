@@ -11,7 +11,7 @@ We release patches for security vulnerabilities for the following versions:
 
 ## Reporting a Vulnerability
 
-We take the security of PHPeek System Metrics seriously. If you discover a security vulnerability, please follow these steps:
+We take the security of Cbox System Metrics seriously. If you discover a security vulnerability, please follow these steps:
 
 ### 1. Do Not Disclose Publicly
 
@@ -19,7 +19,7 @@ Please do not open a public GitHub issue for security vulnerabilities. This give
 
 ### 2. Report Privately
 
-Send your vulnerability report to **sn@cbox.dk** with the subject line: `[SECURITY] PHPeek System Metrics Vulnerability`
+Send your vulnerability report to **sn@cbox.dk** with the subject line: `[SECURITY] Cbox System Metrics Vulnerability`
 
 ### 3. Include Details
 
@@ -44,7 +44,7 @@ We will acknowledge receipt of your vulnerability report within **48 hours** and
 
 ## Security Best Practices for Users
 
-When using PHPeek System Metrics, follow these security best practices:
+When using Cbox System Metrics, follow these security best practices:
 
 ### 1. Read-Only Operations
 
@@ -138,7 +138,7 @@ We appreciate the security research community's efforts to improve the security 
 ## Contact
 
 For security concerns: **sn@cbox.dk**
-For general issues: https://github.com/gophpeek/system-metrics/issues
+For general issues: https://github.com/cboxdk/system-metrics/issues
 
 ---
 

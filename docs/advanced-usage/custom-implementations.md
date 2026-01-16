@@ -20,7 +20,7 @@ All metric sources implement interfaces, making them easy to swap out with custo
 ## Available Interfaces
 
 ```php
-use PHPeek\SystemMetrics\Contracts\{
+use Cbox\SystemMetrics\Contracts\{
     EnvironmentDetector,
     CpuMetricsSource,
     MemoryMetricsSource,
@@ -36,9 +36,9 @@ use PHPeek\SystemMetrics\Contracts\{
 ### Example: Redis-Cached CPU Metrics
 
 ```php
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Cpu\LinuxProcCpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Cpu\LinuxProcCpuMetricsSource;
 
 class RedisCachedCpuSource implements CpuMetricsSource
 {
@@ -77,7 +77,7 @@ class RedisCachedCpuSource implements CpuMetricsSource
 ### Configuring Custom Source Globally
 
 ```php
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
 
 // Set custom CPU source
 $redis = new Redis();
@@ -93,9 +93,9 @@ $cpu = SystemMetrics::cpu();
 ### Simple Stub
 
 ```php
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\{CpuSnapshot, CpuTimes};
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\{CpuSnapshot, CpuTimes};
 
 $stub = new class implements CpuMetricsSource {
     public function read(): Result {
@@ -114,8 +114,8 @@ SystemMetricsConfig::setCpuMetricsSource($stub);
 
 ```php
 use PHPUnit\Framework\TestCase;
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
 
 class MyTest extends TestCase
 {
@@ -157,8 +157,8 @@ class MyTest extends TestCase
 Actions can be instantiated with custom sources:
 
 ```php
-use PHPeek\SystemMetrics\Actions\ReadCpuMetricsAction;
-use PHPeek\SystemMetrics\Sources\Cpu\LinuxProcCpuMetricsSource;
+use Cbox\SystemMetrics\Actions\ReadCpuMetricsAction;
+use Cbox\SystemMetrics\Sources\Cpu\LinuxProcCpuMetricsSource;
 
 // Direct instantiation with custom source
 $action = new ReadCpuMetricsAction(
@@ -171,8 +171,8 @@ $result = $action->execute();
 ## Example: Logging Source Wrapper
 
 ```php
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
 use Psr\Log\LoggerInterface;
 
 class LoggingMemorySource implements MemoryMetricsSource
@@ -209,8 +209,8 @@ class LoggingMemorySource implements MemoryMetricsSource
 ## Example: Rate-Limited Source
 
 ```php
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
 
 class RateLimitedCpuSource implements CpuMetricsSource
 {
@@ -244,7 +244,7 @@ class RateLimitedCpuSource implements CpuMetricsSource
 ## Configuration Methods
 
 ```php
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
 
 // CPU metrics source
 SystemMetricsConfig::setCpuMetricsSource($customCpuSource);

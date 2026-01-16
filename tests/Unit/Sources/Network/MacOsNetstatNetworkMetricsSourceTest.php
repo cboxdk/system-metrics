@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Network\MacOsNetstatNetworkMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Network\MacOsNetstatNetworkMetricsSource;
 
 describe('MacOsNetstatNetworkMetricsSource', function () {
     it('can read network metrics on macOS', function () {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser;
+namespace Cbox\SystemMetrics\Support\Parser;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\ParseException;
 
 /**
  * Parse /proc/net/dev for network interface statistics.

@@ -11,7 +11,7 @@ Track how long the system has been running since last boot.
 ## Overview
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $uptime = SystemMetrics::uptime()->getValue();
 ```

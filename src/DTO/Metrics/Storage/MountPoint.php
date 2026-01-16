@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Storage;
+namespace Cbox\SystemMetrics\DTO\Metrics\Storage;
 
 /**
  * Represents a filesystem mount point with usage statistics.

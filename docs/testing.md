@@ -1,6 +1,6 @@
 ---
 title: "Testing"
-description: "Guide to running tests and understanding test coverage for PHPeek System Metrics"
+description: "Guide to running tests and understanding test coverage for Cbox System Metrics"
 weight: 85
 ---
 

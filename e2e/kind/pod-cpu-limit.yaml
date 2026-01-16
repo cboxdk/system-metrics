@@ -12,7 +12,7 @@ spec:
         - |
           cd /workspace
           php -r 'require "vendor/autoload.php";
-          $result = PHPeek\SystemMetrics\SystemMetrics::container();
+          $result = Cbox\SystemMetrics\SystemMetrics::container();
           var_dump($result->getValue());
           sleep(3600);'
       resources:

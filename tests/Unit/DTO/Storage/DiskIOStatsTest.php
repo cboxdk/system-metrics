@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
 
 describe('DiskIOStats', function () {
     it('can be instantiated with all values', function () {

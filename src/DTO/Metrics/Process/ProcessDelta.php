@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Process;
+namespace Cbox\SystemMetrics\DTO\Metrics\Process;
 
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 use DateTimeImmutable;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 
 /**
  * Delta between two process snapshots (typically start and stop).

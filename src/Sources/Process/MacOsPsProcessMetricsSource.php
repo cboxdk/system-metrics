@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Process;
+namespace Cbox\SystemMetrics\Sources\Process;
 
+use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\Parser\MacOsPsParser;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 use DateTimeImmutable;
-use PHPeek\SystemMetrics\Contracts\ProcessMetricsSource;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\Parser\MacOsPsParser;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
 
 /**
  * Reads process metrics from macOS using ps command.
@@ -36,7 +36,7 @@ final class MacOsPsProcessMetricsSource implements ProcessMetricsSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
             return Result::failure($error);
         }
 
@@ -51,7 +51,7 @@ final class MacOsPsProcessMetricsSource implements ProcessMetricsSource
             $error = $rootResult->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
             return Result::failure($error);
         }
 

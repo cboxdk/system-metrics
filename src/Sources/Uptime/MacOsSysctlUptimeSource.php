@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Uptime;
+namespace Cbox\SystemMetrics\Sources\Uptime;
 
-use PHPeek\SystemMetrics\Contracts\UptimeSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\Parser\MacOsSysctlBoottimeParser;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\Parser\MacOsSysctlBoottimeParser;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 /**
  * macOS uptime source using sysctl kern.boottime.
@@ -24,7 +24,7 @@ final class MacOsSysctlUptimeSource implements UptimeSource
         $result = $this->processRunner->execute('sysctl kern.boottime');
 
         if ($result->isFailure()) {
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot> */
             return $result;
         }
 

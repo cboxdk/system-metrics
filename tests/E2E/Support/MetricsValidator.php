@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Tests\E2E\Support;
+namespace Cbox\SystemMetrics\Tests\E2E\Support;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use PHPUnit\Framework\Assert;
 
 /**

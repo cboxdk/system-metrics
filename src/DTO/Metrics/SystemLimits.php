@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics;
+namespace Cbox\SystemMetrics\DTO\Metrics;
 
 /**
  * Unified system resource limits and current usage.

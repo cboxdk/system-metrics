@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Memory;
+namespace Cbox\SystemMetrics\Sources\Memory;
 
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Routes memory metrics reading to the appropriate OS-specific source.

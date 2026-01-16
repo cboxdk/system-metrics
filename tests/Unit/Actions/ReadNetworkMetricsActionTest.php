@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Actions\ReadNetworkMetricsAction;
-use PHPeek\SystemMetrics\Contracts\NetworkMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Actions\ReadNetworkMetricsAction;
+use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
 
 describe('ReadNetworkMetricsAction', function () {
     it('uses default source when none provided', function () {

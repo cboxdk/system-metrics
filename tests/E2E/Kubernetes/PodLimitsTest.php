@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\KindHelper;
 
 describe('Kubernetes - Pod Resource Limits', function () {
 
     it('detects CPU limits in Kubernetes pod', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 echo json_encode([
     'success' => $result->isSuccess(),
     'coreCount' => $result->isSuccess() ? $result->getValue()->coreCount() : null,
@@ -40,7 +40,7 @@ PHP;
     it('detects memory limits in Kubernetes pod', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 echo json_encode([
     'success' => $result->isSuccess(),
     'totalBytes' => $result->isSuccess() ? $result->getValue()->totalBytes : null,
@@ -71,7 +71,7 @@ PHP;
     it('validates environment detection in Kubernetes pod', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::environment();
+$result = Cbox\SystemMetrics\SystemMetrics::environment();
 if ($result->isSuccess()) {
     $env = $result->getValue();
     echo json_encode([
@@ -93,7 +93,7 @@ PHP;
     it('reads complete system overview from pod', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::overview();
+$result = Cbox\SystemMetrics\SystemMetrics::overview();
 if ($result->isSuccess()) {
     $overview = $result->getValue();
     echo json_encode([
@@ -130,14 +130,14 @@ PHP;
         $logs = KindHelper::getPodLogs('php-metrics-cpu-test', 'metrics-test');
 
         // Logs should contain the SystemMetrics output from pod startup
-        expect($logs)->toContain('object(PHPeek\SystemMetrics\DTO\Metrics', 'Logs should show metrics output');
+        expect($logs)->toContain('object(Cbox\SystemMetrics\DTO\Metrics', 'Logs should show metrics output');
     });
 
     it('validates pod CPU and memory metrics consistency', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$cpuResult = PHPeek\SystemMetrics\SystemMetrics::cpu();
-$memResult = PHPeek\SystemMetrics\SystemMetrics::memory();
+$cpuResult = Cbox\SystemMetrics\SystemMetrics::cpu();
+$memResult = Cbox\SystemMetrics\SystemMetrics::memory();
 
 if ($cpuResult->isSuccess() && $memResult->isSuccess()) {
     $cpu = $cpuResult->getValue();

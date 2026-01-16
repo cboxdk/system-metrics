@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Uptime;
+namespace Cbox\SystemMetrics\Sources\Uptime;
 
-use PHPeek\SystemMetrics\Contracts\UptimeSource;
-use PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Composite uptime source with automatic OS detection.

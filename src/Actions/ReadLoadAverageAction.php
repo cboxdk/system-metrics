@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\LoadAverageSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\LoadAverage\CompositeLoadAverageSource;
+use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\LoadAverage\CompositeLoadAverageSource;
 
 /**
  * Action for reading system load average.
@@ -20,7 +20,7 @@ final readonly class ReadLoadAverageAction
     /**
      * Execute the action to read load average.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
      */
     public function execute(): Result
     {

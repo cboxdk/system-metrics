@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\DTO\SystemOverview;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\SystemOverview;
 
 /**
  * Action to get a complete system overview.

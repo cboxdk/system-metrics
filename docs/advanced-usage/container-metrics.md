@@ -13,7 +13,7 @@ Get container resource limits and usage when running in Docker/Kubernetes.
 The Container Metrics API provides access to cgroup (control group) limits and usage, allowing your application to be aware of container resource constraints.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $container = SystemMetrics::container()->getValue();
 ```
@@ -65,7 +65,7 @@ if ($container->hasOomKills()) {
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $container = SystemMetrics::container()->getValue();
 

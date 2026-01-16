@@ -1,12 +1,12 @@
 ---
 title: "Architecture"
-description: "Design philosophy and architectural patterns used in PHPeek System Metrics"
+description: "Design philosophy and architectural patterns used in Cbox System Metrics"
 weight: 50
 ---
 
 # Architecture
 
-This section explains the design principles and architectural patterns that make PHPeek System Metrics reliable, maintainable, and type-safe.
+This section explains the design principles and architectural patterns that make Cbox System Metrics reliable, maintainable, and type-safe.
 
 ## Design Patterns
 

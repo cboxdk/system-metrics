@@ -13,7 +13,7 @@ Master the Result<T> pattern for explicit error handling without exceptions.
 All SystemMetrics methods return `Result<T>` objects instead of throwing exceptions. This forces explicit error handling at compile time and prevents uncaught exceptions in production.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::cpu();  // Returns Result<CpuSnapshot>
 ```
@@ -155,8 +155,8 @@ if ($result->isFailure()) {
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
-use PHPeek\SystemMetrics\Exceptions\{
+use Cbox\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\Exceptions\{
     FileNotFoundException,
     InsufficientPermissionsException,
     ParseException,
@@ -231,7 +231,7 @@ SystemMetrics::cpu()
 For testing, you can create Result objects:
 
 ```php
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Result;
 
 // Success result
 $result = Result::success($fakeCpuSnapshot);

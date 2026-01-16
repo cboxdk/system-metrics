@@ -13,7 +13,7 @@ Detect operating system information, architecture, virtualization, containers, a
 Environment detection provides comprehensive information about the system your code is running on. The results are automatically cached after the first call for performance.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $env = SystemMetrics::environment()->getValue();
 ```
@@ -196,7 +196,7 @@ $env->cgroup->memoryPath === null;
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::environment();
 

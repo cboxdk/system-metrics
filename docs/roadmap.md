@@ -1,6 +1,6 @@
 ---
 title: "Roadmap"
-description: "Future features and planned improvements for PHPeek System Metrics library"
+description: "Future features and planned improvements for Cbox System Metrics library"
 weight: 90
 ---
 
@@ -99,7 +99,7 @@ This library monitors the local system only. Use distributed monitoring for mult
 
 ## Community Requests
 
-Have a feature request? [Open an issue](https://github.com/gophpeek/system-metrics/issues) to discuss!
+Have a feature request? [Open an issue](https://github.com/cboxdk/system-metrics/issues) to discuss!
 
 **Criteria for new features:**
 - Must be universally useful (not niche)
@@ -116,4 +116,4 @@ See [CHANGELOG.md](../CHANGELOG.md) for complete version history.
 
 - [Introduction](introduction) - Current features
 - [Contributing](../CONTRIBUTING.md) - How to contribute
-- [GitHub Issues](https://github.com/gophpeek/system-metrics/issues) - Report bugs or request features
+- [GitHub Issues](https://github.com/cboxdk/system-metrics/issues) - Report bugs or request features

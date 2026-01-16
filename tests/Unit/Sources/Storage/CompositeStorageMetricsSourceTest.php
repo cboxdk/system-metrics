@@ -1,10 +1,10 @@
 <?php
 
-use PHPeek\SystemMetrics\Contracts\StorageMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Sources\Storage\CompositeStorageMetricsSource;
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Sources\Storage\CompositeStorageMetricsSource;
 
 describe('CompositeStorageMetricsSource', function () {
     it('creates OS-specific source when none provided', function () {

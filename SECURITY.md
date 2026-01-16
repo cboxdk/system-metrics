@@ -8,7 +8,7 @@
 
 ## Security Model
 
-PHPeek/SystemMetrics is designed with security as a core principle. This document describes the security architecture, threat model, and best practices.
+Cbox/SystemMetrics is designed with security as a core principle. This document describes the security architecture, threat model, and best practices.
 
 ### Design Principles
 
@@ -212,7 +212,7 @@ public function read(string $path): string {
 
 ### Reporting Process
 
-If you discover a security vulnerability in PHPeek/SystemMetrics:
+If you discover a security vulnerability in Cbox/SystemMetrics:
 
 1. **DO NOT** create a public GitHub issue
 2. Email security reports to: [sn@cbox.dk](mailto:sn@cbox.dk)

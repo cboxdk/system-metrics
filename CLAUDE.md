@@ -4,10 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**PHPeek/SystemMetrics** is a modern PHP 8.3+ library for accessing low-level system metrics on Linux and macOS. It provides a clean, type-safe API for reading environment detection, CPU metrics, and memory metrics through immutable DTOs and explicit error handling.
+**Cbox/SystemMetrics** is a modern PHP 8.3+ library for accessing low-level system metrics on Linux and macOS. It provides a clean, type-safe API for reading environment detection, CPU metrics, and memory metrics through immutable DTOs and explicit error handling.
 
-- **Namespace**: `PHPeek\SystemMetrics`
-- **Package Name**: `gophpeek/system-metrics`
+- **Namespace**: `Cbox\SystemMetrics`
+- **Package Name**: `cboxdk/system-metrics`
 - **PHP Version**: 8.3+ (strict requirement, enables readonly classes)
 - **Testing Framework**: Pest v4
 - **Code Style**: Laravel Pint (automated via GitHub Actions)
@@ -228,7 +228,7 @@ composer update
 ### Quick Start
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 // Complete system overview
 $result = SystemMetrics::overview();
@@ -319,8 +319,8 @@ $result = SystemMetrics::cpu()->map(fn($cpu) => [
 ### Custom Implementations
 
 ```php
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
 
 // Create custom CPU source
 class MyCustomCpuSource implements CpuMetricsSource {
@@ -340,7 +340,7 @@ $cpu = SystemMetrics::cpu();
 
 ### When Adding New Code
 
-1. All new classes go in `src/` with namespace `PHPeek\SystemMetrics`
+1. All new classes go in `src/` with namespace `Cbox\SystemMetrics`
 2. Write Pest tests in `tests/` (unit tests in `tests/Unit/`, integration in root)
 3. Follow existing patterns:
    - DTOs are readonly value objects
@@ -417,27 +417,27 @@ $cpu = SystemMetrics::cpu();
 - **Readonly everywhere**: PHP 8.3+ readonly classes enable immutability without boilerplate
 - **No Windows support**: By design, this library focuses on Unix-like systems
 
-# PHPeek Documentation Guide
+# Cbox Documentation Guide
 
-This guide explains how to structure documentation for PHPeek packages to ensure optimal display and navigation on phpeek.com.
+This guide explains how to structure documentation for Cbox packages to ensure optimal display and navigation on phpeek.com.
 
 ## Core Concepts
 
 ### Major Version Management
-- PHPeek displays ONE entry per major version (v1, v2, v3)
+- Cbox displays ONE entry per major version (v1, v2, v3)
 - System automatically tracks the latest release within each major version
 - URLs use major version: `/docs/{package}/v1`, `/docs/{package}/v2`
 - When you release v1.2.1 after v1.2.0, the website updates automatically
 
-### Files NOT Used on PHPeek.com
+### Files NOT Used on Cbox.com
 
 **README.md - GitHub Only**
-- ⚠️ README.md is **NEVER** displayed on PHPeek.com
+- ⚠️ README.md is **NEVER** displayed on Cbox.com
 - README.md is only for GitHub repository display
 - All documentation must be in the `/docs` folder
 - Do NOT reference README.md in your docs
 
-**Files Used on PHPeek.com**
+**Files Used on Cbox.com**
 - All `.md` files in the `/docs` folder
 - All image/asset files within `/docs`
 - `_index.md` files for directory landing pages (optional but recommended)
@@ -653,7 +653,7 @@ Always specify the language after the opening fence:
 
 ````markdown
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $cpu = SystemMetrics::cpu()->get();
 echo "Cores: {$cpu->cores}\n";
@@ -733,7 +733,7 @@ Monitor CPU usage and performance with real-time metrics.
 ## Getting CPU Statistics
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $cpu = SystemMetrics::cpu()->get();
 

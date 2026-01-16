@@ -6,14 +6,14 @@ weight: 1
 
 # Introduction
 
-**PHPeek System Metrics** is a modern PHP library for accessing low-level system metrics from Linux and macOS platforms. Get real-time CPU, memory, storage, network, and container metrics in pure PHP—no extensions, no dependencies, just clean type-safe access to system data.
+**Cbox System Metrics** is a modern PHP library for accessing low-level system metrics from Linux and macOS platforms. Get real-time CPU, memory, storage, network, and container metrics in pure PHP—no extensions, no dependencies, just clean type-safe access to system data.
 
 ## Overview
 
 SystemMetrics provides a clean, type-safe API for monitoring system resources through immutable DTOs and explicit error handling. Built for production environments, it offers comprehensive metrics collection with graceful degradation when system APIs are unavailable.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::overview();
 $overview = $result->getValue();
@@ -124,7 +124,7 @@ Track CPU usage deltas, identify bottlenecks, analyze I/O patterns, monitor netw
 
 ## Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/gophpeek/system-metrics/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/cboxdk/system-metrics/issues)
 - **Documentation**: You're reading it!
 - **Contributing**: See CONTRIBUTING.md for guidelines
 - **Security**: Report vulnerabilities via SECURITY.md

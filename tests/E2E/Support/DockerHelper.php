@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Tests\E2E\Support;
+namespace Cbox\SystemMetrics\Tests\E2E\Support;
 
 use RuntimeException;
 

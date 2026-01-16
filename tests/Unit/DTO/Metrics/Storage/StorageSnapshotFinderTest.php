@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
 
 describe('StorageSnapshot Finder Methods', function () {
     beforeEach(function () {

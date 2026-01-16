@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 
 describe('MemorySnapshot', function () {
     it('can be instantiated with all values', function () {

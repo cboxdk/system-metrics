@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Contracts\LoadAverageSource;
-use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
-use PHPeek\SystemMetrics\Sources\LoadAverage\CompositeLoadAverageSource;
+use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Sources\LoadAverage\CompositeLoadAverageSource;
 
 describe('CompositeLoadAverageSource', function () {
     it('creates OS-specific source when none provided', function () {

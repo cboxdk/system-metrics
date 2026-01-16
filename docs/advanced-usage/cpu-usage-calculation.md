@@ -27,7 +27,7 @@ where:
 The blocking convenience method handles everything for you:
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 // Blocks for 1 second, takes two snapshots, calculates delta
 $delta = SystemMetrics::cpuUsage(1.0)->getValue();
@@ -43,8 +43,8 @@ echo "Idle: " . round($delta->idlePercentage(), 1) . "%\n";
 For non-blocking scenarios, manually take snapshots and calculate delta:
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 
 // Take first snapshot
 $snap1 = SystemMetrics::cpu()->getValue();
@@ -111,7 +111,7 @@ foreach ($delta->perCore as $core) {
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 // Get CPU usage over 1 second
 $delta = SystemMetrics::cpuUsage(1.0)->getValue();

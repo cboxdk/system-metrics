@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Network;
+namespace Cbox\SystemMetrics\Sources\Network;
 
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\Contracts\NetworkMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Support\FileReader;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcNetDevParser;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcNetTcpParser;
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Support\FileReader;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcNetDevParser;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcNetTcpParser;
 
 /**
  * Read network metrics from Linux /proc/net/* files.

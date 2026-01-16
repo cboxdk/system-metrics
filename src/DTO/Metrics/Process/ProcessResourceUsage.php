@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Process;
+namespace Cbox\SystemMetrics\DTO\Metrics\Process;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 
 /**
  * Resource usage for a single process or process group at a point in time.

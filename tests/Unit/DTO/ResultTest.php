@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
 describe('Result', function () {
     it('can create a successful result', function () {

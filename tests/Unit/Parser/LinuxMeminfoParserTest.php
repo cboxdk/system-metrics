@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
-use PHPeek\SystemMetrics\Support\Parser\LinuxMeminfoParser;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\Support\Parser\LinuxMeminfoParser;
 
 describe('LinuxMeminfoParser', function () {
     it('can parse memory information from meminfo', function () {

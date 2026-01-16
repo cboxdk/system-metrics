@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser;
+namespace Cbox\SystemMetrics\Support\Parser;
 
-use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\ParseException;
 
 /**
  * Parses macOS sysctl vm.loadavg output for load average metrics.

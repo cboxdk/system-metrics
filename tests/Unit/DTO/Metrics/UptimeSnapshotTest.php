@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
 
 describe('UptimeSnapshot', function () {
     it('can be instantiated with all values', function () {

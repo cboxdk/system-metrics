@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
+use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
 
 describe('ContainerLimits', function () {
     it('can be instantiated with all values', function () {

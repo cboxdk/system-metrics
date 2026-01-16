@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Support\Parser\MacOsPsParser;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Support\Parser\MacOsPsParser;
 
 it('can parse ps command output', function () {
     $parser = new MacOsPsParser;
@@ -276,7 +276,7 @@ it('handles lsof failure gracefully', function () {
         public function execute(string $command): Result
         {
             if (str_starts_with($command, 'lsof')) {
-                return Result::failure(new \PHPeek\SystemMetrics\Exceptions\SystemMetricsException('lsof failed'));
+                return Result::failure(new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('lsof failed'));
             }
 
             return Result::success('');

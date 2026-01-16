@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 describe('Environment Caching', function () {
     beforeEach(function () {

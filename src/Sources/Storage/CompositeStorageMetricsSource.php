@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Storage;
+namespace Cbox\SystemMetrics\Sources\Storage;
 
-use PHPeek\SystemMetrics\Contracts\StorageMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Composite storage metrics source that routes to platform-specific implementations.

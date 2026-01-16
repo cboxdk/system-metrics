@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser\Cgroup;
+namespace Cbox\SystemMetrics\Support\Parser\Cgroup;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
 
 /**
  * Detects the cgroup version available on the system.

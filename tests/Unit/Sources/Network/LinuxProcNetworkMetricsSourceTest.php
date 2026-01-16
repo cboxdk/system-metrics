@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Network\LinuxProcNetworkMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Network\LinuxProcNetworkMetricsSource;
 
 describe('LinuxProcNetworkMetricsSource', function () {
     it('can read network metrics on Linux', function () {

@@ -42,7 +42,19 @@
       "Bash(composer dump-autoload:*)",
       "Bash(composer remove:*)",
       "Bash(composer analyse:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh run view:*)",
+      "Bash(ls:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh api:*)",
+      "Bash(timeout 30 vendor/bin/pest:*)",
+      "Bash(script -q /dev/null php:*)",
+      "Bash(PHP_CLI_SERVER_WORKERS=1 php:*)",
+      "Bash(tee:*)",
+      "Bash(herd coverage:*)",
+      "Bash(unzip:*)"
     ],
     "deny": [],
     "ask": []

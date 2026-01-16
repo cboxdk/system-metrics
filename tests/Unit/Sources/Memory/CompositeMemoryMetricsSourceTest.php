@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
-use PHPeek\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
 
 describe('CompositeMemoryMetricsSource', function () {
     it('creates OS-specific source when none provided', function () {

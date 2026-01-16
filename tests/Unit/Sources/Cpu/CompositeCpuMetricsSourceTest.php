@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuCoreTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
-use PHPeek\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuCoreTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
 
 describe('CompositeCpuMetricsSource', function () {
     it('creates OS-specific source when none provided', function () {

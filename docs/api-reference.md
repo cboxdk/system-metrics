@@ -1,6 +1,6 @@
 ---
 title: "API Reference"
-description: "Complete API documentation for all public methods and classes in PHPeek System Metrics"
+description: "Complete API documentation for all public methods and classes in Cbox System Metrics"
 weight: 80
 ---
 

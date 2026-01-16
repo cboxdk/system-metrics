@@ -13,7 +13,7 @@ Get raw CPU time counters and per-core metrics from the system.
 CPU metrics provide raw time counters (measured in ticks/jiffies) that increase monotonically since boot. These counters track how much time the CPU spent in different states.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $cpu = SystemMetrics::cpu()->getValue();
 ```
@@ -84,7 +84,7 @@ Since raw counters are cumulative, you need TWO snapshots to calculate usage:
 ### Method 1: Convenience Method (Blocking)
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 // Blocks for the specified interval
 $delta = SystemMetrics::cpuUsage(1.0)->getValue(); // Wait 1 second
@@ -111,8 +111,8 @@ if ($idlest = $delta->idlestCore()) {
 ### Method 2: Manual (Non-Blocking)
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 
 // Take first snapshot
 $snap1 = SystemMetrics::cpu()->getValue();
@@ -143,7 +143,7 @@ echo "CPU Usage: " . round($delta->usagePercentage(), 1) . "%\n";
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 // Get raw CPU counters
 $cpu = SystemMetrics::cpu()->getValue();

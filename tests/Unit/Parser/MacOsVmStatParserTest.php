@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
-use PHPeek\SystemMetrics\Support\Parser\MacOsVmStatParser;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\Support\Parser\MacOsVmStatParser;
 
 describe('MacOsVmStatParser', function () {
     it('can parse memory information from vm_stat', function () {

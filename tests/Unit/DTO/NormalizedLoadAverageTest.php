@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\DTO\Metrics\NormalizedLoadAverage;
+use Cbox\SystemMetrics\DTO\Metrics\NormalizedLoadAverage;
 
 it('can be instantiated with all values', function () {
     $normalized = new NormalizedLoadAverage(

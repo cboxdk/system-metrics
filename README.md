@@ -1,15 +1,15 @@
-# PHPeek System Metrics
+# Cbox System Metrics
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/gophpeek/system-metrics.svg?style=flat-square)](https://packagist.org/packages/gophpeek/system-metrics)
-[![Tests](https://img.shields.io/github/actions/workflow/status/gophpeek/system-metrics/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/gophpeek/system-metrics/actions/workflows/run-tests.yml)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/cboxdk/system-metrics.svg?style=flat-square)](https://packagist.org/packages/cboxdk/system-metrics)
+[![Tests](https://img.shields.io/github/actions/workflow/status/cboxdk/system-metrics/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/cboxdk/system-metrics/actions/workflows/run-tests.yml)
 [![PHPStan Level 9](https://img.shields.io/badge/PHPStan-level%209-brightgreen.svg?style=flat-square)](https://phpstan.org/)
-[![Total Downloads](https://img.shields.io/packagist/dt/gophpeek/system-metrics.svg?style=flat-square)](https://packagist.org/packages/gophpeek/system-metrics)
+[![Total Downloads](https://img.shields.io/packagist/dt/cboxdk/system-metrics.svg?style=flat-square)](https://packagist.org/packages/cboxdk/system-metrics)
 [![PHP 8.3+](https://img.shields.io/badge/PHP-8.3+-blue.svg?style=flat-square)](https://www.php.net)
 
 **Get real-time system metrics from Linux and macOS in pure PHP.** No extensions, no dependencies, just clean type-safe access to CPU, memory, storage, network, and container metrics.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $overview = SystemMetrics::overview()->getValue();
 
@@ -80,7 +80,7 @@ echo "Memory: " . round($overview->memory->usedPercentage(), 1) . "%\n";
 ## Installation
 
 ```bash
-composer require gophpeek/system-metrics
+composer require cboxdk/system-metrics
 ```
 
 ## Quick Start
@@ -88,7 +88,7 @@ composer require gophpeek/system-metrics
 ### Complete System Overview
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::overview();
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Process;
+namespace Cbox\SystemMetrics\Sources\Process;
 
-use PHPeek\SystemMetrics\Contracts\ProcessMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Composite source that delegates to OS-specific implementations.
@@ -23,7 +23,7 @@ final class CompositeProcessMetricsSource implements ProcessMetricsSource
         $source = $this->source ?? $this->createOsSpecificSource();
 
         if ($source === null) {
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
             return Result::failure(
                 UnsupportedOperatingSystemException::forOs(PHP_OS_FAMILY)
             );
@@ -37,7 +37,7 @@ final class CompositeProcessMetricsSource implements ProcessMetricsSource
         $source = $this->source ?? $this->createOsSpecificSource();
 
         if ($source === null) {
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
             return Result::failure(
                 UnsupportedOperatingSystemException::forOs(PHP_OS_FAMILY)
             );

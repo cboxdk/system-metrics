@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Container;
+namespace Cbox\SystemMetrics\Sources\Container;
 
-use PHPeek\SystemMetrics\Contracts\ContainerMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Contracts\ContainerMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Composite container metrics source with automatic OS detection.

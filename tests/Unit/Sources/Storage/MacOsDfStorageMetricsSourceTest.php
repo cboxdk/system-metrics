@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Storage\MacOsDfStorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Storage\MacOsDfStorageMetricsSource;
 
 describe('MacOsDfStorageMetricsSource', function () {
     it('can read storage metrics on macOS', function () {

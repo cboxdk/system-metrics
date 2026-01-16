@@ -1,5 +1,5 @@
 {
-    "name": "gophpeek/system-metrics",
+    "name": "cboxdk/system-metrics",
     "description": "Peek into your low level system metrics with PHP",
     "keywords": [
         "php",
@@ -13,12 +13,12 @@
         "performance",
         "observability"
     ],
-    "homepage": "https://github.com/gophpeek/system-metrics",
+    "homepage": "https://github.com/cboxdk/system-metrics",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/gophpeek/system-metrics/issues",
-        "source": "https://github.com/gophpeek/system-metrics",
-        "docs": "https://github.com/gophpeek/system-metrics/blob/main/README.md"
+        "issues": "https://github.com/cboxdk/system-metrics/issues",
+        "source": "https://github.com/cboxdk/system-metrics",
+        "docs": "https://github.com/cboxdk/system-metrics/blob/main/README.md"
     },
     "authors": [
         {
@@ -37,12 +37,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PHPeek\\SystemMetrics\\": "src"
+            "Cbox\\SystemMetrics\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PHPeek\\SystemMetrics\\Tests\\": "tests"
+            "Cbox\\SystemMetrics\\Tests\\": "tests"
         }
     },
     "scripts": {

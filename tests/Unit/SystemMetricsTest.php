@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\SystemMetrics;
 
 describe('SystemMetrics Facade', function () {
     it('can get environment detection', function () {
@@ -199,9 +199,9 @@ describe('SystemMetrics Facade', function () {
         // Overview might fail if CPU fails (on modern macOS)
         if ($result->isSuccess()) {
             $overview = $result->getValue();
-            expect($overview->environment)->toBeInstanceOf(\PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot::class);
-            expect($overview->cpu)->toBeInstanceOf(\PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot::class);
-            expect($overview->memory)->toBeInstanceOf(\PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot::class);
+            expect($overview->environment)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot::class);
+            expect($overview->cpu)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot::class);
+            expect($overview->memory)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot::class);
         } else {
             expect($result->isFailure())->toBeTrue();
         }
@@ -223,10 +223,10 @@ describe('SystemMetrics Facade', function () {
             expect($overview->memory->totalBytes)->toBeGreaterThan(0);
 
             // Storage should be available
-            expect($overview->storage)->toBeInstanceOf(\PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot::class);
+            expect($overview->storage)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot::class);
 
             // Network should be available
-            expect($overview->network)->toBeInstanceOf(\PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot::class);
+            expect($overview->network)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot::class);
         } else {
             // If overview fails, verify it's a proper failure
             expect($result->isFailure())->toBeTrue();

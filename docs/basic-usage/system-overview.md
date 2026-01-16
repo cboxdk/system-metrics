@@ -13,7 +13,7 @@ Get a complete snapshot of all system metrics at once.
 The `SystemMetrics::overview()` method returns a single snapshot containing all available system metrics. This is more efficient than calling each metric individually when you need multiple values.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $overview = SystemMetrics::overview()->getValue();
 ```
@@ -46,7 +46,7 @@ $overview->network      // NetworkSnapshot|null
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $overview = SystemMetrics::overview()->getValue();
 

@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-use DateTimeImmutable;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessStats;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessStats;
 
 it('can be instantiated with all values', function () {
     $currentCpu = new CpuTimes(

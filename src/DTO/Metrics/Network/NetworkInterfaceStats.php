@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Network;
+namespace Cbox\SystemMetrics\DTO\Metrics\Network;
 
 /**
  * Network interface traffic statistics.

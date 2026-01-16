@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser\Cgroup\V2;
+namespace Cbox\SystemMetrics\Support\Parser\Cgroup\V2;
 
 /**
  * Parses cgroup v2 CPU metrics.

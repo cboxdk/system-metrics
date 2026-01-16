@@ -1,6 +1,6 @@
 ---
 title: "Installation"
-description: "Install PHPeek System Metrics via Composer and verify your environment meets the requirements"
+description: "Install Cbox System Metrics via Composer and verify your environment meets the requirements"
 weight: 2
 ---
 
@@ -8,7 +8,7 @@ weight: 2
 
 ## Requirements
 
-Before installing PHPeek System Metrics, ensure your environment meets these requirements:
+Before installing Cbox System Metrics, ensure your environment meets these requirements:
 
 ### PHP Version
 - **PHP 8.3 or higher** (required for readonly classes)
@@ -45,7 +45,7 @@ Different platforms require different system access:
 Install the package via Composer:
 
 ```bash
-composer require gophpeek/system-metrics
+composer require cboxdk/system-metrics
 ```
 
 That's it! The library has zero dependencies and works immediately.
@@ -59,13 +59,13 @@ Create a test script to verify the installation:
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::environment();
 
 if ($result->isSuccess()) {
     $env = $result->getValue();
-    echo "✅ PHPeek System Metrics installed successfully!\n";
+    echo "✅ Cbox System Metrics installed successfully!\n";
     echo "OS: {$env->os->name} {$env->os->version}\n";
     echo "Architecture: {$env->architecture->kind->value}\n";
 } else {
@@ -82,7 +82,7 @@ php verify.php
 
 Expected output:
 ```
-✅ PHPeek System Metrics installed successfully!
+✅ Cbox System Metrics installed successfully!
 OS: Ubuntu 22.04
 Architecture: x86_64
 ```
@@ -98,8 +98,8 @@ The library works out of the box with no configuration files, environment variab
 If you want to use custom metric sources (e.g., cached Redis values, custom parsers), you can configure them globally:
 
 ```php
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
 
 // Example: Set custom CPU metrics source
 SystemMetricsConfig::setCpuMetricsSource(new YourCustomSource());
@@ -118,7 +118,7 @@ See [Custom Implementations](advanced-usage/custom-implementations) for details.
 Environment detection results are cached automatically for performance. To clear the cache:
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 SystemMetrics::clearEnvironmentCache();
 ```
@@ -192,7 +192,7 @@ For development and contributing:
 
 ```bash
 # Clone the repository
-git clone https://github.com/gophpeek/system-metrics.git
+git clone https://github.com/cboxdk/system-metrics.git
 cd system-metrics
 
 # Install development dependencies

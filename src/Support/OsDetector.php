@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support;
+namespace Cbox\SystemMetrics\Support;
 
 /**
  * Simple runtime OS detection helper.

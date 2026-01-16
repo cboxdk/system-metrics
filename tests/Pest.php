@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
 
 /*
 |--------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
-use PHPeek\SystemMetrics\Support\Parser\LinuxDiskstatsParser;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
+use Cbox\SystemMetrics\Support\Parser\LinuxDiskstatsParser;
 
 describe('LinuxDiskstatsParser', function () {
     it('can parse /proc/diskstats output', function () {

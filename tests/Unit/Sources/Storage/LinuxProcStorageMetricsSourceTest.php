@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Storage\LinuxProcStorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Storage\LinuxProcStorageMetricsSource;
 
 describe('LinuxProcStorageMetricsSource', function () {
     it('can read storage metrics on Linux', function () {

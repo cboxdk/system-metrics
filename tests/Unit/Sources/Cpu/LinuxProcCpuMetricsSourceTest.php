@@ -1,12 +1,12 @@
 <?php
 
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\FileNotFoundException;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Sources\Cpu\LinuxProcCpuMetricsSource;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcStatParser;
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\FileNotFoundException;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Sources\Cpu\LinuxProcCpuMetricsSource;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcStatParser;
 
 // Test double that implements FileReaderInterface
 class FakeFileReader implements FileReaderInterface

@@ -13,7 +13,7 @@ Get physical memory, swap, and buffer/cache information from the system.
 Memory metrics provide instant snapshots of RAM and swap usage. All values are in bytes.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $mem = SystemMetrics::memory()->getValue();
 ```
@@ -90,7 +90,7 @@ echo "Swap Usage: " . round($mem->swapUsedPercentage(), 1) . "%\n";
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::memory();
 

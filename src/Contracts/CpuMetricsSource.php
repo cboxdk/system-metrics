@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Contracts;
+namespace Cbox\SystemMetrics\Contracts;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
 
 /**
  * Contract for reading CPU metrics.

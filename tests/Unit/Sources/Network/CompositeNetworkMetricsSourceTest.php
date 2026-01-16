@@ -1,10 +1,10 @@
 <?php
 
-use PHPeek\SystemMetrics\Contracts\NetworkMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Sources\Network\CompositeNetworkMetricsSource;
+use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Sources\Network\CompositeNetworkMetricsSource;
 
 describe('CompositeNetworkMetricsSource', function () {
     it('creates OS-specific source when none provided', function () {

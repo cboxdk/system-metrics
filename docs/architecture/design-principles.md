@@ -1,12 +1,12 @@
 ---
 title: "Design Principles"
-description: "Core architectural philosophy and design decisions behind PHPeek System Metrics"
+description: "Core architectural philosophy and design decisions behind Cbox System Metrics"
 weight: 51
 ---
 
 # Design Principles
 
-Core architectural philosophy and design decisions behind PHPeek System Metrics.
+Core architectural philosophy and design decisions behind Cbox System Metrics.
 
 ## Pure PHP
 

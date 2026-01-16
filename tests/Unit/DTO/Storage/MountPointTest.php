@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
 
 describe('MountPoint', function () {
     it('can be instantiated with all values', function () {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Container;
+namespace Cbox\SystemMetrics\DTO\Metrics\Container;
 
 /**
  * Cgroup version detected on the system.

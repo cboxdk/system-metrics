@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# run-e2e.sh - Execute all E2E tests for PHPeek/SystemMetrics
+# run-e2e.sh - Execute all E2E tests for Cbox/SystemMetrics
 #
 # Usage:
 #   ./e2e/scripts/run-e2e.sh [options]
@@ -63,7 +63,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 E2E_DIR="$PROJECT_ROOT/e2e"
 
 echo -e "${BLUE}======================================${NC}"
-echo -e "${BLUE}PHPeek/SystemMetrics - E2E Test Suite${NC}"
+echo -e "${BLUE}Cbox/SystemMetrics - E2E Test Suite${NC}"
 echo -e "${BLUE}======================================${NC}"
 echo ""
 

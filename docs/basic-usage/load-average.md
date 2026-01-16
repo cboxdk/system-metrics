@@ -13,7 +13,7 @@ Get system load average without needing delta calculations.
 Load average represents the number of processes in the run queue (runnable + waiting for CPU). On Linux, it also includes processes in uninterruptible I/O wait.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $load = SystemMetrics::loadAverage()->getValue();
 ```

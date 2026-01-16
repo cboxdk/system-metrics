@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Memory;
+namespace Cbox\SystemMetrics\DTO\Metrics\Memory;
 
 /**
  * Complete snapshot of memory metrics in bytes.

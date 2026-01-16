@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\NetworkMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Network\CompositeNetworkMetricsSource;
+use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Network\CompositeNetworkMetricsSource;
 
 /**
  * Action to read network metrics.

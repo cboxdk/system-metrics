@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
 
 describe('NetworkConnectionStats', function () {
     it('can be instantiated with all values', function () {

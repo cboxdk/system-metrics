@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\KindHelper;
 
 describe('Kubernetes - Memory Pressure', function () {
 
@@ -10,7 +10,7 @@ describe('Kubernetes - Memory Pressure', function () {
         // Pod has 256Mi memory limit
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     echo json_encode(['totalBytes' => $result->getValue()->totalBytes]);
 }
@@ -35,7 +35,7 @@ PHP;
     it('reads memory usage metrics from pod', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     $mem = $result->getValue();
     echo json_encode([
@@ -63,7 +63,7 @@ PHP;
 
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     echo json_encode(['usedPercentage' => $result->getValue()->usedPercentage()]);
 }
@@ -111,7 +111,7 @@ PHP;
     it('validates memory consistency under pressure', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     $mem = $result->getValue();
     $consistent = $mem->usedBytes <= $mem->totalBytes;
@@ -155,7 +155,7 @@ PHP;
     it('reads memory metrics multiple times for consistency', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     echo json_encode(['totalBytes' => $result->getValue()->totalBytes]);
 }
@@ -183,7 +183,7 @@ PHP;
     it('validates swap configuration in pod', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     $mem = $result->getValue();
     echo json_encode([

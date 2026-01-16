@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Exceptions;
+namespace Cbox\SystemMetrics\Exceptions;
 
 /**
  * Thrown when attempting to read metrics on an unsupported operating system.

@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 describe('OsDetector', function () {
     it('can detect OS family', function () {

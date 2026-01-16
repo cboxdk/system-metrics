@@ -1,12 +1,12 @@
 <?php
 
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\FileNotFoundException;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Sources\Memory\LinuxProcMeminfoMemoryMetricsSource;
-use PHPeek\SystemMetrics\Support\Parser\LinuxMeminfoParser;
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\FileNotFoundException;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Sources\Memory\LinuxProcMeminfoMemoryMetricsSource;
+use Cbox\SystemMetrics\Support\Parser\LinuxMeminfoParser;
 
 // Test doubles
 class FakeMemoryFileReader implements FileReaderInterface

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser;
+namespace Cbox\SystemMetrics\Support\Parser;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
+use Cbox\SystemMetrics\DTO\Result;
 
 /**
  * Coordinates cgroup parsing across v1 and v2.

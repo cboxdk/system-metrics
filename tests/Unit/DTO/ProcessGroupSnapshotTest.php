@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
 
 it('can be instantiated with root and children', function () {
     $rootCpu = new CpuTimes(

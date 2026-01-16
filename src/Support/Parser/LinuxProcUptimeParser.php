@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser;
+namespace Cbox\SystemMetrics\Support\Parser;
 
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\ParseException;
 use DateTimeImmutable;
-use PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
 
 /**
  * Parse /proc/uptime format.

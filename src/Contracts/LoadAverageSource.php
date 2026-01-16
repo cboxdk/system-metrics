@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Contracts;
+namespace Cbox\SystemMetrics\Contracts;
 
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Result;
 
 /**
  * Contract for reading system load average metrics.
@@ -14,7 +14,7 @@ interface LoadAverageSource
     /**
      * Read current system load average.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
      */
     public function read(): Result;
 }

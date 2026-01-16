@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\DockerHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\DockerHelper;
 
 describe('Docker CgroupV2 - CPU Throttling', function () {
 
@@ -169,7 +169,7 @@ describe('Docker CgroupV2 - CPU Throttling', function () {
     it('validates throttling affects CPU usage metrics', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     $cpu = $result->getValue();
     echo json_encode([

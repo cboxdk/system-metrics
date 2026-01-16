@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Cpu;
+namespace Cbox\SystemMetrics\DTO\Metrics\Cpu;
 
 use DateTimeImmutable;
 
@@ -15,7 +15,7 @@ use DateTimeImmutable;
  * CPU counters are cumulative since boot (like an odometer). To calculate speed (usage %),
  * you need to measure distance traveled over time.
  *
- * @see \PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessDelta for similar pattern
+ * @see \Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta for similar pattern
  */
 final readonly class CpuDelta
 {

@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
 
 describe('NetworkInterface', function () {
     it('can be instantiated with all values', function () {

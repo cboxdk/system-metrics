@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Contracts;
+namespace Cbox\SystemMetrics\Contracts;
 
-use PHPeek\SystemMetrics\DTO\Metrics\SystemLimits;
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Metrics\SystemLimits;
+use Cbox\SystemMetrics\DTO\Result;
 
 /**
  * Contract for retrieving unified system resource limits.

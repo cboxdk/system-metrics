@@ -13,7 +13,7 @@ Monitor resource usage for individual processes or process groups.
 Process metrics allow you to track CPU, memory, threads, and file descriptors for specific processes, including spawned child processes.
 
 ```php
-use PHPeek\SystemMetrics\ProcessMetrics;
+use Cbox\SystemMetrics\ProcessMetrics;
 ```
 
 ## One-Time Snapshot

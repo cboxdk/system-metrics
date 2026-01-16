@@ -1,6 +1,6 @@
 <?php
 
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 describe('ProcessRunner', function () {
     it('can execute a simple command', function () {
@@ -105,7 +105,7 @@ describe('ProcessRunner', function () {
 
         // This should either fail or output the literal string with escaped pipe
         // Either behavior is acceptable from security perspective
-        expect($result)->toBeInstanceOf(\PHPeek\SystemMetrics\DTO\Result::class);
+        expect($result)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Result::class);
     });
 
     it('handles commands with numeric output', function () {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics;
+namespace Cbox\SystemMetrics\DTO\Metrics;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 
 /**
  * System load average snapshot.

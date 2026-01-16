@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
-use PHPeek\SystemMetrics\Support\Parser\MacOsNetstatConnectionParser;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
+use Cbox\SystemMetrics\Support\Parser\MacOsNetstatConnectionParser;
 
 describe('MacOsNetstatConnectionParser', function () {
     it('can parse macOS netstat -an output', function () {

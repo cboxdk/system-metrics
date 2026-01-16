@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcNetDevParser;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcNetDevParser;
 
 describe('LinuxProcNetDevParser', function () {
     it('can parse /proc/net/dev output', function () {

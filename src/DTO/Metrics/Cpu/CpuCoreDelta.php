@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Cpu;
+namespace Cbox\SystemMetrics\DTO\Metrics\Cpu;
 
 /**
  * Delta for a single CPU core between two snapshots.

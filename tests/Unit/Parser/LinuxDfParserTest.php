@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint;
-use PHPeek\SystemMetrics\Support\Parser\LinuxDfParser;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
+use Cbox\SystemMetrics\Support\Parser\LinuxDfParser;
 
 describe('LinuxDfParser', function () {
     it('can parse df -k output', function () {

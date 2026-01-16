@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Environment;
+namespace Cbox\SystemMetrics\DTO\Environment;
 
 /**
  * Represents the operating system family.

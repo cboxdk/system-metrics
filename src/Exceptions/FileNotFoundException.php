@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Exceptions;
+namespace Cbox\SystemMetrics\Exceptions;
 
 /**
  * Thrown when a required system file does not exist.

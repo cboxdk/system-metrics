@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Container;
+namespace Cbox\SystemMetrics\DTO\Metrics\Container;
 
 /**
  * Container resource limits and usage from cgroups.

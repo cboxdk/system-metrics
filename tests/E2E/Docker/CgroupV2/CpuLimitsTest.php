@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\DockerHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\DockerHelper;
 
 describe('Docker CgroupV2 - CPU Limits', function () {
 
     it('detects CPU quota in cgroup v2 container', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 echo json_encode([
     'success' => $result->isSuccess(),
     'coreCount' => $result->isSuccess() ? $result->getValue()->coreCount() : null,
@@ -30,7 +30,7 @@ PHP;
     it('reads CPU times from cgroup v2 container', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     $cpu = $result->getValue();
     echo json_encode([
@@ -57,7 +57,7 @@ PHP;
     it('reads per-core CPU metrics in cgroup v2 container', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     $cpu = $result->getValue();
     $cores = array_map(function($core) {
@@ -160,8 +160,8 @@ PHP;
     it('validates CPU metrics consistency under cgroup v2 limits', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$cpuResult = PHPeek\SystemMetrics\SystemMetrics::cpu();
-$memResult = PHPeek\SystemMetrics\SystemMetrics::memory();
+$cpuResult = Cbox\SystemMetrics\SystemMetrics::cpu();
+$memResult = Cbox\SystemMetrics\SystemMetrics::memory();
 echo json_encode([
     'cpu_success' => $cpuResult->isSuccess(),
     'mem_success' => $memResult->isSuccess(),
@@ -178,7 +178,7 @@ PHP;
     it('detects CPU activity during stress test in cgroup v2', function () {
         $baselineCode = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     echo json_encode(['busy' => $result->getValue()->total->busy()]);
 }

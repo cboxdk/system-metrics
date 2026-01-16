@@ -11,7 +11,7 @@ Get network interface statistics and connection information.
 ## Overview
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $network = SystemMetrics::network()->getValue();
 ```

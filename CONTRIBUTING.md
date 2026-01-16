@@ -1,6 +1,6 @@
-# Contributing to PHPeek System Metrics
+# Contributing to Cbox System Metrics
 
-Thank you for considering contributing to PHPeek System Metrics! This document provides guidelines and instructions for contributing to the project.
+Thank you for considering contributing to Cbox System Metrics! This document provides guidelines and instructions for contributing to the project.
 
 ## Code of Conduct
 
@@ -142,7 +142,7 @@ We use **Pest v4** for testing:
 ```php
 <?php
 
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Result;
 
 describe('MyClass', function () {
     it('can do something', function () {
@@ -312,4 +312,4 @@ Contributors will be recognized in:
 - CHANGELOG.md for significant contributions
 - README.md credits section
 
-Thank you for making PHPeek System Metrics better! 🚀
+Thank you for making Cbox System Metrics better! 🚀

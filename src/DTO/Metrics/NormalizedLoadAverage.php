@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics;
+namespace Cbox\SystemMetrics\DTO\Metrics;
 
 /**
  * Load average normalized by CPU core count.

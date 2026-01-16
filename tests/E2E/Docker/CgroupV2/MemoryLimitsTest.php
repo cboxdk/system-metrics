@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\DockerHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\DockerHelper;
 
 describe('Docker CgroupV2 - Memory Limits', function () {
 
     it('detects memory limit in cgroup v2 container', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 echo json_encode([
     'success' => $result->isSuccess(),
     'totalBytes' => $result->isSuccess() ? $result->getValue()->totalBytes : null,
@@ -31,7 +31,7 @@ PHP;
     it('reads all memory metrics from cgroup v2 container', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     $mem = $result->getValue();
     echo json_encode([
@@ -136,7 +136,7 @@ PHP;
     it('validates memory metrics consistency under cgroup v2 limits', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     $mem = $result->getValue();
     $consistent = true;
@@ -178,7 +178,7 @@ PHP;
         // Test that memory metrics can be read and are reasonable
         $memoryCode = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     $mem = $result->getValue();
     echo json_encode([

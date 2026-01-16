@@ -1,28 +1,28 @@
 <?php
 
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\Contracts\EnvironmentDetector;
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\DTO\Environment\Architecture;
-use PHPeek\SystemMetrics\DTO\Environment\ArchitectureKind;
-use PHPeek\SystemMetrics\DTO\Environment\Cgroup;
-use PHPeek\SystemMetrics\DTO\Environment\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Environment\Containerization;
-use PHPeek\SystemMetrics\DTO\Environment\ContainerType;
-use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
-use PHPeek\SystemMetrics\DTO\Environment\Kernel;
-use PHPeek\SystemMetrics\DTO\Environment\OperatingSystem;
-use PHPeek\SystemMetrics\DTO\Environment\OsFamily;
-use PHPeek\SystemMetrics\DTO\Environment\Virtualization;
-use PHPeek\SystemMetrics\DTO\Environment\VirtualizationType;
-use PHPeek\SystemMetrics\DTO\Environment\VirtualizationVendor;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
-use PHPeek\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
-use PHPeek\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\EnvironmentDetector;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\DTO\Environment\Architecture;
+use Cbox\SystemMetrics\DTO\Environment\ArchitectureKind;
+use Cbox\SystemMetrics\DTO\Environment\Cgroup;
+use Cbox\SystemMetrics\DTO\Environment\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Environment\Containerization;
+use Cbox\SystemMetrics\DTO\Environment\ContainerType;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
+use Cbox\SystemMetrics\DTO\Environment\Kernel;
+use Cbox\SystemMetrics\DTO\Environment\OperatingSystem;
+use Cbox\SystemMetrics\DTO\Environment\OsFamily;
+use Cbox\SystemMetrics\DTO\Environment\Virtualization;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationType;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
+use Cbox\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
+use Cbox\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
 
 // Fake sources for testing injection
 class FakeCpuSource implements CpuMetricsSource

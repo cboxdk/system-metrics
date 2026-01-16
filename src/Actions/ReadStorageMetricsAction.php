@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\StorageMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Storage\CompositeStorageMetricsSource;
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Storage\CompositeStorageMetricsSource;
 
 /**
  * Action to read storage metrics.

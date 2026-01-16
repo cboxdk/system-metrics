@@ -6,7 +6,7 @@ weight: 70
 
 # Platform Support
 
-PHPeek System Metrics supports Linux and macOS with platform-specific implementations that leverage native system APIs.
+Cbox System Metrics supports Linux and macOS with platform-specific implementations that leverage native system APIs.
 
 ## Platform Pages
 

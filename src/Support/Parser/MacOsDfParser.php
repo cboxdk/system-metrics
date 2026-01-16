@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser;
+namespace Cbox\SystemMetrics\Support\Parser;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\ParseException;
 
 /**
  * Parse macOS df -k output for mount point information.

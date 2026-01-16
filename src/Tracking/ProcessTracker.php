@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Tracking;
+namespace Cbox\SystemMetrics\Tracking;
 
-use PHPeek\SystemMetrics\Contracts\ProcessMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessStats;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessStats;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
 
 /**
  * Object-oriented process tracker for monitoring resource usage over time.

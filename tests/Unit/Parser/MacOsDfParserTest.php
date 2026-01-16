@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint;
-use PHPeek\SystemMetrics\Support\Parser\MacOsDfParser;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
+use Cbox\SystemMetrics\Support\Parser\MacOsDfParser;
 
 describe('MacOsDfParser', function () {
     it('can parse macOS df -ki output', function () {

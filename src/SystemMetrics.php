@@ -2,31 +2,31 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics;
+namespace Cbox\SystemMetrics;
 
-use PHPeek\SystemMetrics\Actions\DetectEnvironmentAction;
-use PHPeek\SystemMetrics\Actions\ReadContainerMetricsAction;
-use PHPeek\SystemMetrics\Actions\ReadCpuMetricsAction;
-use PHPeek\SystemMetrics\Actions\ReadLoadAverageAction;
-use PHPeek\SystemMetrics\Actions\ReadMemoryMetricsAction;
-use PHPeek\SystemMetrics\Actions\ReadNetworkMetricsAction;
-use PHPeek\SystemMetrics\Actions\ReadStorageMetricsAction;
-use PHPeek\SystemMetrics\Actions\ReadSystemLimitsAction;
-use PHPeek\SystemMetrics\Actions\ReadUptimeAction;
-use PHPeek\SystemMetrics\Actions\SystemOverviewAction;
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
-use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuDelta;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\SystemLimits;
-use PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\DTO\SystemOverview;
+use Cbox\SystemMetrics\Actions\DetectEnvironmentAction;
+use Cbox\SystemMetrics\Actions\ReadContainerMetricsAction;
+use Cbox\SystemMetrics\Actions\ReadCpuMetricsAction;
+use Cbox\SystemMetrics\Actions\ReadLoadAverageAction;
+use Cbox\SystemMetrics\Actions\ReadMemoryMetricsAction;
+use Cbox\SystemMetrics\Actions\ReadNetworkMetricsAction;
+use Cbox\SystemMetrics\Actions\ReadStorageMetricsAction;
+use Cbox\SystemMetrics\Actions\ReadSystemLimitsAction;
+use Cbox\SystemMetrics\Actions\ReadUptimeAction;
+use Cbox\SystemMetrics\Actions\SystemOverviewAction;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuDelta;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\SystemLimits;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\SystemOverview;
 
 /**
  * Main facade for accessing system metrics.

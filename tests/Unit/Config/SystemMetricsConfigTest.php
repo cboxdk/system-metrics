@@ -1,12 +1,12 @@
 <?php
 
-use PHPeek\SystemMetrics\Config\SystemMetricsConfig;
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\Contracts\EnvironmentDetector;
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
-use PHPeek\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
-use PHPeek\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
+use Cbox\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\EnvironmentDetector;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
+use Cbox\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
+use Cbox\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
 
 beforeEach(function () {
     // Reset config before each test to ensure isolation
@@ -29,36 +29,36 @@ describe('SystemMetricsConfig', function () {
     it('returns custom EnvironmentDetector when set', function () {
         $customDetector = new class implements EnvironmentDetector
         {
-            public function detect(): \PHPeek\SystemMetrics\DTO\Result
+            public function detect(): \Cbox\SystemMetrics\DTO\Result
             {
-                return \PHPeek\SystemMetrics\DTO\Result::success(
-                    new \PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
-                        os: new \PHPeek\SystemMetrics\DTO\Environment\OperatingSystem(
-                            family: \PHPeek\SystemMetrics\DTO\Environment\OsFamily::Linux,
+                return \Cbox\SystemMetrics\DTO\Result::success(
+                    new \Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
+                        os: new \Cbox\SystemMetrics\DTO\Environment\OperatingSystem(
+                            family: \Cbox\SystemMetrics\DTO\Environment\OsFamily::Linux,
                             name: 'Custom',
                             version: '1.0'
                         ),
-                        kernel: new \PHPeek\SystemMetrics\DTO\Environment\Kernel(
+                        kernel: new \Cbox\SystemMetrics\DTO\Environment\Kernel(
                             release: '5.0',
                             version: '5.0.0'
                         ),
-                        architecture: new \PHPeek\SystemMetrics\DTO\Environment\Architecture(
-                            kind: \PHPeek\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
+                        architecture: new \Cbox\SystemMetrics\DTO\Environment\Architecture(
+                            kind: \Cbox\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
                             raw: 'x86_64'
                         ),
-                        virtualization: new \PHPeek\SystemMetrics\DTO\Environment\Virtualization(
-                            type: \PHPeek\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
-                            vendor: \PHPeek\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
+                        virtualization: new \Cbox\SystemMetrics\DTO\Environment\Virtualization(
+                            type: \Cbox\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
+                            vendor: \Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
                             rawIdentifier: null
                         ),
-                        containerization: new \PHPeek\SystemMetrics\DTO\Environment\Containerization(
-                            type: \PHPeek\SystemMetrics\DTO\Environment\ContainerType::None,
+                        containerization: new \Cbox\SystemMetrics\DTO\Environment\Containerization(
+                            type: \Cbox\SystemMetrics\DTO\Environment\ContainerType::None,
                             runtime: null,
                             insideContainer: false,
                             rawIdentifier: null
                         ),
-                        cgroup: new \PHPeek\SystemMetrics\DTO\Environment\Cgroup(
-                            version: \PHPeek\SystemMetrics\DTO\Environment\CgroupVersion::None,
+                        cgroup: new \Cbox\SystemMetrics\DTO\Environment\Cgroup(
+                            version: \Cbox\SystemMetrics\DTO\Environment\CgroupVersion::None,
                             cpuPath: null,
                             memoryPath: null
                         )
@@ -83,11 +83,11 @@ describe('SystemMetricsConfig', function () {
     it('returns custom CpuMetricsSource when set', function () {
         $customSource = new class implements CpuMetricsSource
         {
-            public function read(): \PHPeek\SystemMetrics\DTO\Result
+            public function read(): \Cbox\SystemMetrics\DTO\Result
             {
-                return \PHPeek\SystemMetrics\DTO\Result::success(
-                    new \PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot(
-                        total: new \PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes(
+                return \Cbox\SystemMetrics\DTO\Result::success(
+                    new \Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot(
+                        total: new \Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes(
                             user: 100,
                             nice: 0,
                             system: 50,
@@ -119,10 +119,10 @@ describe('SystemMetricsConfig', function () {
     it('returns custom MemoryMetricsSource when set', function () {
         $customSource = new class implements MemoryMetricsSource
         {
-            public function read(): \PHPeek\SystemMetrics\DTO\Result
+            public function read(): \Cbox\SystemMetrics\DTO\Result
             {
-                return \PHPeek\SystemMetrics\DTO\Result::success(
-                    new \PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot(
+                return \Cbox\SystemMetrics\DTO\Result::success(
+                    new \Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot(
                         totalBytes: 1000000,
                         freeBytes: 500000,
                         availableBytes: 600000,
@@ -144,36 +144,36 @@ describe('SystemMetricsConfig', function () {
     it('resets all configuration to defaults', function () {
         $customDetector = new class implements EnvironmentDetector
         {
-            public function detect(): \PHPeek\SystemMetrics\DTO\Result
+            public function detect(): \Cbox\SystemMetrics\DTO\Result
             {
-                return \PHPeek\SystemMetrics\DTO\Result::success(
-                    new \PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
-                        os: new \PHPeek\SystemMetrics\DTO\Environment\OperatingSystem(
-                            family: \PHPeek\SystemMetrics\DTO\Environment\OsFamily::Linux,
+                return \Cbox\SystemMetrics\DTO\Result::success(
+                    new \Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
+                        os: new \Cbox\SystemMetrics\DTO\Environment\OperatingSystem(
+                            family: \Cbox\SystemMetrics\DTO\Environment\OsFamily::Linux,
                             name: 'Custom',
                             version: '1.0'
                         ),
-                        kernel: new \PHPeek\SystemMetrics\DTO\Environment\Kernel(
+                        kernel: new \Cbox\SystemMetrics\DTO\Environment\Kernel(
                             release: '5.0',
                             version: '5.0.0'
                         ),
-                        architecture: new \PHPeek\SystemMetrics\DTO\Environment\Architecture(
-                            kind: \PHPeek\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
+                        architecture: new \Cbox\SystemMetrics\DTO\Environment\Architecture(
+                            kind: \Cbox\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
                             raw: 'x86_64'
                         ),
-                        virtualization: new \PHPeek\SystemMetrics\DTO\Environment\Virtualization(
-                            type: \PHPeek\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
-                            vendor: \PHPeek\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
+                        virtualization: new \Cbox\SystemMetrics\DTO\Environment\Virtualization(
+                            type: \Cbox\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
+                            vendor: \Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
                             rawIdentifier: null
                         ),
-                        containerization: new \PHPeek\SystemMetrics\DTO\Environment\Containerization(
-                            type: \PHPeek\SystemMetrics\DTO\Environment\ContainerType::None,
+                        containerization: new \Cbox\SystemMetrics\DTO\Environment\Containerization(
+                            type: \Cbox\SystemMetrics\DTO\Environment\ContainerType::None,
                             runtime: null,
                             insideContainer: false,
                             rawIdentifier: null
                         ),
-                        cgroup: new \PHPeek\SystemMetrics\DTO\Environment\Cgroup(
-                            version: \PHPeek\SystemMetrics\DTO\Environment\CgroupVersion::None,
+                        cgroup: new \Cbox\SystemMetrics\DTO\Environment\Cgroup(
+                            version: \Cbox\SystemMetrics\DTO\Environment\CgroupVersion::None,
                             cpuPath: null,
                             memoryPath: null
                         )
@@ -193,36 +193,36 @@ describe('SystemMetricsConfig', function () {
     it('persists custom configuration across multiple get calls', function () {
         $customDetector = new class implements EnvironmentDetector
         {
-            public function detect(): \PHPeek\SystemMetrics\DTO\Result
+            public function detect(): \Cbox\SystemMetrics\DTO\Result
             {
-                return \PHPeek\SystemMetrics\DTO\Result::success(
-                    new \PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
-                        os: new \PHPeek\SystemMetrics\DTO\Environment\OperatingSystem(
-                            family: \PHPeek\SystemMetrics\DTO\Environment\OsFamily::Linux,
+                return \Cbox\SystemMetrics\DTO\Result::success(
+                    new \Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
+                        os: new \Cbox\SystemMetrics\DTO\Environment\OperatingSystem(
+                            family: \Cbox\SystemMetrics\DTO\Environment\OsFamily::Linux,
                             name: 'Custom',
                             version: '1.0'
                         ),
-                        kernel: new \PHPeek\SystemMetrics\DTO\Environment\Kernel(
+                        kernel: new \Cbox\SystemMetrics\DTO\Environment\Kernel(
                             release: '5.0',
                             version: '5.0.0'
                         ),
-                        architecture: new \PHPeek\SystemMetrics\DTO\Environment\Architecture(
-                            kind: \PHPeek\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
+                        architecture: new \Cbox\SystemMetrics\DTO\Environment\Architecture(
+                            kind: \Cbox\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
                             raw: 'x86_64'
                         ),
-                        virtualization: new \PHPeek\SystemMetrics\DTO\Environment\Virtualization(
-                            type: \PHPeek\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
-                            vendor: \PHPeek\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
+                        virtualization: new \Cbox\SystemMetrics\DTO\Environment\Virtualization(
+                            type: \Cbox\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
+                            vendor: \Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
                             rawIdentifier: null
                         ),
-                        containerization: new \PHPeek\SystemMetrics\DTO\Environment\Containerization(
-                            type: \PHPeek\SystemMetrics\DTO\Environment\ContainerType::None,
+                        containerization: new \Cbox\SystemMetrics\DTO\Environment\Containerization(
+                            type: \Cbox\SystemMetrics\DTO\Environment\ContainerType::None,
                             runtime: null,
                             insideContainer: false,
                             rawIdentifier: null
                         ),
-                        cgroup: new \PHPeek\SystemMetrics\DTO\Environment\Cgroup(
-                            version: \PHPeek\SystemMetrics\DTO\Environment\CgroupVersion::None,
+                        cgroup: new \Cbox\SystemMetrics\DTO\Environment\Cgroup(
+                            version: \Cbox\SystemMetrics\DTO\Environment\CgroupVersion::None,
                             cpuPath: null,
                             memoryPath: null
                         )

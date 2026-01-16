@@ -11,7 +11,7 @@ Get filesystem usage and disk I/O statistics.
 ## Overview
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $storage = SystemMetrics::storage()->getValue();
 ```

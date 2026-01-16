@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Process;
+namespace Cbox\SystemMetrics\DTO\Metrics\Process;
 
 /**
  * Statistical aggregation of process metrics over time.

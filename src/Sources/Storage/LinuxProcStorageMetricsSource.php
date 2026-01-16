@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Storage;
+namespace Cbox\SystemMetrics\Sources\Storage;
 
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\Contracts\StorageMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Support\FileReader;
-use PHPeek\SystemMetrics\Support\Parser\LinuxDfParser;
-use PHPeek\SystemMetrics\Support\Parser\LinuxDiskstatsParser;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Support\FileReader;
+use Cbox\SystemMetrics\Support\Parser\LinuxDfParser;
+use Cbox\SystemMetrics\Support\Parser\LinuxDiskstatsParser;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 /**
  * Read storage metrics from Linux /proc/diskstats and df command.
@@ -72,7 +72,7 @@ final class LinuxProcStorageMetricsSource implements StorageMetricsSource
                     if (isset($inodeData[$mp->mountPoint])) {
                         $inodes = $inodeData[$mp->mountPoint];
 
-                        return new \PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint(
+                        return new \Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint(
                             device: $mp->device,
                             mountPoint: $mp->mountPoint,
                             fsType: $mp->fsType,

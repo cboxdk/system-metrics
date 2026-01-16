@@ -1,16 +1,16 @@
 <?php
 
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\DTO\Environment\ArchitectureKind;
-use PHPeek\SystemMetrics\DTO\Environment\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Environment\ContainerType;
-use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
-use PHPeek\SystemMetrics\DTO\Environment\OsFamily;
-use PHPeek\SystemMetrics\DTO\Environment\VirtualizationType;
-use PHPeek\SystemMetrics\DTO\Environment\VirtualizationVendor;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\FileNotFoundException;
-use PHPeek\SystemMetrics\Sources\Environment\LinuxEnvironmentDetector;
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\DTO\Environment\ArchitectureKind;
+use Cbox\SystemMetrics\DTO\Environment\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Environment\ContainerType;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
+use Cbox\SystemMetrics\DTO\Environment\OsFamily;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationType;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\FileNotFoundException;
+use Cbox\SystemMetrics\Sources\Environment\LinuxEnvironmentDetector;
 
 // Flexible fake file reader that can return different content based on paths
 class FakeEnvironmentFileReader implements FileReaderInterface

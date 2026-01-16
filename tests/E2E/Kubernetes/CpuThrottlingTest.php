@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\KindHelper;
 
 describe('Kubernetes - CPU Throttling', function () {
 
@@ -10,7 +10,7 @@ describe('Kubernetes - CPU Throttling', function () {
         // Pod has 500m (0.5 CPU) limit
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     echo json_encode(['cores' => $result->getValue()->coreCount()]);
 }
@@ -42,7 +42,7 @@ PHP;
         // Take baseline
         $baselineCode = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     echo json_encode(['busy' => $result->getValue()->total->busy()]);
 }
@@ -75,7 +75,7 @@ PHP;
     it('validates per-core metrics in pod', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     $cpu = $result->getValue();
     echo json_encode([
@@ -107,7 +107,7 @@ PHP;
     it('validates CPU time advances consistently', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     echo json_encode([
         'total' => $result->getValue()->total->total(),

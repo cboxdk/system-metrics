@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Storage;
+namespace Cbox\SystemMetrics\Sources\Storage;
 
-use PHPeek\SystemMetrics\Contracts\StorageMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
 /**
  * Fallback storage metrics source that tries multiple sources in order.
@@ -44,7 +44,7 @@ final class FallbackStorageMetricsSource implements StorageMetricsSource
             );
         }
 
-        /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot> */
+        /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot> */
         return Result::failure(
             new SystemMetricsException(
                 'All storage metrics sources failed: '.implode('; ', $errors)

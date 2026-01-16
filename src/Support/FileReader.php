@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support;
+namespace Cbox\SystemMetrics\Support;
 
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\FileNotFoundException;
-use PHPeek\SystemMetrics\Exceptions\InsufficientPermissionsException;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\FileNotFoundException;
+use Cbox\SystemMetrics\Exceptions\InsufficientPermissionsException;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
 /**
  * Reads system files with proper error handling.

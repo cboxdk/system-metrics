@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Memory;
+namespace Cbox\SystemMetrics\Sources\Memory;
 
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\Parser\MacOsVmStatParser;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\Parser\MacOsVmStatParser;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 /**
  * Reads memory metrics from macOS vm_stat and sysctl.
@@ -28,7 +28,7 @@ final class MacOsVmStatMemoryMetricsSource implements MemoryMetricsSource
             $error = $vmStatResult->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
             return Result::failure($error);
         }
 
@@ -38,7 +38,7 @@ final class MacOsVmStatMemoryMetricsSource implements MemoryMetricsSource
             $error = $hwMemsizeResult->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
             return Result::failure($error);
         }
 
@@ -48,7 +48,7 @@ final class MacOsVmStatMemoryMetricsSource implements MemoryMetricsSource
             $error = $pageSizeResult->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
             return Result::failure($error);
         }
 

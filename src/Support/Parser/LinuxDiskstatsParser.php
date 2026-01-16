@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser;
+namespace Cbox\SystemMetrics\Support\Parser;
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\ParseException;
 
 /**
  * Parse /proc/diskstats for disk I/O statistics.

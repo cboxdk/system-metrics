@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Storage;
+namespace Cbox\SystemMetrics\Sources\Storage;
 
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Support\FileReader;
+use Cbox\SystemMetrics\Support\Parser\LinuxDiskstatsParser;
 use FFI;
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\Contracts\StorageMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\FileSystemType;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\MountPoint;
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Support\FileReader;
-use PHPeek\SystemMetrics\Support\Parser\LinuxDiskstatsParser;
 
 /**
  * Read storage metrics from Linux using /proc/mounts and statfs() via FFI.

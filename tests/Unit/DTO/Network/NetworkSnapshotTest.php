@@ -1,10 +1,10 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceStats;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
 
 describe('NetworkSnapshot', function () {
     it('can be instantiated with interfaces and connections', function () {

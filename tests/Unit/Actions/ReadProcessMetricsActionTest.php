@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Actions\ReadProcessMetricsAction;
-use PHPeek\SystemMetrics\Contracts\ProcessMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Actions\ReadProcessMetricsAction;
+use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessResourceUsage;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
 // Test double for ProcessMetricsSource
 class FakeProcessMetricsSourceForAction implements ProcessMetricsSource

@@ -1,10 +1,10 @@
-# E2E Testing for PHPeek/SystemMetrics
+# E2E Testing for Cbox/SystemMetrics
 
 Comprehensive end-to-end testing infrastructure for validating system metrics across multiple container environments.
 
 ## Overview
 
-This E2E test suite validates that PHPeek/SystemMetrics accurately reports system metrics when running inside:
+This E2E test suite validates that Cbox/SystemMetrics accurately reports system metrics when running inside:
 
 - **Docker containers** with cgroup v1 (Ubuntu 20.04)
 - **Docker containers** with cgroup v2 (Ubuntu 22.04)
@@ -254,7 +254,7 @@ $cores = MetricsValidator::milliCoresToCores(500); // 0.5
 it('detects CPU limit in container', function () {
     $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 echo json_encode([
     'success' => $result->isSuccess(),
     'coreCount' => $result->isSuccess() ? $result->getValue()->coreCount() : null,

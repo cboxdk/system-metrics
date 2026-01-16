@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\ProcessMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
 
 /**
  * Action for reading process metrics.
@@ -20,7 +20,7 @@ final readonly class ReadProcessMetricsAction
     /**
      * Execute the action to read process metrics.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot>
      */
     public function execute(int $pid): Result
     {

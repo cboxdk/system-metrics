@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Cpu;
+namespace Cbox\SystemMetrics\Sources\Cpu;
 
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\Parser\MacOsSysctlParser;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\Parser\MacOsSysctlParser;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 /**
  * Reads CPU metrics from macOS sysctl kern.cp_time API.
@@ -38,7 +38,7 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
         if ($cpTimeResult->isFailure()) {
             /** @var Result<CpuSnapshot> */
             return Result::failure(
-                new \PHPeek\SystemMetrics\Exceptions\SystemMetricsException(
+                new \Cbox\SystemMetrics\Exceptions\SystemMetricsException(
                     'kern.cp_time sysctl not available (use MacOsHostProcessorInfoSource for modern macOS)'
                 )
             );
@@ -49,7 +49,7 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
         if ($cpTimesResult->isFailure()) {
             /** @var Result<CpuSnapshot> */
             return Result::failure(
-                new \PHPeek\SystemMetrics\Exceptions\SystemMetricsException(
+                new \Cbox\SystemMetrics\Exceptions\SystemMetricsException(
                     'kern.cp_times sysctl not available (use MacOsHostProcessorInfoSource for modern macOS)'
                 )
             );

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcPidStatParser;
-use PHPeek\SystemMetrics\Support\SystemInfo;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcPidStatParser;
+use Cbox\SystemMetrics\Support\SystemInfo;
 
 it('can parse /proc/{pid}/stat content', function () {
     $parser = new LinuxProcPidStatParser;

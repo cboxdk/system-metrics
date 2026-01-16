@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
-use PHPeek\SystemMetrics\Support\Parser\MacOsIostatParser;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\DiskIOStats;
+use Cbox\SystemMetrics\Support\Parser\MacOsIostatParser;
 
 describe('MacOsIostatParser', function () {
     it('can parse macOS iostat -Id output', function () {

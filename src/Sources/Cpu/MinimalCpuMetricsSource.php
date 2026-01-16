@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Cpu;
+namespace Cbox\SystemMetrics\Sources\Cpu;
 
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuCoreTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuCoreTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 /**
  * Returns zero-filled CPU metrics as a last-resort fallback.

@@ -30,23 +30,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Full CI coverage on Ubuntu, macOS, and Windows
 - E2E tests in Docker containers
 
-**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.5.0...v1.6.0
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.5.0...v1.6.0
 
 ## v1.5.0 - 2025-11-20
 
 ### What's Changed
 
-* feat(freebsd): Add comprehensive FreeBSD FFI support by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/9
+* feat(freebsd): Add comprehensive FreeBSD FFI support by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/9
 
-**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.4.0...v1.5.0
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.4.0...v1.5.0
 
 ## v1.4.0 - 2025-11-20
 
 ### What's Changed
 
-* feat: eliminate shell execution with FFI-based metrics by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/8
+* feat: eliminate shell execution with FFI-based metrics by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/8
 
-**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.3.0...v1.4.0
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.3.0...v1.4.0
 
 ## [Unreleased]
 
@@ -210,37 +210,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### What's Changed
 
-* Docs/add documentation structure by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/7
+* Docs/add documentation structure by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/7
 
-**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.2.0...v1.3.0
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.2.0...v1.3.0
 
 ## v1.2.0 - 2025-11-18
 
 ### What's Changed
 
-* Add comprehensive documentation structure by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/6
+* Add comprehensive documentation structure by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/6
 
-**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.1.0...v1.2.0
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.1.0...v1.2.0
 
 ## v1.1.0 - 2025-11-18
 
 ### What's Changed
 
-* Add ProcessDelta to ProcessStats and VirtualizationVendor enum by @sylvesterdamgaard in https://github.com/gophpeek/system-metrics/pull/5
+* Add ProcessDelta to ProcessStats and VirtualizationVendor enum by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/5
 
-**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v1.0.0...v1.1.0
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.0.0...v1.1.0
 
 ## v1.0.0 - 2025-11-17
 
 ### What's Changed
 
-* chore(deps): bump actions/upload-artifact from 4 to 5 by @dependabot[bot] in https://github.com/gophpeek/system-metrics/pull/4
+* chore(deps): bump actions/upload-artifact from 4 to 5 by @dependabot[bot] in https://github.com/cboxdk/system-metrics/pull/4
 
 ### New Contributors
 
-* @dependabot[bot] made their first contribution in https://github.com/gophpeek/system-metrics/pull/4
+* @dependabot[bot] made their first contribution in https://github.com/cboxdk/system-metrics/pull/4
 
-**Full Changelog**: https://github.com/gophpeek/system-metrics/compare/v0.1.0...v1.0.0
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v0.1.0...v1.0.0
 
 ## [0.1.0] - 2025-11-16
 

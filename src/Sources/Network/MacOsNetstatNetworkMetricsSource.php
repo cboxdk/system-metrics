@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Network;
+namespace Cbox\SystemMetrics\Sources\Network;
 
-use PHPeek\SystemMetrics\Contracts\NetworkMetricsSource;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Support\Parser\MacOsNetstatConnectionParser;
-use PHPeek\SystemMetrics\Support\Parser\MacOsNetstatInterfaceParser;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Support\Parser\MacOsNetstatConnectionParser;
+use Cbox\SystemMetrics\Support\Parser\MacOsNetstatInterfaceParser;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 /**
  * Read network metrics from macOS netstat command.

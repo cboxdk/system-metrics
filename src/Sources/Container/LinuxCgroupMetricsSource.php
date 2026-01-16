@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Container;
+namespace Cbox\SystemMetrics\Sources\Container;
 
-use PHPeek\SystemMetrics\Contracts\ContainerMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\Parser\CgroupParser;
+use Cbox\SystemMetrics\Contracts\ContainerMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\Parser\CgroupParser;
 
 /**
  * Read container metrics from Linux cgroups (v1 and v2).

@@ -13,7 +13,7 @@ Get actual resource limits and current usage regardless of environment (bare met
 The Unified Limits API provides a single interface for checking resource limits that works correctly whether you're running on bare metal, in a VM, or inside a container. It automatically detects and uses the appropriate limits for your environment.
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $limits = SystemMetrics::limits()->getValue();
 ```
@@ -93,7 +93,7 @@ if ($limits->isMemoryPressure(0.90)) {  // 90% threshold
 ## Complete Example
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $limits = SystemMetrics::limits()->getValue();
 

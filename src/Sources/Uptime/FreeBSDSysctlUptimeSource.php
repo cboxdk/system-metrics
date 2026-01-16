@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Uptime;
+namespace Cbox\SystemMetrics\Sources\Uptime;
 
+use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use DateTimeImmutable;
 use FFI;
-use PHPeek\SystemMetrics\Contracts\UptimeSource;
-use PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
 
 /**
  * Read uptime from FreeBSD using sysctl kern.boottime via FFI.

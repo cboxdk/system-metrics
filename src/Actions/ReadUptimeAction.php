@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\UptimeSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Uptime\CompositeUptimeSource;
+use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Uptime\CompositeUptimeSource;
 
 /**
  * Read system uptime.
@@ -20,7 +20,7 @@ final readonly class ReadUptimeAction
     /**
      * Execute the action.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot>
      */
     public function execute(): Result
     {

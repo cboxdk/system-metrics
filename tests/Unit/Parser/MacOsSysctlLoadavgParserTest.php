@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Support\Parser\MacOsSysctlLoadavgParser;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Support\Parser\MacOsSysctlLoadavgParser;
 
 it('can parse valid sysctl output with braces', function () {
     $parser = new MacOsSysctlLoadavgParser;

@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
-use PHPeek\SystemMetrics\Support\Parser\MacOsNetstatInterfaceParser;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkInterfaceType;
+use Cbox\SystemMetrics\Support\Parser\MacOsNetstatInterfaceParser;
 
 describe('MacOsNetstatInterfaceParser', function () {
     it('can parse macOS netstat -ib output', function () {

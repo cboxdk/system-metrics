@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuCoreDelta;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuDelta;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuCoreDelta;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuDelta;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 
 it('calculates total system CPU usage percentage correctly (0-100%)', function () {
     $delta = new CpuDelta(

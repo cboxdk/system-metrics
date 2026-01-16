@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Sources\LoadAverage\MacOsSysctlLoadAverageSource;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Sources\LoadAverage\MacOsSysctlLoadAverageSource;
 
 // Test doubles
 class FakeProcessRunner implements ProcessRunnerInterface

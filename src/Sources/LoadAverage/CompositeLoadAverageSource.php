@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\LoadAverage;
+namespace Cbox\SystemMetrics\Sources\LoadAverage;
 
-use PHPeek\SystemMetrics\Contracts\LoadAverageSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Composite load average source with automatic OS detection.
@@ -27,12 +27,12 @@ final class CompositeLoadAverageSource implements LoadAverageSource
     /**
      * Read load average using the OS-specific implementation.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
      */
     public function read(): Result
     {
         if ($this->source === null) {
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
             return Result::failure(
                 UnsupportedOperatingSystemException::forOs(PHP_OS_FAMILY)
             );

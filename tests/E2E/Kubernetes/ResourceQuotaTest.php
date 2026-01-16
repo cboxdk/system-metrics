@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\KindHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\KindHelper;
 
 describe('Kubernetes - Resource Quotas', function () {
 
@@ -128,7 +128,7 @@ describe('Kubernetes - Resource Quotas', function () {
     it('reads metrics from pod under quota constraints', function () {
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::cpu();
+$result = Cbox\SystemMetrics\SystemMetrics::cpu();
 if ($result->isSuccess()) {
     $cpu = $result->getValue();
     echo json_encode([

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Cpu;
+namespace Cbox\SystemMetrics\Sources\Cpu;
 
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
 /**
  * Tries multiple CPU metrics sources in priority order.
@@ -46,7 +46,7 @@ final class FallbackCpuMetricsSource implements CpuMetricsSource
         }
 
         // All sources failed
-        /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot> */
+        /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot> */
         return Result::failure(
             new SystemMetricsException(
                 'All CPU metrics sources failed: '.implode('; ', $errors)

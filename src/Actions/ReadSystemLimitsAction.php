@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\SystemLimitsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\SystemLimits;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\SystemLimits\CompositeSystemLimitsSource;
+use Cbox\SystemMetrics\Contracts\SystemLimitsSource;
+use Cbox\SystemMetrics\DTO\Metrics\SystemLimits;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\SystemLimits\CompositeSystemLimitsSource;
 
 /**
  * Read unified system resource limits and current usage.

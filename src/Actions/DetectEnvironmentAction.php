@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\EnvironmentDetector;
-use PHPeek\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
+use Cbox\SystemMetrics\Contracts\EnvironmentDetector;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
 
 /**
  * Action to detect the current system environment.

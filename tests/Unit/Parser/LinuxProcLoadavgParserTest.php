@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcLoadavgParser;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcLoadavgParser;
 
 it('can parse valid /proc/loadavg format', function () {
     $parser = new LinuxProcLoadavgParser;

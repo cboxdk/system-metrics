@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Environment;
+namespace Cbox\SystemMetrics\Sources\Environment;
 
-use PHPeek\SystemMetrics\Contracts\EnvironmentDetector;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
-use PHPeek\SystemMetrics\Support\OsDetector;
+use Cbox\SystemMetrics\Contracts\EnvironmentDetector;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Routes environment detection to the appropriate OS-specific detector.

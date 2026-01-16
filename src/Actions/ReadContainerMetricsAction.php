@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\ContainerMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Container\CompositeContainerMetricsSource;
+use Cbox\SystemMetrics\Contracts\ContainerMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Container\CompositeContainerMetricsSource;
 
 /**
  * Read container resource limits and usage.
@@ -20,7 +20,7 @@ final readonly class ReadContainerMetricsAction
     /**
      * Execute the action to read container metrics.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits>
      */
     public function execute(): Result
     {

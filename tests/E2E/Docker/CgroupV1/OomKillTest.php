@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\Tests\E2E\Support\DockerHelper;
+use Cbox\SystemMetrics\Tests\E2E\Support\DockerHelper;
 
 describe('Docker CgroupV1 - OOM Kill Detection', function () {
 
@@ -51,7 +51,7 @@ describe('Docker CgroupV1 - OOM Kill Detection', function () {
         // Read memory metrics when approaching limit (but not triggering OOM)
         $code = <<<'PHP'
 require 'vendor/autoload.php';
-$result = PHPeek\SystemMetrics\SystemMetrics::memory();
+$result = Cbox\SystemMetrics\SystemMetrics::memory();
 if ($result->isSuccess()) {
     $mem = $result->getValue();
     echo json_encode([

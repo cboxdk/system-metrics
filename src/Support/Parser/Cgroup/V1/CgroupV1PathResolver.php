@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support\Parser\Cgroup\V1;
+namespace Cbox\SystemMetrics\Support\Parser\Cgroup\V1;
 
 /**
  * Resolves cgroup v1 controller paths.

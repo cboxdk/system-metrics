@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\LoadAverage;
+namespace Cbox\SystemMetrics\Sources\LoadAverage;
 
-use PHPeek\SystemMetrics\Contracts\LoadAverageSource;
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\Parser\MacOsSysctlLoadavgParser;
-use PHPeek\SystemMetrics\Support\ProcessRunner;
+use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\Parser\MacOsSysctlLoadavgParser;
+use Cbox\SystemMetrics\Support\ProcessRunner;
 
 /**
  * macOS implementation for reading load average via sysctl.
@@ -23,7 +23,7 @@ final readonly class MacOsSysctlLoadAverageSource implements LoadAverageSource
     /**
      * Read load average via sysctl vm.loadavg.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
      */
     public function read(): Result
     {
@@ -33,7 +33,7 @@ final readonly class MacOsSysctlLoadAverageSource implements LoadAverageSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
             return Result::failure($error);
         }
 

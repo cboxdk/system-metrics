@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcNetTcpParser;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkConnectionStats;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcNetTcpParser;
 
 describe('LinuxProcNetTcpParser', function () {
     it('can parse /proc/net/tcp and /proc/net/udp output', function () {

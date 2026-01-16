@@ -19,7 +19,7 @@ This section covers advanced features and complex scenarios for experienced user
 
 ## Container Awareness
 
-PHPeek System Metrics automatically detects when running inside Docker or Kubernetes containers and respects cgroup limits rather than reporting host resources. This is critical for accurate monitoring in containerized environments.
+Cbox System Metrics automatically detects when running inside Docker or Kubernetes containers and respects cgroup limits rather than reporting host resources. This is critical for accurate monitoring in containerized environments.
 
 See **[Container Metrics](container-metrics)** for detailed examples.
 

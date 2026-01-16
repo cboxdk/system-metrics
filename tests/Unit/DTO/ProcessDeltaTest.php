@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
 
 it('can be instantiated with all values', function () {
     $cpuDelta = new CpuTimes(

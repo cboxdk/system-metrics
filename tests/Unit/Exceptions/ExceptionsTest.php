@@ -1,10 +1,10 @@
 <?php
 
-use PHPeek\SystemMetrics\Exceptions\FileNotFoundException;
-use PHPeek\SystemMetrics\Exceptions\InsufficientPermissionsException;
-use PHPeek\SystemMetrics\Exceptions\ParseException;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
-use PHPeek\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
+use Cbox\SystemMetrics\Exceptions\FileNotFoundException;
+use Cbox\SystemMetrics\Exceptions\InsufficientPermissionsException;
+use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
 
 describe('SystemMetricsException', function () {
     it('can be thrown with custom message', function () {

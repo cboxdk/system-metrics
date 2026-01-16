@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Process;
+namespace Cbox\SystemMetrics\Sources\Process;
 
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\FileReader;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcPidStatParser;
 use DateTimeImmutable;
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\Contracts\ProcessMetricsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\FileReader;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcPidStatParser;
 
 /**
  * Reads process metrics from Linux /proc/{pid}/ filesystem.
@@ -30,7 +30,7 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
             return Result::failure($error);
         }
 
@@ -45,7 +45,7 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
             $error = $rootResult->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
             return Result::failure($error);
         }
 

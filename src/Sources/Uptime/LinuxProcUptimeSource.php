@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Uptime;
+namespace Cbox\SystemMetrics\Sources\Uptime;
 
-use PHPeek\SystemMetrics\Contracts\UptimeSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\FileReader;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcUptimeParser;
+use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\FileReader;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcUptimeParser;
 
 /**
  * Linux uptime source using /proc/uptime.
@@ -26,7 +26,7 @@ final class LinuxProcUptimeSource implements UptimeSource
         $result = $this->fileReader->read(self::PROC_UPTIME);
 
         if ($result->isFailure()) {
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\UptimeSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot> */
             return $result;
         }
 

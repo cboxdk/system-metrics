@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\Parser\CgroupParser;
+use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\Parser\CgroupParser;
 
 describe('CgroupParser', function () {
     beforeEach(function () {

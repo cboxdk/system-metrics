@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\LimitSource;
-use PHPeek\SystemMetrics\DTO\Metrics\SystemLimits;
+use Cbox\SystemMetrics\DTO\Metrics\LimitSource;
+use Cbox\SystemMetrics\DTO\Metrics\SystemLimits;
 
 describe('SystemLimits', function () {
     it('can be instantiated with all values', function () {

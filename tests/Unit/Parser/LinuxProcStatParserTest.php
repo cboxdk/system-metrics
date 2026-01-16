@@ -1,8 +1,8 @@
 <?php
 
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuCoreTimes;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcStatParser;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuCoreTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcStatParser;
 
 describe('LinuxProcStatParser', function () {
     it('can parse total CPU times from first line', function () {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Support;
+namespace Cbox\SystemMetrics\Support;
 
-use PHPeek\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
 
 /**
  * Provides system-level information and configuration.

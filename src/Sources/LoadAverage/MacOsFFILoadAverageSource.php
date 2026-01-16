@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\LoadAverage;
+namespace Cbox\SystemMetrics\Sources\LoadAverage;
 
+use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use FFI;
-use PHPeek\SystemMetrics\Contracts\LoadAverageSource;
-use PHPeek\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
 
 /**
  * Reads load average from macOS using getloadavg() via FFI.

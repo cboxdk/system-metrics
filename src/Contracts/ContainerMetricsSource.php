@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Contracts;
+namespace Cbox\SystemMetrics\Contracts;
 
-use PHPeek\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\DTO\Result;
 
 /**
  * Contract for reading container resource limits and usage.
@@ -14,7 +14,7 @@ interface ContainerMetricsSource
     /**
      * Read container limits and usage from cgroups.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\Container\ContainerLimits>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits>
      */
     public function read(): Result;
 }

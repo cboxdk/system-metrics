@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Actions;
+namespace Cbox\SystemMetrics\Actions;
 
-use PHPeek\SystemMetrics\Contracts\ProcessMetricsSource;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
+use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
 
 /**
  * Action for reading process group metrics (parent + children).
@@ -20,7 +20,7 @@ final readonly class ReadProcessGroupMetricsAction
     /**
      * Execute the action to read process group metrics.
      *
-     * @return Result<\PHPeek\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot>
+     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot>
      */
     public function execute(int $rootPid): Result
     {

@@ -1,17 +1,17 @@
 ---
 title: "Quick Start"
-description: "Get up and running with PHPeek System Metrics in 30 seconds with practical examples"
+description: "Get up and running with Cbox System Metrics in 30 seconds with practical examples"
 weight: 3
 ---
 
 # Quick Start
 
-Get up and running with PHPeek System Metrics in 30 seconds.
+Get up and running with Cbox System Metrics in 30 seconds.
 
 ## Installation
 
 ```bash
-composer require gophpeek/system-metrics
+composer require cboxdk/system-metrics
 ```
 
 ## Basic Example
@@ -21,7 +21,7 @@ composer require gophpeek/system-metrics
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 // Get complete system overview
 $result = SystemMetrics::overview();
@@ -90,7 +90,7 @@ Instead of getting everything at once, you can fetch specific metrics:
 ### Environment Detection
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $env = SystemMetrics::environment()->getValue();
 
@@ -158,7 +158,7 @@ foreach ($network->interfaces as $iface) {
 CPU metrics return raw time counters. To calculate usage percentage, you need two snapshots:
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 // Convenience method (blocks for the specified interval)
 $cpuDelta = SystemMetrics::cpuUsage(1.0)->getValue(); // Wait 1 second
@@ -172,8 +172,8 @@ echo "Idle: " . round($cpuDelta->idlePercentage(), 1) . "%\n";
 **Alternative non-blocking approach:**
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
-use PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 
 // Take first snapshot
 $snap1 = SystemMetrics::cpu()->getValue();
@@ -194,7 +194,7 @@ echo "CPU Usage: " . round($delta->usagePercentage(), 1) . "%\n";
 All methods return `Result<T>` objects. Always check for success:
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::memory();
 
@@ -237,7 +237,7 @@ SystemMetrics::cpu()
 The library automatically detects container environments:
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $container = SystemMetrics::container()->getValue();
 
@@ -258,7 +258,7 @@ if ($container->hasMemoryLimit()) {
 Track individual processes:
 
 ```php
-use PHPeek\SystemMetrics\ProcessMetrics;
+use Cbox\SystemMetrics\ProcessMetrics;
 
 // Get current process snapshot
 $process = ProcessMetrics::snapshot(getmypid())->getValue();
@@ -284,7 +284,7 @@ Now that you've seen the basics:
 ### Health Check Endpoint
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $result = SystemMetrics::overview();
 
@@ -312,7 +312,7 @@ echo json_encode([
 ### Auto-Scaling Decision
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $limits = SystemMetrics::limits()->getValue();
 
@@ -332,7 +332,7 @@ if ($limits->canScaleMemory(4 * 1024**3)) { // Can we add 4 GB?
 ### Queue Worker Concurrency
 
 ```php
-use PHPeek\SystemMetrics\SystemMetrics;
+use Cbox\SystemMetrics\SystemMetrics;
 
 $cpu = SystemMetrics::cpu()->getValue();
 $memory = SystemMetrics::memory()->getValue();

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Config;
+namespace Cbox\SystemMetrics\Config;
 
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\Contracts\EnvironmentDetector;
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
-use PHPeek\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
-use PHPeek\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\EnvironmentDetector;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
+use Cbox\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
+use Cbox\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
 
 /**
  * Configuration for SystemMetrics with default bindings.

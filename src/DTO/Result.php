@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO;
+namespace Cbox\SystemMetrics\DTO;
 
-use PHPeek\SystemMetrics\Exceptions\SystemMetricsException;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
 /**
  * Represents the result of an operation that may succeed or fail.

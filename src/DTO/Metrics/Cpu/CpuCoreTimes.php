@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\DTO\Metrics\Cpu;
+namespace Cbox\SystemMetrics\DTO\Metrics\Cpu;
 
 /**
  * Represents CPU time counters for a specific core.

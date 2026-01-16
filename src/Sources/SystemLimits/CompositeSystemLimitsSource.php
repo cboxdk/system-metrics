@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\SystemLimits;
+namespace Cbox\SystemMetrics\Sources\SystemLimits;
 
-use PHPeek\SystemMetrics\Contracts\ContainerMetricsSource;
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\Contracts\MemoryMetricsSource;
-use PHPeek\SystemMetrics\Contracts\SystemLimitsSource;
-use PHPeek\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
-use PHPeek\SystemMetrics\DTO\Metrics\LimitSource;
-use PHPeek\SystemMetrics\DTO\Metrics\SystemLimits;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Sources\Container\CompositeContainerMetricsSource;
-use PHPeek\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
-use PHPeek\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
+use Cbox\SystemMetrics\Contracts\ContainerMetricsSource;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\Contracts\SystemLimitsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Metrics\LimitSource;
+use Cbox\SystemMetrics\DTO\Metrics\SystemLimits;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Sources\Container\CompositeContainerMetricsSource;
+use Cbox\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
+use Cbox\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
 
 /**
  * Intelligent source that provides unified limits regardless of environment.

@@ -1,7 +1,7 @@
 <?php
 
-use PHPeek\SystemMetrics\Exceptions\FileNotFoundException;
-use PHPeek\SystemMetrics\Support\FileReader;
+use Cbox\SystemMetrics\Exceptions\FileNotFoundException;
+use Cbox\SystemMetrics\Support\FileReader;
 
 describe('FileReader', function () {
     it('can read an existing file', function () {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPeek\SystemMetrics\Sources\Cpu;
+namespace Cbox\SystemMetrics\Sources\Cpu;
 
-use PHPeek\SystemMetrics\Contracts\CpuMetricsSource;
-use PHPeek\SystemMetrics\Contracts\FileReaderInterface;
-use PHPeek\SystemMetrics\DTO\Result;
-use PHPeek\SystemMetrics\Support\FileReader;
-use PHPeek\SystemMetrics\Support\Parser\LinuxProcStatParser;
+use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Support\FileReader;
+use Cbox\SystemMetrics\Support\Parser\LinuxProcStatParser;
 
 /**
  * Reads CPU metrics from Linux /proc/stat.
@@ -28,7 +28,7 @@ final class LinuxProcCpuMetricsSource implements CpuMetricsSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\PHPeek\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot> */
+            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot> */
             return Result::failure($error);
         }
 
