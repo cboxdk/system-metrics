@@ -57,7 +57,7 @@ jobs:
 
       - name: Upload test logs on failure
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: unit-test-logs-${{ matrix.os }}-php${{ matrix.php }}-${{ matrix.stability }}
           path: tests/**/*.log
@@ -102,7 +102,7 @@ jobs:
 
       - name: Upload test logs on failure
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: e2e-test-logs-php${{ matrix.php }}
           path: |
