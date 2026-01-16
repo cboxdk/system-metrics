@@ -5,6 +5,34 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.0.0 - Rebrand to Cbox - 2026-01-16
+
+### Breaking Changes
+
+- **Namespace Changed**: `PHPeek\SystemMetrics` → `Cbox\SystemMetrics`
+- **Package Renamed**: `gophpeek/system-metrics` → `cboxdk/system-metrics`
+
+### Migration Guide
+
+Update your `composer.json`:
+
+```bash
+composer remove gophpeek/system-metrics
+composer require cboxdk/system-metrics
+
+```
+Update your imports:
+
+```php
+// Before
+use PHPeek\SystemMetrics\SystemMetrics;
+
+// After
+use Cbox\SystemMetrics\SystemMetrics;
+
+```
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.6.0...v2.0.0
+
 ## v2.0.0 - 2026-01-16
 
 ### Breaking Changes
@@ -15,20 +43,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Migration Guide
 
 Update your `composer.json`:
+
 ```bash
 composer remove gophpeek/system-metrics
 composer require cboxdk/system-metrics
-```
 
+```
 Update your imports:
+
 ```php
 // Before
 use PHPeek\SystemMetrics\SystemMetrics;
 
 // After
 use Cbox\SystemMetrics\SystemMetrics;
-```
 
+```
 **Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.6.0...v2.0.0
 
 ## v1.6.0 - 2026-01-02
