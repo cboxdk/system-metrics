@@ -86,9 +86,13 @@ final class LinuxProcStatParser
     private function parseCpuLine(string $line): Result
     {
         // Format: cpu[N]  user nice system idle iowait irq softirq steal [guest guest_nice]
-        $parts = preg_split('/\s+/', $line);
+        // Use explode + array_filter for better performance than regex
+        $parts = array_values(array_filter(
+            explode(' ', $line),
+            fn (string $p) => $p !== ''
+        ));
 
-        if ($parts === false || count($parts) < 9) {
+        if (count($parts) < 9) {
             /** @var Result<CpuTimes> */
             return Result::failure(
                 ParseException::forFile('/proc/stat', 'Invalid CPU line format')

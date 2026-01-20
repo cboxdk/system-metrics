@@ -60,9 +60,10 @@ final class LinuxProcPidStatParser
 
         // Split into fields after the process name
         $afterName = substr($content, $closingParen + 2);
-        $fields = preg_split('/\s+/', $afterName);
+        // Optimize: Use explode instead of preg_split for better performance
+        $fields = explode(' ', $afterName);
 
-        if ($fields === false || count($fields) < 22) {
+        if (count($fields) < 22) {
             /** @var Result<ProcessSnapshot> */
             return Result::failure(
                 ParseException::forFile("/proc/{$pid}/stat", 'Insufficient fields')

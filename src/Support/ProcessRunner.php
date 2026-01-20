@@ -124,10 +124,21 @@ final class ProcessRunner implements ProcessRunnerInterface
     }
 
     /**
+     * Cache of command availability checks.
+     *
+     * @var array<string, bool>
+     */
+    private static array $commandAvailabilityCache = [];
+
+    /**
      * Check if a command is available on the system.
      */
     public function commandExists(string $command): bool
     {
+        if (isset(self::$commandAvailabilityCache[$command])) {
+            return self::$commandAvailabilityCache[$command];
+        }
+
         $which = PHP_OS_FAMILY === 'Windows' ? 'where' : 'which';
         $output = [];
         $resultCode = 0;
@@ -136,7 +147,7 @@ final class ProcessRunner implements ProcessRunnerInterface
 
         @exec("{$safeWhichCommand} 2>&1", $output, $resultCode);
 
-        return $resultCode === 0;
+        return self::$commandAvailabilityCache[$command] = ($resultCode === 0);
     }
 
     /**
