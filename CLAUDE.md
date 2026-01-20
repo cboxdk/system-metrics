@@ -419,7 +419,7 @@ $cpu = SystemMetrics::cpu();
 
 # Cbox Documentation Guide
 
-This guide explains how to structure documentation for Cbox packages to ensure optimal display and navigation on phpeek.com.
+This guide explains how to structure documentation for Cbox packages to ensure optimal display and navigation on cbox.dk.
 
 ## Core Concepts
 
@@ -831,7 +831,7 @@ Before publishing, verify:
 Your documentation will be available at:
 
 ```
-https://phpeek.com/docs/{package}/{major_version}/{page_path}
+https://cbox.dk/docs/{package}/{major_version}/{page_path}
 
 Examples:
 /docs/system-metrics/v1/introduction
