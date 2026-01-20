@@ -120,6 +120,6 @@ Tested on:
 
 ## Related Documentation
 
-- [macOS Support](macos)
-- [Platform Comparison](comparison)
+- [macOS Support](macos.md)
+- [Platform Comparison](comparison.md)
 - [Container Metrics](../advanced-usage/container-metrics)

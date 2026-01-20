@@ -256,4 +256,4 @@ $result = Result::failure(new FileNotFoundException('/proc/stat'));
 ## Related Documentation
 
 - [API Reference](../api-reference) - All return types
-- [Custom Implementations](custom-implementations) - Creating custom sources
+- [Custom Implementations](custom-implementations.md) - Creating custom sources

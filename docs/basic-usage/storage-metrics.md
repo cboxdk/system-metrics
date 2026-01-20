@@ -70,4 +70,4 @@ foreach ($storage->mountPoints as $mount) {
 
 ## Related Documentation
 
-- [System Overview](system-overview)
+- [System Overview](system-overview.md)

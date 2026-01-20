@@ -67,5 +67,5 @@ if ($normalized->oneMinutePercentage() > 80) {
 
 ## Related Documentation
 
-- [CPU Metrics](cpu-metrics)
-- [System Overview](system-overview)
+- [CPU Metrics](cpu-metrics.md)
+- [System Overview](system-overview.md)

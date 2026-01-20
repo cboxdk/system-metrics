@@ -130,10 +130,10 @@ return [
 
 ## Related Documentation
 
-- [Environment Detection](environment-detection)
-- [CPU Metrics](cpu-metrics)
-- [Memory Metrics](memory-metrics)
-- [Load Average](load-average)
-- [System Uptime](uptime)
-- [Storage Metrics](storage-metrics)
-- [Network Metrics](network-metrics)
+- [Environment Detection](environment-detection.md)
+- [CPU Metrics](cpu-metrics.md)
+- [Memory Metrics](memory-metrics.md)
+- [Load Average](load-average.md)
+- [System Uptime](uptime.md)
+- [Storage Metrics](storage-metrics.md)
+- [Network Metrics](network-metrics.md)

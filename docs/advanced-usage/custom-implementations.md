@@ -273,6 +273,6 @@ SystemMetricsConfig::setNetworkMetricsSource($customNetworkSource);
 
 ## Related Documentation
 
-- [Error Handling](error-handling) - Result<T> pattern
+- [Error Handling](error-handling.md) - Result<T> pattern
 - [Architecture: Design Principles](../architecture/design-principles) - Interface-driven design
 - [API Reference](../api-reference) - All interfaces and DTOs

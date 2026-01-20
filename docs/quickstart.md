@@ -273,11 +273,11 @@ echo "Threads: {$process->resources->threadCount}\n";
 
 Now that you've seen the basics:
 
-- **[Explore all metrics](basic-usage/system-overview)** - Detailed examples for each metric type
-- **[Learn error handling](advanced-usage/error-handling)** - Master the Result<T> pattern
-- **[Container metrics](advanced-usage/container-metrics)** - Docker and Kubernetes integration
-- **[Process tracking](advanced-usage/process-metrics)** - Monitor spawned processes
-- **[API reference](api-reference)** - Complete method documentation
+- **[Explore all metrics](basic-usage/system-overview.md)** - Detailed examples for each metric type
+- **[Learn error handling](advanced-usage/error-handling.md)** - Master the Result<T> pattern
+- **[Container metrics](advanced-usage/container-metrics.md)** - Docker and Kubernetes integration
+- **[Process tracking](advanced-usage/process-metrics.md)** - Monitor spawned processes
+- **[API reference](api-reference.md)** - Complete method documentation
 
 ## Common Patterns
 

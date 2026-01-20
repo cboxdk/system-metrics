@@ -92,6 +92,6 @@ If you're developing on macOS but deploying to Linux:
 
 ## Related Documentation
 
-- [Linux Support](linux) - Linux-specific details
-- [macOS Support](macos) - macOS-specific details
+- [Linux Support](linux.md) - Linux-specific details
+- [macOS Support](macos.md) - macOS-specific details
 - [Architecture: Composite Sources](../architecture/composite-sources) - Fallback implementation

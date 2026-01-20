@@ -182,4 +182,4 @@ while (true) {
 
 - [CPU Metrics](../basic-usage/cpu-metrics) - Raw CPU counters
 - [Load Average](../basic-usage/load-average) - System load metrics
-- [Process Metrics](process-metrics) - Per-process CPU tracking
+- [Process Metrics](process-metrics.md) - Per-process CPU tracking

@@ -53,7 +53,7 @@ readonly class CpuSnapshot {
 - Predictable behavior
 - Clear ownership semantics
 
-See [Immutable DTOs](immutable-dtos) for details.
+See [Immutable DTOs](immutable-dtos.md) for details.
 
 ## Result Pattern
 
@@ -72,7 +72,7 @@ if ($result->isSuccess()) {
 - Functional programming style
 - Type-safe error propagation
 
-See [Result Pattern](result-pattern) for details.
+See [Result Pattern](result-pattern.md) for details.
 
 ## Interface-Driven
 
@@ -110,12 +110,12 @@ class ReadCpuMetricsAction {
 - Clear boundaries
 - Composable
 
-See [Action Pattern](action-pattern) for details.
+See [Action Pattern](action-pattern.md) for details.
 
 ## Related Documentation
 
-- [Result Pattern](result-pattern)
-- [Composite Sources](composite-sources)
-- [Immutable DTOs](immutable-dtos)
-- [Action Pattern](action-pattern)
-- [Performance Caching](performance-caching)
+- [Result Pattern](result-pattern.md)
+- [Composite Sources](composite-sources.md)
+- [Immutable DTOs](immutable-dtos.md)
+- [Action Pattern](action-pattern.md)
+- [Performance Caching](performance-caching.md)

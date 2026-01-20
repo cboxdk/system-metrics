@@ -66,4 +66,4 @@ echo "Uptime: " . round($uptimePercent, 2) . "%\n";
 
 ## Related Documentation
 
-- [System Overview](system-overview)
+- [System Overview](system-overview.md)

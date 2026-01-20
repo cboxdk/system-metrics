@@ -10,9 +10,9 @@ Cbox System Metrics supports Linux and macOS with platform-specific implementati
 
 ## Platform Pages
 
-- **[Comparison](comparison)** - Feature comparison across Linux and macOS
-- **[Linux](linux)** - Linux-specific implementation details
-- **[macOS](macos)** - macOS-specific implementation details and limitations
+- **[Comparison](comparison.md)** - Feature comparison across Linux and macOS
+- **[Linux](linux.md)** - Linux-specific implementation details
+- **[macOS](macos.md)** - macOS-specific implementation details and limitations
 
 ## Supported Platforms
 
@@ -42,4 +42,4 @@ Different platforms have different capabilities and limitations. See the individ
 
 The library uses the **Composite pattern** with platform-specific sources and fallbacks, ensuring graceful degradation when APIs are unavailable.
 
-See **[Comparison](comparison)** for a detailed feature matrix.
+See **[Comparison](comparison.md)** for a detailed feature matrix.

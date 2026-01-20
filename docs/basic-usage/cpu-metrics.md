@@ -237,7 +237,7 @@ echo "Operation used " . round($delta->usagePercentage(), 1) . "% CPU\n";
 
 ## Related Documentation
 
-- [Load Average](load-average) - System load metrics
+- [Load Average](load-average.md) - System load metrics
 - [CPU Usage Calculation](../advanced-usage/cpu-usage-calculation) - Deep dive into delta calculations
 - [Process Metrics](../advanced-usage/process-metrics) - Per-process CPU tracking
 - [Container Metrics](../advanced-usage/container-metrics) - Container CPU limits

@@ -122,5 +122,5 @@ See [API Reference](../api-reference) for complete list.
 
 ## Related Documentation
 
-- [Design Principles](design-principles) - Overall architecture
+- [Design Principles](design-principles.md) - Overall architecture
 - [Custom Implementations](../advanced-usage/custom-implementations) - Inject custom sources

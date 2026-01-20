@@ -562,31 +562,31 @@ weight: 10
 
 ### Internal Documentation Links
 
-Use **relative paths** to link between documentation pages:
+Use **relative paths** with full filename to link between documentation pages:
 
 ```markdown
 # Link to sibling file in same directory
-[Installation Guide](installation)
+[Installation Guide](installation.md)
 
 # Link to file in parent directory
-[Back to Introduction](../introduction)
+[Back to Introduction](../introduction.md)
 
 # Link to file in subdirectory
-[CPU Metrics](basic-usage/cpu-metrics)
+[CPU Metrics](basic-usage/cpu-metrics.md)
 
 # Link to file in different subdirectory
-[Platform Comparison](../platform-support/comparison)
+[Platform Comparison](../platform-support/comparison.md)
 
 # Link with anchor to heading
-[Error Handling](advanced-usage/error-handling#result-pattern)
+[Error Handling](advanced-usage/error-handling.md#result-pattern)
 ```
 
 **Link Best Practices**
-- ✅ Use descriptive link text: `[View API Reference](api-reference)`
-- ✅ Remove `.md` extension: `[Guide](installation)` not `[Guide](installation.md)`
-- ✅ Use relative paths: `[Guide](../guide)`
-- ❌ Don't use generic text: `[Click here](guide)` or `[Read more](docs)`
-- ❌ Don't hardcode absolute URLs: `[Guide](/docs/package/v1/guide)`
+- ✅ Use descriptive link text: `[View API Reference](api-reference.md)`
+- ✅ Keep `.md` extension: `[Guide](installation.md)` not `[Guide](installation)`
+- ✅ Use relative paths: `[Guide](../guide.md)`
+- ❌ Don't use generic text: `[Click here](guide.md)` or `[Read more](docs.md)`
+- ❌ Don't hardcode absolute URLs: `[Guide](/docs/package/v1/guide.md)`
 - ❌ Don't link to README.md (it's not displayed)
 
 ### External Links

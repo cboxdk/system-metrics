@@ -176,4 +176,4 @@ GitHub Actions runs:
 ## Related Documentation
 
 - [Contributing](../CONTRIBUTING.md) - Contribution guidelines
-- [Architecture](architecture/design-principles) - Design principles
+- [Architecture](architecture/design-principles.md) - Design principles

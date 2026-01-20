@@ -116,4 +116,4 @@ Alternative approaches considered:
 
 - [Introduction](../introduction) - Performance characteristics
 - [Environment Detection](../basic-usage/environment-detection) - What gets cached
-- [Design Principles](design-principles) - Architectural decisions
+- [Design Principles](design-principles.md) - Architectural decisions

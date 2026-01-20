@@ -111,7 +111,7 @@ SystemMetricsConfig::setMemoryMetricsSource(new YourCustomMemorySource());
 SystemMetricsConfig::setEnvironmentDetector(new YourCustomDetector());
 ```
 
-See [Custom Implementations](advanced-usage/custom-implementations) for details.
+See [Custom Implementations](advanced-usage/custom-implementations.md) for details.
 
 ### Optional: Clear Environment Cache
 
@@ -171,7 +171,7 @@ $cpu = SystemMetrics::cpu()->getValue();
 
 This is expected behavior—modern macOS deprecated the `kern.cp_time` sysctl. The library gracefully returns zero values rather than failing. For CPU monitoring on macOS, consider using system tools like `top` or `Activity Monitor`.
 
-See [Platform Support: macOS](platform-support/macos) for details.
+See [Platform Support: macOS](platform-support/macos.md) for details.
 
 ### Unsupported Operating System
 
@@ -212,7 +212,7 @@ See CONTRIBUTING.md for full development guidelines.
 
 ## Next Steps
 
-- **[Quick Start Guide](quickstart)** - See a working example in 30 seconds
-- **[Basic Usage](basic-usage/system-overview)** - Explore available metrics
-- **[Error Handling](advanced-usage/error-handling)** - Learn the Result<T> pattern
-- **[API Reference](api-reference)** - Complete method documentation
+- **[Quick Start Guide](quickstart.md)** - See a working example in 30 seconds
+- **[Basic Usage](basic-usage/system-overview.md)** - Explore available metrics
+- **[Error Handling](advanced-usage/error-handling.md)** - Learn the Result<T> pattern
+- **[API Reference](api-reference.md)** - Complete method documentation

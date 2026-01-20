@@ -10,12 +10,12 @@ This section explains the design principles and architectural patterns that make
 
 ## Design Patterns
 
-- **[Design Principles](design-principles)** - Core philosophy guiding the library's architecture
-- **[Result Pattern](result-pattern)** - Explicit success/failure handling without exceptions
-- **[Action Pattern](action-pattern)** - Small, focused use case implementations
-- **[Composite Sources](composite-sources)** - Layered pattern with fallback logic
-- **[Immutable DTOs](immutable-dtos)** - Readonly value objects preventing state mutation
-- **[Performance Caching](performance-caching)** - Static data caching for optimal performance
+- **[Design Principles](design-principles.md)** - Core philosophy guiding the library's architecture
+- **[Result Pattern](result-pattern.md)** - Explicit success/failure handling without exceptions
+- **[Action Pattern](action-pattern.md)** - Small, focused use case implementations
+- **[Composite Sources](composite-sources.md)** - Layered pattern with fallback logic
+- **[Immutable DTOs](immutable-dtos.md)** - Readonly value objects preventing state mutation
+- **[Performance Caching](performance-caching.md)** - Static data caching for optimal performance
 
 ## Core Principles
 
@@ -36,4 +36,4 @@ The architecture is intentionally designed for **production reliability**:
 - **Composite sources** enable graceful degradation when APIs are unavailable
 - **Performance caching** reduces overhead from ~1-5ms to ~0.001ms per call
 
-See **[Design Principles](design-principles)** for the full rationale.
+See **[Design Principles](design-principles.md)** for the full rationale.

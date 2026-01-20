@@ -114,6 +114,6 @@ See [CHANGELOG.md](../CHANGELOG.md) for complete version history.
 
 ## Related Documentation
 
-- [Introduction](introduction) - Current features
+- [Introduction](introduction.md) - Current features
 - [Contributing](../CONTRIBUTING.md) - How to contribute
 - [GitHub Issues](https://github.com/cboxdk/system-metrics/issues) - Report bugs or request features
