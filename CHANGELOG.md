@@ -5,6 +5,24 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.2.0 - 2026-03-03
+
+### What's Changed
+
+#### New Features
+
+- **Testing Support**: New `src/Testing/` namespace with fake sources for all metric types
+  - `FakeSystemMetrics::install()` / `uninstall()` — one-line test setup and teardown
+  - Fake sources for all 9 metric types with `set()` and `failWith()` methods
+  - `FakeContainerMetricsSource::asContainer()` for simulating containerized environments
+  - Sensible defaults representing a healthy 4-core, 8 GB Linux server
+
+- **Full SystemMetricsConfig Support**: All metric sources are now configurable via `SystemMetricsConfig`
+  - Added setters/getters for `LoadAverageSource`, `StorageMetricsSource`, `NetworkMetricsSource`, `UptimeSource`, `ContainerMetricsSource`, `SystemLimitsSource`
+  - `SystemMetrics` facade routes all methods through `SystemMetricsConfig`
+
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v2.1.0...v2.2.0
+
 ## v2.1.0 - 2026-03-03
 
 ### What's Changed
@@ -22,16 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Fallback Sources**: Added `FallbackLoadAverageSource` and `FallbackUptimeSource` for graceful degradation when FFI is unavailable (e.g., PHP-FPM with `ffi.enable=preload`)
 
 - **Absolute Command Path Resolution**: `ProcessRunner` now resolves commands to absolute paths, fixing metric collection in restricted environments like PHP-FPM where `PATH` may not include `/usr/sbin`
-
-- **Testing Support**: New `src/Testing/` namespace with fake sources for all metric types
-  - `FakeSystemMetrics::install()` / `uninstall()` — one-line test setup and teardown
-  - Fake sources for all 9 metric types with `set()` and `failWith()` methods
-  - `FakeContainerMetricsSource::asContainer()` for simulating containerized environments
-  - Sensible defaults representing a healthy 4-core, 8 GB Linux server
-
-- **Full SystemMetricsConfig Support**: All metric sources are now configurable via `SystemMetricsConfig`
-  - Added setters/getters for `LoadAverageSource`, `StorageMetricsSource`, `NetworkMetricsSource`, `UptimeSource`, `ContainerMetricsSource`, `SystemLimitsSource`
-  - `SystemMetrics` facade routes all methods through `SystemMetricsConfig`
 
 #### Breaking Changes
 
