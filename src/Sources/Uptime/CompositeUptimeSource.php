@@ -32,7 +32,10 @@ final class CompositeUptimeSource implements UptimeSource
         }
 
         if (OsDetector::isMacOs()) {
-            $source = new MacOsFFIUptimeSource;
+            $source = new FallbackUptimeSource([
+                new MacOsFFIUptimeSource,       // 1. FFI (fast, no subprocess)
+                new MacOsSysctlUptimeSource,    // 2. sysctl (fallback for FPM)
+            ]);
 
             return $source->read();
         }

@@ -9,6 +9,10 @@ use Cbox\SystemMetrics\DTO\SystemOverview;
 
 /**
  * Action to get a complete system overview.
+ *
+ * Core metrics (environment, CPU, memory) are required and will fail the
+ * entire action if unavailable. Optional metrics (storage, network,
+ * load average, uptime, limits, container) gracefully degrade to null.
  */
 final class SystemOverviewAction
 {
@@ -18,6 +22,10 @@ final class SystemOverviewAction
         private readonly ReadMemoryMetricsAction $memoryAction,
         private readonly ReadStorageMetricsAction $storageAction,
         private readonly ReadNetworkMetricsAction $networkAction,
+        private readonly ReadLoadAverageAction $loadAverageAction = new ReadLoadAverageAction,
+        private readonly ReadUptimeAction $uptimeAction = new ReadUptimeAction,
+        private readonly ReadSystemLimitsAction $limitsAction = new ReadSystemLimitsAction,
+        private readonly ReadContainerMetricsAction $containerAction = new ReadContainerMetricsAction,
     ) {}
 
     /**
@@ -27,6 +35,7 @@ final class SystemOverviewAction
      */
     public function execute(): Result
     {
+        // Core metrics — required
         $environmentResult = $this->environmentAction->execute();
         if ($environmentResult->isFailure()) {
             $error = $environmentResult->getError();
@@ -54,30 +63,24 @@ final class SystemOverviewAction
             return Result::failure($error);
         }
 
+        // Optional metrics — null on failure
         $storageResult = $this->storageAction->execute();
-        if ($storageResult->isFailure()) {
-            $error = $storageResult->getError();
-            assert($error !== null);
-
-            /** @var Result<SystemOverview> */
-            return Result::failure($error);
-        }
-
         $networkResult = $this->networkAction->execute();
-        if ($networkResult->isFailure()) {
-            $error = $networkResult->getError();
-            assert($error !== null);
-
-            /** @var Result<SystemOverview> */
-            return Result::failure($error);
-        }
+        $loadAverageResult = $this->loadAverageAction->execute();
+        $uptimeResult = $this->uptimeAction->execute();
+        $limitsResult = $this->limitsAction->execute();
+        $containerResult = $this->containerAction->execute();
 
         return Result::success(new SystemOverview(
             environment: $environmentResult->getValue(),
             cpu: $cpuResult->getValue(),
             memory: $memoryResult->getValue(),
-            storage: $storageResult->getValue(),
-            network: $networkResult->getValue(),
+            storage: $storageResult->isSuccess() ? $storageResult->getValue() : null,
+            network: $networkResult->isSuccess() ? $networkResult->getValue() : null,
+            loadAverage: $loadAverageResult->isSuccess() ? $loadAverageResult->getValue() : null,
+            uptime: $uptimeResult->isSuccess() ? $uptimeResult->getValue() : null,
+            limits: $limitsResult->isSuccess() ? $limitsResult->getValue() : null,
+            container: $containerResult->isSuccess() ? $containerResult->getValue() : null,
         ));
     }
 }

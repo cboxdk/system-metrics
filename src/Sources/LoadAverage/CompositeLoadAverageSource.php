@@ -51,7 +51,10 @@ final class CompositeLoadAverageSource implements LoadAverageSource
         }
 
         if (OsDetector::isMacOs()) {
-            return new MacOsFFILoadAverageSource;
+            return new FallbackLoadAverageSource([
+                new MacOsFFILoadAverageSource,       // 1. FFI (fast, no subprocess)
+                new MacOsSysctlLoadAverageSource,    // 2. sysctl (fallback for FPM)
+            ]);
         }
 
         return null;

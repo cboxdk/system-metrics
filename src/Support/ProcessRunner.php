@@ -17,6 +17,10 @@ use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
  * - Command validation ensures only whitelisted commands can execute
  * - Uses escapeshellcmd() to prevent command injection
  * - Read-only operations only (no write/modify commands)
+ *
+ * Path Resolution:
+ * - Commands are resolved to absolute paths to ensure they work
+ *   in restricted environments (e.g. PHP-FPM with limited PATH)
  */
 final class ProcessRunner implements ProcessRunnerInterface
 {
@@ -61,6 +65,53 @@ final class ProcessRunner implements ProcessRunnerInterface
     ];
 
     /**
+     * Absolute paths for system commands by platform.
+     *
+     * PHP-FPM processes often have a restricted PATH that does not include
+     * /usr/sbin or other directories where system commands live. Using
+     * absolute paths ensures commands work regardless of the PATH.
+     *
+     * @var array<string, array<string, string>>
+     */
+    private const COMMAND_PATHS = [
+        'Darwin' => [
+            'sysctl' => '/usr/sbin/sysctl',
+            'vm_stat' => '/usr/bin/vm_stat',
+            'sw_vers' => '/usr/bin/sw_vers',
+            'df' => '/bin/df',
+            'iostat' => '/usr/sbin/iostat',
+            'netstat' => '/usr/sbin/netstat',
+            'ps' => '/bin/ps',
+            'pgrep' => '/usr/bin/pgrep',
+            'top' => '/usr/bin/top',
+            'lsof' => '/usr/sbin/lsof',
+            'getconf' => '/usr/bin/getconf',
+            'cat' => '/bin/cat',
+            'which' => '/usr/bin/which',
+        ],
+        'Linux' => [
+            'sysctl' => '/usr/sbin/sysctl',
+            'df' => '/bin/df',
+            'netstat' => '/usr/bin/netstat',
+            'ps' => '/bin/ps',
+            'pgrep' => '/usr/bin/pgrep',
+            'top' => '/usr/bin/top',
+            'lsof' => '/usr/bin/lsof',
+            'nproc' => '/usr/bin/nproc',
+            'getconf' => '/usr/bin/getconf',
+            'cat' => '/bin/cat',
+            'which' => '/usr/bin/which',
+        ],
+    ];
+
+    /**
+     * Cache of resolved command paths.
+     *
+     * @var array<string, string>
+     */
+    private static array $resolvedPaths = [];
+
+    /**
      * Execute a command and return its output.
      *
      * @return Result<string>
@@ -80,9 +131,12 @@ final class ProcessRunner implements ProcessRunnerInterface
         $output = [];
         $resultCode = 0;
 
+        // Resolve command to absolute path for restricted environments
+        $resolvedCommand = $this->resolveCommandPath($command);
+
         // Use escapeshellcmd to prevent command injection
         // This is defense-in-depth since all commands are hardcoded
-        $safeCommand = escapeshellcmd($command);
+        $safeCommand = escapeshellcmd($resolvedCommand);
 
         @exec($safeCommand.' 2>&1', $output, $resultCode);
 
@@ -140,10 +194,12 @@ final class ProcessRunner implements ProcessRunnerInterface
         }
 
         $which = PHP_OS_FAMILY === 'Windows' ? 'where' : 'which';
+        // Resolve which/where to absolute path for restricted PATH environments
+        $resolvedWhich = $this->resolveCommandPath($which);
         $output = [];
         $resultCode = 0;
 
-        $safeWhichCommand = escapeshellcmd("{$which} {$command}");
+        $safeWhichCommand = escapeshellcmd("{$resolvedWhich} {$command}");
 
         @exec("{$safeWhichCommand} 2>&1", $output, $resultCode);
 
@@ -151,10 +207,56 @@ final class ProcessRunner implements ProcessRunnerInterface
     }
 
     /**
+     * Resolve a command to its absolute path.
+     *
+     * In PHP-FPM environments (e.g. Laravel Herd, Nginx), the PATH is often
+     * restricted and doesn't include /usr/sbin where commands like sysctl live.
+     * This method resolves commands to absolute paths using a known mapping.
+     */
+    private function resolveCommandPath(string $command): string
+    {
+        // Extract the binary name (first word of the command)
+        $parts = explode(' ', $command, 2);
+        $binary = $parts[0];
+        $arguments = $parts[1] ?? '';
+
+        // Check cache first
+        if (isset(self::$resolvedPaths[$binary])) {
+            $resolved = self::$resolvedPaths[$binary];
+
+            return $arguments !== '' ? "{$resolved} {$arguments}" : $resolved;
+        }
+
+        // If already an absolute path, use as-is
+        if (str_starts_with($binary, '/')) {
+            self::$resolvedPaths[$binary] = $binary;
+
+            return $command;
+        }
+
+        // Look up known absolute path for current platform
+        $platform = PHP_OS_FAMILY;
+        $knownPaths = self::COMMAND_PATHS[$platform] ?? [];
+
+        if (isset($knownPaths[$binary]) && file_exists($knownPaths[$binary])) {
+            self::$resolvedPaths[$binary] = $knownPaths[$binary];
+            $resolved = $knownPaths[$binary];
+
+            return $arguments !== '' ? "{$resolved} {$arguments}" : $resolved;
+        }
+
+        // Fall back to unresolved command (rely on PATH)
+        self::$resolvedPaths[$binary] = $binary;
+
+        return $command;
+    }
+
+    /**
      * Check if a command is whitelisted for execution.
      *
      * Commands must start with one of the allowed command prefixes
-     * to prevent arbitrary command execution.
+     * to prevent arbitrary command execution. Validation happens
+     * BEFORE path resolution to check against the original command.
      */
     private function isCommandAllowed(string $command): bool
     {
@@ -165,5 +267,13 @@ final class ProcessRunner implements ProcessRunnerInterface
         }
 
         return false;
+    }
+
+    /**
+     * Reset the resolved path cache (for testing).
+     */
+    public static function resetPathCache(): void
+    {
+        self::$resolvedPaths = [];
     }
 }

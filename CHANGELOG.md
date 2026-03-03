@@ -5,6 +5,30 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.1.0 - 2026-03-03
+
+### What's Changed
+
+#### New Features
+
+- **Comprehensive SystemOverview**: `SystemMetrics::overview()` now returns all available metrics in a single call
+  - Added `loadAverage` (`?LoadAverageSnapshot`) — system load averages
+  - Added `uptime` (`?UptimeSnapshot`) — system uptime and boot time
+  - Added `limits` (`?SystemLimits`) — unified resource limits (cgroup-aware)
+  - Added `container` (`?ContainerLimits`) — container-specific cgroup data
+
+- **Graceful Partial Failures**: Optional metrics (storage, network, load average, uptime, limits, container) now return `null` instead of failing the entire overview. Core metrics (environment, CPU, memory) remain required.
+
+- **Fallback Sources**: Added `FallbackLoadAverageSource` and `FallbackUptimeSource` for graceful degradation when FFI is unavailable (e.g., PHP-FPM with `ffi.enable=preload`)
+
+- **Absolute Command Path Resolution**: `ProcessRunner` now resolves commands to absolute paths, fixing metric collection in restricted environments like PHP-FPM where `PATH` may not include `/usr/sbin`
+
+#### Breaking Changes
+
+- `SystemOverview::$storage` and `SystemOverview::$network` are now nullable (`?StorageSnapshot`, `?NetworkSnapshot`). Previously they were required and would fail the entire overview if unavailable.
+
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v2.0.1...v2.1.0
+
 ## v2.0.1 - 2026-01-20
 
 ### What's Changed

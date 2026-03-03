@@ -175,15 +175,25 @@ class FakeFailureNetworkSource implements NetworkMetricsSource
     }
 }
 
+function createOverviewAction(
+    ?EnvironmentDetector $env = null,
+    ?CpuMetricsSource $cpu = null,
+    ?MemoryMetricsSource $memory = null,
+    ?StorageMetricsSource $storage = null,
+    ?NetworkMetricsSource $network = null,
+): SystemOverviewAction {
+    return new SystemOverviewAction(
+        new DetectEnvironmentAction($env ?? new FakeSuccessEnvironmentDetector),
+        new ReadCpuMetricsAction($cpu ?? new FakeSuccessCpuSource),
+        new ReadMemoryMetricsAction($memory ?? new FakeSuccessMemorySource),
+        new ReadStorageMetricsAction($storage ?? new FakeSuccessStorageSource),
+        new ReadNetworkMetricsAction($network ?? new FakeSuccessNetworkSource),
+    );
+}
+
 describe('SystemOverviewAction', function () {
     it('collects complete system overview successfully', function () {
-        $environmentAction = new DetectEnvironmentAction(new FakeSuccessEnvironmentDetector);
-        $cpuAction = new ReadCpuMetricsAction(new FakeSuccessCpuSource);
-        $memoryAction = new ReadMemoryMetricsAction(new FakeSuccessMemorySource);
-        $storageAction = new ReadStorageMetricsAction(new FakeSuccessStorageSource);
-        $networkAction = new ReadNetworkMetricsAction(new FakeSuccessNetworkSource);
-
-        $action = new SystemOverviewAction($environmentAction, $cpuAction, $memoryAction, $storageAction, $networkAction);
+        $action = createOverviewAction();
         $result = $action->execute();
 
         expect($result->isSuccess())->toBeTrue();
@@ -197,14 +207,7 @@ describe('SystemOverviewAction', function () {
     });
 
     it('propagates environment detection failure', function () {
-        $environmentAction = new DetectEnvironmentAction(new FakeFailureEnvironmentDetector);
-        $cpuAction = new ReadCpuMetricsAction(new FakeSuccessCpuSource);
-        $memoryAction = new ReadMemoryMetricsAction(new FakeSuccessMemorySource);
-
-        $storageAction = new ReadStorageMetricsAction(new FakeSuccessStorageSource);
-        $networkAction = new ReadNetworkMetricsAction(new FakeSuccessNetworkSource);
-
-        $action = new SystemOverviewAction($environmentAction, $cpuAction, $memoryAction, $storageAction, $networkAction);
+        $action = createOverviewAction(env: new FakeFailureEnvironmentDetector);
         $result = $action->execute();
 
         expect($result->isFailure())->toBeTrue();
@@ -213,14 +216,7 @@ describe('SystemOverviewAction', function () {
     });
 
     it('propagates CPU metrics failure', function () {
-        $environmentAction = new DetectEnvironmentAction(new FakeSuccessEnvironmentDetector);
-        $cpuAction = new ReadCpuMetricsAction(new FakeFailureCpuSource);
-        $memoryAction = new ReadMemoryMetricsAction(new FakeSuccessMemorySource);
-
-        $storageAction = new ReadStorageMetricsAction(new FakeSuccessStorageSource);
-        $networkAction = new ReadNetworkMetricsAction(new FakeSuccessNetworkSource);
-
-        $action = new SystemOverviewAction($environmentAction, $cpuAction, $memoryAction, $storageAction, $networkAction);
+        $action = createOverviewAction(cpu: new FakeFailureCpuSource);
         $result = $action->execute();
 
         expect($result->isFailure())->toBeTrue();
@@ -229,14 +225,7 @@ describe('SystemOverviewAction', function () {
     });
 
     it('propagates memory metrics failure', function () {
-        $environmentAction = new DetectEnvironmentAction(new FakeSuccessEnvironmentDetector);
-        $cpuAction = new ReadCpuMetricsAction(new FakeSuccessCpuSource);
-        $memoryAction = new ReadMemoryMetricsAction(new FakeFailureMemorySource);
-
-        $storageAction = new ReadStorageMetricsAction(new FakeSuccessStorageSource);
-        $networkAction = new ReadNetworkMetricsAction(new FakeSuccessNetworkSource);
-
-        $action = new SystemOverviewAction($environmentAction, $cpuAction, $memoryAction, $storageAction, $networkAction);
+        $action = createOverviewAction(memory: new FakeFailureMemorySource);
         $result = $action->execute();
 
         expect($result->isFailure())->toBeTrue();
@@ -244,33 +233,30 @@ describe('SystemOverviewAction', function () {
         expect($result->getError()->getMessage())->toBe('Memory metrics read failed');
     });
 
-    it('propagates storage metrics failure', function () {
-        $environmentAction = new DetectEnvironmentAction(new FakeSuccessEnvironmentDetector);
-        $cpuAction = new ReadCpuMetricsAction(new FakeSuccessCpuSource);
-        $memoryAction = new ReadMemoryMetricsAction(new FakeSuccessMemorySource);
-        $storageAction = new ReadStorageMetricsAction(new FakeFailureStorageSource);
-        $networkAction = new ReadNetworkMetricsAction(new FakeSuccessNetworkSource);
-
-        $action = new SystemOverviewAction($environmentAction, $cpuAction, $memoryAction, $storageAction, $networkAction);
+    it('gracefully handles storage failure', function () {
+        $action = createOverviewAction(storage: new FakeFailureStorageSource);
         $result = $action->execute();
 
-        expect($result->isFailure())->toBeTrue();
-        expect($result->getError())->toBeInstanceOf(SystemMetricsException::class);
-        expect($result->getError()->getMessage())->toBe('Storage metrics read failed');
+        expect($result->isSuccess())->toBeTrue();
+        expect($result->getValue()->storage)->toBeNull();
     });
 
-    it('propagates network metrics failure', function () {
-        $environmentAction = new DetectEnvironmentAction(new FakeSuccessEnvironmentDetector);
-        $cpuAction = new ReadCpuMetricsAction(new FakeSuccessCpuSource);
-        $memoryAction = new ReadMemoryMetricsAction(new FakeSuccessMemorySource);
-        $storageAction = new ReadStorageMetricsAction(new FakeSuccessStorageSource);
-        $networkAction = new ReadNetworkMetricsAction(new FakeFailureNetworkSource);
-
-        $action = new SystemOverviewAction($environmentAction, $cpuAction, $memoryAction, $storageAction, $networkAction);
+    it('gracefully handles network failure', function () {
+        $action = createOverviewAction(network: new FakeFailureNetworkSource);
         $result = $action->execute();
 
-        expect($result->isFailure())->toBeTrue();
-        expect($result->getError())->toBeInstanceOf(SystemMetricsException::class);
-        expect($result->getError()->getMessage())->toBe('Network metrics read failed');
+        expect($result->isSuccess())->toBeTrue();
+        expect($result->getValue()->network)->toBeNull();
+    });
+
+    it('includes load average uptime limits and container as nullable', function () {
+        $action = createOverviewAction();
+        $result = $action->execute();
+
+        expect($result->isSuccess())->toBeTrue();
+        $overview = $result->getValue();
+
+        // These are platform-dependent, just verify they're accessible
+        expect($overview)->toHaveProperties(['loadAverage', 'uptime', 'limits', 'container']);
     });
 });

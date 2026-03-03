@@ -135,15 +135,38 @@ echo "Memory: " . round($limits->memoryBytes / 1024**3, 2) . " GB\n";
 
 ### `SystemMetrics::overview(): Result<SystemOverview>`
 
-Get complete snapshot of all available metrics.
+Get complete snapshot of all available metrics in a single call.
+
+Core metrics (environment, CPU, memory) are required — if any fail, the result is a failure.
+Optional metrics (storage, network, load average, uptime, limits, container) gracefully degrade to `null`.
 
 **Returns:** `Result<SystemOverview>`
+
+**Properties:**
+| Property | Type | Required |
+|---|---|---|
+| `environment` | `EnvironmentSnapshot` | Yes |
+| `cpu` | `CpuSnapshot` | Yes |
+| `memory` | `MemorySnapshot` | Yes |
+| `storage` | `?StorageSnapshot` | No |
+| `network` | `?NetworkSnapshot` | No |
+| `loadAverage` | `?LoadAverageSnapshot` | No |
+| `uptime` | `?UptimeSnapshot` | No |
+| `limits` | `?SystemLimits` | No |
+| `container` | `?ContainerLimits` | No |
+
 **Example:**
 ```php
 $overview = SystemMetrics::overview()->getValue();
 echo "OS: {$overview->environment->os->name}\n";
 echo "CPU Cores: {$overview->cpu->coreCount()}\n";
 echo "Memory: " . round($overview->memory->usedPercentage(), 1) . "%\n";
+echo "Load: {$overview->loadAverage?->oneMinute}\n";
+echo "Uptime: {$overview->uptime?->humanReadable()}\n";
+
+if ($overview->limits?->isContainerized()) {
+    echo "Container memory limit: " . round($overview->limits->memoryBytes / 1024**2) . " MB\n";
+}
 ```
 
 ### `SystemMetrics::clearEnvironmentCache(): void`

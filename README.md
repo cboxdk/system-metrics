@@ -102,13 +102,17 @@ if ($result->isSuccess()) {
     // CPU
     echo "CPU Cores: {$overview->cpu->coreCount()}\n";
 
-    // Memory
-    $usedGB = round($overview->memory->usedBytes / 1024**3, 2);
-    echo "Memory Used: {$usedGB} GB\n";
-    echo "Memory Usage: " . round($overview->memory->usedPercentage(), 1) . "%\n";
+    // Memory (cgroup-aware — shows container limit when containerized)
+    if ($overview->limits !== null) {
+        echo "Memory: " . round($overview->limits->memoryUtilization(), 1) . "%\n";
+        echo "Containerized: " . ($overview->limits->isContainerized() ? 'yes' : 'no') . "\n";
+    }
 
     // Load Average
-    echo "Load Average (1 min): {$overview->loadAverage->oneMinute}\n";
+    echo "Load Average (1 min): {$overview->loadAverage?->oneMinute}\n";
+
+    // Uptime
+    echo "Uptime: {$overview->uptime?->humanReadable()}\n";
 }
 ```
 

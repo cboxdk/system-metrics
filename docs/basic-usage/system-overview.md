@@ -21,26 +21,18 @@ $overview = SystemMetrics::overview()->getValue();
 ## Available Metrics
 
 ```php
-// Environment information
+// Core metrics (always present)
 $overview->environment  // EnvironmentSnapshot
-
-// CPU metrics
 $overview->cpu          // CpuSnapshot
-
-// Memory metrics
 $overview->memory       // MemorySnapshot
 
-// Load average
-$overview->loadAverage  // LoadAverageSnapshot
-
-// System uptime
-$overview->uptime       // UptimeSnapshot
-
-// Storage metrics (may be null if unavailable)
+// Optional metrics (null if unavailable on the current platform)
 $overview->storage      // StorageSnapshot|null
-
-// Network metrics (may be null if unavailable)
 $overview->network      // NetworkSnapshot|null
+$overview->loadAverage  // LoadAverageSnapshot|null
+$overview->uptime       // UptimeSnapshot|null
+$overview->limits       // SystemLimits|null      — cgroup-aware resource limits
+$overview->container    // ContainerLimits|null   — container-specific cgroup data
 ```
 
 ## Complete Example
@@ -85,6 +77,32 @@ if ($overview->network !== null) {
     echo "Total received: " . round($overview->network->totalBytesReceived() / 1024**3, 2) . " GB\n";
     echo "Total sent: " . round($overview->network->totalBytesSent() / 1024**3, 2) . " GB\n";
 }
+
+if ($overview->limits !== null) {
+    echo "\n=== RESOURCE LIMITS ===\n";
+    echo "Source: {$overview->limits->source->value}\n";
+    echo "CPU cores: {$overview->limits->cpuCores}\n";
+    echo "Memory: " . round($overview->limits->memoryBytes / 1024**3, 2) . " GB\n";
+    echo "Memory utilization: " . round($overview->limits->memoryUtilization(), 1) . "%\n";
+
+    if ($overview->limits->isContainerized()) {
+        echo "Running inside container (cgroup limits active)\n";
+    }
+}
+
+if ($overview->container !== null) {
+    echo "\n=== CONTAINER ===\n";
+    echo "Cgroup version: {$overview->container->cgroupVersion->value}\n";
+
+    if ($overview->container->hasMemoryLimit()) {
+        echo "Memory limit: " . round($overview->container->memoryLimitBytes / 1024**2) . " MB\n";
+        echo "Memory utilization: " . round($overview->container->memoryUtilizationPercentage(), 1) . "%\n";
+    }
+
+    if ($overview->container->hasCpuLimit()) {
+        echo "CPU quota: {$overview->container->cpuQuota} cores\n";
+    }
+}
 ```
 
 ## Use Cases
@@ -99,10 +117,14 @@ echo json_encode([
     'status' => 'healthy',
     'system' => [
         'os' => $overview->environment->os->name,
-        'cpu_cores' => $overview->cpu->coreCount(),
-        'memory_usage_percent' => round($overview->memory->usedPercentage(), 2),
-        'load_average_1min' => $overview->loadAverage->oneMinute,
-        'uptime_seconds' => $overview->uptime->totalSeconds,
+        'cpu_cores' => $overview->limits?->cpuCores ?? $overview->cpu->coreCount(),
+        'memory_total' => $overview->limits?->memoryBytes ?? $overview->memory->totalBytes,
+        'memory_usage_percent' => $overview->limits !== null
+            ? round($overview->limits->memoryUtilization(), 2)
+            : round($overview->memory->usedPercentage(), 2),
+        'load_average_1min' => $overview->loadAverage?->oneMinute,
+        'uptime_seconds' => $overview->uptime?->totalSeconds,
+        'containerized' => $overview->limits?->isContainerized() ?? false,
     ],
 ]);
 ```
@@ -128,6 +150,26 @@ return [
 ];
 ```
 
+## Container-Aware Metrics
+
+When running inside Docker or Kubernetes, `overview()` automatically detects cgroup limits. The `limits` property reflects the **effective** resource limits (cgroup when containerized, host when bare metal), and the `container` property provides cgroup-specific details.
+
+```php
+$overview = SystemMetrics::overview()->getValue();
+
+if ($overview->limits?->isContainerized()) {
+    // Memory limit is the container limit, not the host
+    echo "Container memory: " . round($overview->limits->memoryBytes / 1024**2) . " MB\n";
+    echo "Container CPU cores: {$overview->limits->cpuCores}\n";
+
+    // Detailed container info
+    if ($overview->container !== null) {
+        echo "Throttled: " . ($overview->container->isCpuThrottled() ? 'yes' : 'no') . "\n";
+        echo "OOM kills: " . ($overview->container->oomKillCount ?? 0) . "\n";
+    }
+}
+```
+
 ## Related Documentation
 
 - [Environment Detection](environment-detection.md)
@@ -137,3 +179,5 @@ return [
 - [System Uptime](uptime.md)
 - [Storage Metrics](storage-metrics.md)
 - [Network Metrics](network-metrics.md)
+- [Container Metrics](../advanced-usage/container-metrics.md)
+- [Unified Limits](../advanced-usage/unified-limits.md)
