@@ -111,7 +111,9 @@ final class SystemMetrics
      */
     public static function loadAverage(): Result
     {
-        $action = new ReadLoadAverageAction;
+        $action = new ReadLoadAverageAction(
+            SystemMetricsConfig::getLoadAverageSource()
+        );
 
         return $action->execute();
     }
@@ -123,7 +125,9 @@ final class SystemMetrics
      */
     public static function uptime(): Result
     {
-        $action = new ReadUptimeAction;
+        $action = new ReadUptimeAction(
+            SystemMetricsConfig::getUptimeSource()
+        );
 
         return $action->execute();
     }
@@ -141,7 +145,9 @@ final class SystemMetrics
      */
     public static function limits(): Result
     {
-        $action = new ReadSystemLimitsAction;
+        $action = new ReadSystemLimitsAction(
+            SystemMetricsConfig::getSystemLimitsSource()
+        );
 
         return $action->execute();
     }
@@ -153,7 +159,9 @@ final class SystemMetrics
      */
     public static function storage(): Result
     {
-        $action = new ReadStorageMetricsAction;
+        $action = new ReadStorageMetricsAction(
+            SystemMetricsConfig::getStorageMetricsSource()
+        );
 
         return $action->execute();
     }
@@ -165,7 +173,9 @@ final class SystemMetrics
      */
     public static function network(): Result
     {
-        $action = new ReadNetworkMetricsAction;
+        $action = new ReadNetworkMetricsAction(
+            SystemMetricsConfig::getNetworkMetricsSource()
+        );
 
         return $action->execute();
     }
@@ -177,7 +187,9 @@ final class SystemMetrics
      */
     public static function container(): Result
     {
-        $action = new ReadContainerMetricsAction;
+        $action = new ReadContainerMetricsAction(
+            SystemMetricsConfig::getContainerMetricsSource()
+        );
 
         return $action->execute();
     }
@@ -251,8 +263,12 @@ final class SystemMetrics
             new DetectEnvironmentAction(SystemMetricsConfig::getEnvironmentDetector()),
             new ReadCpuMetricsAction(SystemMetricsConfig::getCpuMetricsSource()),
             new ReadMemoryMetricsAction(SystemMetricsConfig::getMemoryMetricsSource()),
-            new ReadStorageMetricsAction,
-            new ReadNetworkMetricsAction,
+            new ReadStorageMetricsAction(SystemMetricsConfig::getStorageMetricsSource()),
+            new ReadNetworkMetricsAction(SystemMetricsConfig::getNetworkMetricsSource()),
+            new ReadLoadAverageAction(SystemMetricsConfig::getLoadAverageSource()),
+            new ReadUptimeAction(SystemMetricsConfig::getUptimeSource()),
+            new ReadSystemLimitsAction(SystemMetricsConfig::getSystemLimitsSource()),
+            new ReadContainerMetricsAction(SystemMetricsConfig::getContainerMetricsSource()),
         );
 
         return $action->execute();

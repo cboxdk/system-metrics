@@ -1,12 +1,30 @@
 <?php
 
 use Cbox\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\Contracts\ContainerMetricsSource;
 use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
 use Cbox\SystemMetrics\Contracts\EnvironmentDetector;
+use Cbox\SystemMetrics\Contracts\LoadAverageSource;
 use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
+use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\Contracts\SystemLimitsSource;
+use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\Sources\Container\CompositeContainerMetricsSource;
 use Cbox\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
 use Cbox\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
+use Cbox\SystemMetrics\Sources\LoadAverage\CompositeLoadAverageSource;
 use Cbox\SystemMetrics\Sources\Memory\CompositeMemoryMetricsSource;
+use Cbox\SystemMetrics\Sources\Network\CompositeNetworkMetricsSource;
+use Cbox\SystemMetrics\Sources\Storage\CompositeStorageMetricsSource;
+use Cbox\SystemMetrics\Sources\SystemLimits\CompositeSystemLimitsSource;
+use Cbox\SystemMetrics\Sources\Uptime\CompositeUptimeSource;
+use Cbox\SystemMetrics\Testing\FakeContainerMetricsSource;
+use Cbox\SystemMetrics\Testing\FakeLoadAverageSource;
+use Cbox\SystemMetrics\Testing\FakeNetworkMetricsSource;
+use Cbox\SystemMetrics\Testing\FakeStorageMetricsSource;
+use Cbox\SystemMetrics\Testing\FakeSystemLimitsSource;
+use Cbox\SystemMetrics\Testing\FakeUptimeSource;
 
 beforeEach(function () {
     // Reset config before each test to ensure isolation
@@ -239,5 +257,107 @@ describe('SystemMetricsConfig', function () {
         expect($detector1)->toBe($customDetector);
         expect($detector2)->toBe($customDetector);
         expect($detector1)->toBe($detector2);
+    });
+
+    it('returns default LoadAverageSource when none set', function () {
+        $source = SystemMetricsConfig::getLoadAverageSource();
+
+        expect($source)->toBeInstanceOf(LoadAverageSource::class);
+        expect($source)->toBeInstanceOf(CompositeLoadAverageSource::class);
+    });
+
+    it('returns custom LoadAverageSource when set', function () {
+        $custom = new FakeLoadAverageSource;
+        SystemMetricsConfig::setLoadAverageSource($custom);
+
+        expect(SystemMetricsConfig::getLoadAverageSource())->toBe($custom);
+    });
+
+    it('returns default StorageMetricsSource when none set', function () {
+        $source = SystemMetricsConfig::getStorageMetricsSource();
+
+        expect($source)->toBeInstanceOf(StorageMetricsSource::class);
+        expect($source)->toBeInstanceOf(CompositeStorageMetricsSource::class);
+    });
+
+    it('returns custom StorageMetricsSource when set', function () {
+        $custom = new FakeStorageMetricsSource;
+        SystemMetricsConfig::setStorageMetricsSource($custom);
+
+        expect(SystemMetricsConfig::getStorageMetricsSource())->toBe($custom);
+    });
+
+    it('returns default NetworkMetricsSource when none set', function () {
+        $source = SystemMetricsConfig::getNetworkMetricsSource();
+
+        expect($source)->toBeInstanceOf(NetworkMetricsSource::class);
+        expect($source)->toBeInstanceOf(CompositeNetworkMetricsSource::class);
+    });
+
+    it('returns custom NetworkMetricsSource when set', function () {
+        $custom = new FakeNetworkMetricsSource;
+        SystemMetricsConfig::setNetworkMetricsSource($custom);
+
+        expect(SystemMetricsConfig::getNetworkMetricsSource())->toBe($custom);
+    });
+
+    it('returns default UptimeSource when none set', function () {
+        $source = SystemMetricsConfig::getUptimeSource();
+
+        expect($source)->toBeInstanceOf(UptimeSource::class);
+        expect($source)->toBeInstanceOf(CompositeUptimeSource::class);
+    });
+
+    it('returns custom UptimeSource when set', function () {
+        $custom = new FakeUptimeSource;
+        SystemMetricsConfig::setUptimeSource($custom);
+
+        expect(SystemMetricsConfig::getUptimeSource())->toBe($custom);
+    });
+
+    it('returns default ContainerMetricsSource when none set', function () {
+        $source = SystemMetricsConfig::getContainerMetricsSource();
+
+        expect($source)->toBeInstanceOf(ContainerMetricsSource::class);
+        expect($source)->toBeInstanceOf(CompositeContainerMetricsSource::class);
+    });
+
+    it('returns custom ContainerMetricsSource when set', function () {
+        $custom = new FakeContainerMetricsSource;
+        SystemMetricsConfig::setContainerMetricsSource($custom);
+
+        expect(SystemMetricsConfig::getContainerMetricsSource())->toBe($custom);
+    });
+
+    it('returns default SystemLimitsSource when none set', function () {
+        $source = SystemMetricsConfig::getSystemLimitsSource();
+
+        expect($source)->toBeInstanceOf(SystemLimitsSource::class);
+        expect($source)->toBeInstanceOf(CompositeSystemLimitsSource::class);
+    });
+
+    it('returns custom SystemLimitsSource when set', function () {
+        $custom = new FakeSystemLimitsSource;
+        SystemMetricsConfig::setSystemLimitsSource($custom);
+
+        expect(SystemMetricsConfig::getSystemLimitsSource())->toBe($custom);
+    });
+
+    it('resets all new sources to defaults', function () {
+        SystemMetricsConfig::setLoadAverageSource(new FakeLoadAverageSource);
+        SystemMetricsConfig::setStorageMetricsSource(new FakeStorageMetricsSource);
+        SystemMetricsConfig::setNetworkMetricsSource(new FakeNetworkMetricsSource);
+        SystemMetricsConfig::setUptimeSource(new FakeUptimeSource);
+        SystemMetricsConfig::setContainerMetricsSource(new FakeContainerMetricsSource);
+        SystemMetricsConfig::setSystemLimitsSource(new FakeSystemLimitsSource);
+
+        SystemMetricsConfig::reset();
+
+        expect(SystemMetricsConfig::getLoadAverageSource())->toBeInstanceOf(CompositeLoadAverageSource::class);
+        expect(SystemMetricsConfig::getStorageMetricsSource())->toBeInstanceOf(CompositeStorageMetricsSource::class);
+        expect(SystemMetricsConfig::getNetworkMetricsSource())->toBeInstanceOf(CompositeNetworkMetricsSource::class);
+        expect(SystemMetricsConfig::getUptimeSource())->toBeInstanceOf(CompositeUptimeSource::class);
+        expect(SystemMetricsConfig::getContainerMetricsSource())->toBeInstanceOf(CompositeContainerMetricsSource::class);
+        expect(SystemMetricsConfig::getSystemLimitsSource())->toBeInstanceOf(CompositeSystemLimitsSource::class);
     });
 });

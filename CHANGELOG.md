@@ -23,6 +23,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Absolute Command Path Resolution**: `ProcessRunner` now resolves commands to absolute paths, fixing metric collection in restricted environments like PHP-FPM where `PATH` may not include `/usr/sbin`
 
+- **Testing Support**: New `src/Testing/` namespace with fake sources for all metric types
+  - `FakeSystemMetrics::install()` / `uninstall()` — one-line test setup and teardown
+  - Fake sources for all 9 metric types with `set()` and `failWith()` methods
+  - `FakeContainerMetricsSource::asContainer()` for simulating containerized environments
+  - Sensible defaults representing a healthy 4-core, 8 GB Linux server
+
+- **Full SystemMetricsConfig Support**: All metric sources are now configurable via `SystemMetricsConfig`
+  - Added setters/getters for `LoadAverageSource`, `StorageMetricsSource`, `NetworkMetricsSource`, `UptimeSource`, `ContainerMetricsSource`, `SystemLimitsSource`
+  - `SystemMetrics` facade routes all methods through `SystemMetricsConfig`
+
 #### Breaking Changes
 
 - `SystemOverview::$storage` and `SystemOverview::$network` are now nullable (`?StorageSnapshot`, `?NetworkSnapshot`). Previously they were required and would fail the entire overview if unavailable.
