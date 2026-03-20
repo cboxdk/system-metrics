@@ -5,15 +5,30 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.3.1 - 2026-03-21
+
+### What's Changed
+
+#### Bug Fixes
+
+- **Rewrite container detection to use allowlist strategy**: The previous detection used fragile heuristics (cgroup path analysis, init.scope exclusions) that caused false positives on VMs with cgroup v2 and systemd. Replaced with a clean allowlist approach: check for known container indicators only (sentinel files, PID 1 environment, cgroup keywords). If no known indicator matches, we are not in a container. No more trying to prove a negative.
+- **Detection order** (most reliable first):
+  1. Sentinel files: `/.dockerenv` (Docker), `/run/.containerenv` (Podman)
+  2. PID 1 environment: `container=` variable (LXC/systemd-nspawn)
+  3. Cgroup keywords: `kubepods`, `docker`, `containerd`, `crio`, `lxc` in `/proc/self/cgroup` and `/proc/1/cgroup`
+- Extracted `readCgroupContent()`, `matchContainerRuntime()`, and `containerized()` helpers for readability
+- Added LXC detection via cgroup keywords
+
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v2.3.0...v2.3.1
+
 ## v2.3.0 - 2026-03-20
 
 ### What's Changed
 
 #### Bug Fixes
 
-- **Fix false positive container detection on VMs with cgroup v2**: Modern Linux (Ubuntu 22.04+, Debian 12+) enables cgroup v2 by default even on bare metal and VMs. The container detection now correctly identifies VMs by checking the cgroup path — root cgroup `/` means VM/bare metal, non-root scope means container.
 - **SystemOverviewAction**: Only populates the `container` field when environment detection confirms `insideContainer` is true. Previously, any Linux system with cgroup v2 would report container metrics.
-- **LinuxEnvironmentDetector**: Added `/proc/1/environ` check for systemd container markers (LXC/nspawn). Added cgroup v2 path heuristic for container scope detection.
+- **LinuxEnvironmentDetector**: Added `/proc/1/environ` check for systemd container markers (LXC/nspawn).
 
 #### Deprecations
 

@@ -49,8 +49,13 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
 
         if ($result->isSuccess()) {
             $content = $result->getValue();
-            $name = $this->extractOsReleaseField($content, 'NAME') ?? 'Linux';
-            $version = $this->extractOsReleaseField($content, 'VERSION_ID') ?? 'unknown';
+            $name = $this->extractOsReleaseField($content, 'PRETTY_NAME')
+                ?? $this->extractOsReleaseField($content, 'NAME')
+                ?? 'Linux';
+            $version = $this->extractOsReleaseField($content, 'VERSION_ID')
+                ?? $this->extractOsReleaseField($content, 'VERSION')
+                ?? $this->extractOsReleaseField($content, 'BUILD_ID')
+                ?? 'unknown';
 
             return new OperatingSystem(
                 family: OsFamily::Linux,
@@ -63,7 +68,7 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
         return new OperatingSystem(
             family: OsFamily::Linux,
             name: php_uname('s'),
-            version: 'unknown',
+            version: php_uname('r'),
         );
     }
 
@@ -152,102 +157,45 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
         );
     }
 
+    /**
+     * Detect if we are running inside a container.
+     *
+     * Strategy: check for known container indicators only. Each check looks for
+     * a specific, well-documented marker that only exists inside containers.
+     * If no indicator matches, we are not in a container. We never try to prove
+     * a negative ("this looks like a VM because...") — that path leads to
+     * fragile heuristics and false positives.
+     *
+     * Detection order (most reliable first):
+     * 1. Sentinel files: /.dockerenv (Docker), /run/.containerenv (Podman)
+     * 2. PID 1 environment: container= variable set by LXC/systemd-nspawn
+     * 3. Cgroup keywords: docker, kubepods, containerd, crio, lxc in cgroup paths
+     */
     private function detectContainerization(): Containerization
     {
-        // Check for Docker
+        // 1. Sentinel files — definitive, no false positives
         if ($this->fileReader->exists('/.dockerenv')) {
-            return new Containerization(
-                type: ContainerType::Docker,
-                runtime: 'docker',
-                insideContainer: true,
-                rawIdentifier: '/.dockerenv',
-            );
+            return $this->containerized(ContainerType::Docker, 'docker', '/.dockerenv');
         }
 
-        // Check for Podman
         if ($this->fileReader->exists('/run/.containerenv')) {
-            return new Containerization(
-                type: ContainerType::Other,
-                runtime: 'podman',
-                insideContainer: true,
-                rawIdentifier: '/run/.containerenv',
-            );
+            return $this->containerized(ContainerType::Other, 'podman', '/run/.containerenv');
         }
 
-        // Check /proc/1/environ for container_t SELinux label (LXC/systemd-nspawn)
+        // 2. PID 1 environment — LXC and systemd-nspawn set container= in init env
         $initEnviron = $this->fileReader->read('/proc/1/environ');
         if ($initEnviron->isSuccess() && str_contains($initEnviron->getValue(), 'container=')) {
-            return new Containerization(
-                type: ContainerType::Other,
-                runtime: 'systemd-container',
-                insideContainer: true,
-                rawIdentifier: '/proc/1/environ',
-            );
+            return $this->containerized(ContainerType::Other, 'systemd-container', '/proc/1/environ');
         }
 
-        // Check cgroup for container indicators
-        $cgroupResult = $this->fileReader->read('/proc/self/cgroup');
-        if ($cgroupResult->isSuccess()) {
-            $content = $cgroupResult->getValue();
+        // 3. Cgroup keywords — check both /proc/self/cgroup and /proc/1/cgroup
+        //    for runtime-specific identifiers. Works on both cgroup v1 and v2.
+        $cgroupContent = $this->readCgroupContent();
 
-            if (str_contains($content, 'docker')) {
-                return new Containerization(
-                    type: ContainerType::Docker,
-                    runtime: 'docker',
-                    insideContainer: true,
-                    rawIdentifier: '/proc/self/cgroup',
-                );
-            }
-
-            if (str_contains($content, 'kubepods')) {
-                return new Containerization(
-                    type: ContainerType::Kubernetes,
-                    runtime: 'containerd',
-                    insideContainer: true,
-                    rawIdentifier: '/proc/self/cgroup',
-                );
-            }
-
-            if (str_contains($content, 'containerd')) {
-                return new Containerization(
-                    type: ContainerType::Containerd,
-                    runtime: 'containerd',
-                    insideContainer: true,
-                    rawIdentifier: '/proc/self/cgroup',
-                );
-            }
-
-            if (str_contains($content, 'crio')) {
-                return new Containerization(
-                    type: ContainerType::Crio,
-                    runtime: 'cri-o',
-                    insideContainer: true,
-                    rawIdentifier: '/proc/self/cgroup',
-                );
-            }
-
-            // cgroup v2: check PID 1's cgroup path for container detection.
-            // On VMs/bare metal, PID 1 (systemd/init) is always at root cgroup "/".
-            // In containers, PID 1 is placed in a non-root cgroup by the runtime.
-            // We check /proc/1/cgroup (not /proc/self/cgroup) because PHP-FPM
-            // runs under a systemd service slice on VMs (e.g. /system.slice/php8.4-fpm.service)
-            // which would cause a false positive if we checked the current process.
-            // cgroup v2: check PID 1's cgroup path.
-            // On VMs/bare metal, PID 1 (systemd) is at "/" or "/init.scope".
-            // In containers, PID 1 is in a runtime-assigned scope like
-            // "/docker/<hash>" or "/system.slice/docker-<hash>.scope".
-            $pid1Cgroup = $this->fileReader->read('/proc/1/cgroup');
-            if ($pid1Cgroup->isSuccess() && preg_match('#0::/(.*)#', $pid1Cgroup->getValue(), $matches)) {
-                $initCgroupPath = trim($matches[1]);
-                // Root cgroup, empty, or systemd init.scope = VM/bare metal
-                if ($initCgroupPath !== '' && $initCgroupPath !== '/' && $initCgroupPath !== 'init.scope') {
-                    return new Containerization(
-                        type: ContainerType::Other,
-                        runtime: 'unknown',
-                        insideContainer: true,
-                        rawIdentifier: "/proc/1/cgroup: {$initCgroupPath}",
-                    );
-                }
+        if ($cgroupContent !== null) {
+            $match = $this->matchContainerRuntime($cgroupContent);
+            if ($match !== null) {
+                return $match;
             }
         }
 
@@ -256,6 +204,63 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
             runtime: null,
             insideContainer: false,
             rawIdentifier: null,
+        );
+    }
+
+    /**
+     * Read cgroup content from both self and PID 1 for keyword matching.
+     */
+    private function readCgroupContent(): ?string
+    {
+        $parts = [];
+
+        $self = $this->fileReader->read('/proc/self/cgroup');
+        if ($self->isSuccess()) {
+            $parts[] = $self->getValue();
+        }
+
+        $pid1 = $this->fileReader->read('/proc/1/cgroup');
+        if ($pid1->isSuccess()) {
+            $parts[] = $pid1->getValue();
+        }
+
+        return $parts !== [] ? implode("\n", $parts) : null;
+    }
+
+    /**
+     * Match known container runtime keywords in cgroup content.
+     *
+     * Each keyword is specific to a container runtime and does not appear
+     * in normal VM/bare-metal cgroup paths. This is an allowlist approach:
+     * only known container patterns trigger detection.
+     */
+    private function matchContainerRuntime(string $cgroupContent): ?Containerization
+    {
+        /** @var array<string, array{type: ContainerType, runtime: string}> */
+        $runtimes = [
+            'kubepods' => ['type' => ContainerType::Kubernetes, 'runtime' => 'containerd'],
+            'docker' => ['type' => ContainerType::Docker, 'runtime' => 'docker'],
+            'containerd' => ['type' => ContainerType::Containerd, 'runtime' => 'containerd'],
+            'crio' => ['type' => ContainerType::Crio, 'runtime' => 'cri-o'],
+            'lxc' => ['type' => ContainerType::Other, 'runtime' => 'lxc'],
+        ];
+
+        foreach ($runtimes as $keyword => $config) {
+            if (str_contains($cgroupContent, $keyword)) {
+                return $this->containerized($config['type'], $config['runtime'], '/proc/cgroup');
+            }
+        }
+
+        return null;
+    }
+
+    private function containerized(ContainerType $type, string $runtime, string $identifier): Containerization
+    {
+        return new Containerization(
+            type: $type,
+            runtime: $runtime,
+            insideContainer: true,
+            rawIdentifier: $identifier,
         );
     }
 
