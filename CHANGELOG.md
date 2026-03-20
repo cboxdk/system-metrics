@@ -5,6 +5,22 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.3.0 - 2026-03-20
+
+### What's Changed
+
+#### Bug Fixes
+
+- **Fix false positive container detection on VMs with cgroup v2**: Modern Linux (Ubuntu 22.04+, Debian 12+) enables cgroup v2 by default even on bare metal and VMs. The container detection now correctly identifies VMs by checking the cgroup path — root cgroup `/` means VM/bare metal, non-root scope means container.
+- **SystemOverviewAction**: Only populates the `container` field when environment detection confirms `insideContainer` is true. Previously, any Linux system with cgroup v2 would report container metrics.
+- **LinuxEnvironmentDetector**: Added `/proc/1/environ` check for systemd container markers (LXC/nspawn). Added cgroup v2 path heuristic for container scope detection.
+
+#### Deprecations
+
+- **`SystemLimits::isContainerized()`**: Deprecated. Use `SystemMetrics::environment()->containerization->insideContainer` for accurate container detection. The cgroup source alone is not a reliable indicator of containerization on modern Linux.
+
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v2.2.0...v2.3.0
+
 ## v2.2.0 - 2026-03-03
 
 ### What's Changed
