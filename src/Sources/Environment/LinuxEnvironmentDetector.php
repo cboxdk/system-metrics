@@ -232,10 +232,15 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
             // We check /proc/1/cgroup (not /proc/self/cgroup) because PHP-FPM
             // runs under a systemd service slice on VMs (e.g. /system.slice/php8.4-fpm.service)
             // which would cause a false positive if we checked the current process.
+            // cgroup v2: check PID 1's cgroup path.
+            // On VMs/bare metal, PID 1 (systemd) is at "/" or "/init.scope".
+            // In containers, PID 1 is in a runtime-assigned scope like
+            // "/docker/<hash>" or "/system.slice/docker-<hash>.scope".
             $pid1Cgroup = $this->fileReader->read('/proc/1/cgroup');
-            if ($pid1Cgroup->isSuccess() && preg_match('#0::/(.+)#', $pid1Cgroup->getValue(), $matches)) {
+            if ($pid1Cgroup->isSuccess() && preg_match('#0::/(.*)#', $pid1Cgroup->getValue(), $matches)) {
                 $initCgroupPath = trim($matches[1]);
-                if ($initCgroupPath !== '' && $initCgroupPath !== '/') {
+                // Root cgroup, empty, or systemd init.scope = VM/bare metal
+                if ($initCgroupPath !== '' && $initCgroupPath !== '/' && $initCgroupPath !== 'init.scope') {
                     return new Containerization(
                         type: ContainerType::Other,
                         runtime: 'unknown',
