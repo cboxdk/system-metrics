@@ -174,6 +174,17 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
             );
         }
 
+        // Check /proc/1/environ for container_t SELinux label (LXC/systemd-nspawn)
+        $initEnviron = $this->fileReader->read('/proc/1/environ');
+        if ($initEnviron->isSuccess() && str_contains($initEnviron->getValue(), 'container=')) {
+            return new Containerization(
+                type: ContainerType::Other,
+                runtime: 'systemd-container',
+                insideContainer: true,
+                rawIdentifier: '/proc/1/environ',
+            );
+        }
+
         // Check cgroup for container indicators
         $cgroupResult = $this->fileReader->read('/proc/self/cgroup');
         if ($cgroupResult->isSuccess()) {
@@ -213,6 +224,22 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
                     insideContainer: true,
                     rawIdentifier: '/proc/self/cgroup',
                 );
+            }
+
+            // cgroup v2: check if PID 1 cgroup scope indicates a container
+            // On VMs/bare metal, /proc/self/cgroup is "0::/" (root cgroup)
+            // In containers, it's "0::/docker/<hash>" or "0::/system.slice/docker-<hash>.scope"
+            if (preg_match('#0::/(.+)#', $content, $matches)) {
+                $cgroupPath = trim($matches[1]);
+                // Root cgroup "/" means bare metal or VM — not a container
+                if ($cgroupPath !== '' && $cgroupPath !== '/') {
+                    return new Containerization(
+                        type: ContainerType::Other,
+                        runtime: 'unknown',
+                        insideContainer: true,
+                        rawIdentifier: "/proc/self/cgroup: {$cgroupPath}",
+                    );
+                }
             }
         }
 

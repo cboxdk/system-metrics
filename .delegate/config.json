@@ -1,0 +1,31 @@
+{
+    "project_id": 12,
+    "name": "System Metrics",
+    "delegate_url": "https://delegate.test",
+    "base_prompt": null,
+    "updated_at": "2026-01-23T10:33:15+00:00",
+    "git": {
+        "workflow": "github_flow",
+        "enabled": true,
+        "auto_commit": true,
+        "auto_push": true,
+        "auto_create_pr": false,
+        "commit_convention": "conventional",
+        "branch_template": "{prefix}/{task_id}-{slug}",
+        "branch_prefix": "delegate",
+        "base_branch": null
+    },
+    "evaluation": {
+        "enabled": false,
+        "provider": "gemini",
+        "model": "gemini-2.0-flash",
+        "auto_approve_threshold": 0.8,
+        "require_approval_below": 0.5,
+        "criteria": [
+            "task_completion",
+            "code_quality",
+            "test_coverage",
+            "documentation"
+        ]
+    }
+}

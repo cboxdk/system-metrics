@@ -1,0 +1,10 @@
+{
+    "task_id": "fa99ad81-b340-4e8b-ae96-21ab957e5f07",
+    "started_at": "2026-02-25T15:30:29Z",
+    "ended_at": "2026-02-25T15:30:38Z",
+    "status": "completed",
+    "session_id": "3942f53c-4681-48d4-a44e-9098ca25c514",
+    "duration_ms": 6849,
+    "cost_usd": 0.24777099999999996,
+    "num_turns": 2
+}

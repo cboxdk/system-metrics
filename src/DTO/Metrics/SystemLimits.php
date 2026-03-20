@@ -121,7 +121,12 @@ final readonly class SystemLimits
     }
 
     /**
-     * Is system running in container with cgroup limits?
+     * Whether limits were sourced from cgroups.
+     *
+     * @deprecated Use SystemMetrics::environment()->containerization->insideContainer
+     *             for accurate container detection. Cgroup v2 is standard on modern
+     *             Linux (Ubuntu 22.04+, Debian 12+) even on bare metal and VMs,
+     *             so cgroup source alone does not indicate containerization.
      */
     public function isContainerized(): bool
     {

@@ -1,0 +1,29 @@
+{
+    "id": "fa99ad81-b340-4e8b-ae96-21ab957e5f07",
+    "title": "hello world",
+    "description": "print hey there",
+    "status": "review",
+    "priority": "medium",
+    "position": 0,
+    "agent_prompt": null,
+    "comments": [
+        {
+            "id": "77f69abf-4c3e-456a-96dc-ccb5fdcb3f7a",
+            "content": "jeg mente print \"prøv igen\"",
+            "is_agent": false,
+            "created_at": "2026-02-25T15:30:17+00:00"
+        },
+        {
+            "id": "ac74e62f-47f1-4e5c-bd42-0edeaeff9fec",
+            "content": "Task queued for work (from Review).",
+            "is_agent": true,
+            "created_at": "2026-02-25T15:30:29+00:00"
+        }
+    ],
+    "screenshots": [],
+    "started_at": "2026-02-25T15:29:21Z",
+    "completed_at": "2026-02-25T15:29:31Z",
+    "created_at": "2026-02-25T15:29:20+00:00",
+    "updated_at": "2026-02-25T15:30:38Z",
+    "session_id": null
+}

@@ -69,10 +69,19 @@ final class SystemOverviewAction
         $loadAverageResult = $this->loadAverageAction->execute();
         $uptimeResult = $this->uptimeAction->execute();
         $limitsResult = $this->limitsAction->execute();
-        $containerResult = $this->containerAction->execute();
+
+        // Only collect container metrics when actually running inside a container
+        $environment = $environmentResult->getValue();
+        $isContainerized = $environment->containerization->insideContainer;
+
+        $container = null;
+        if ($isContainerized) {
+            $containerResult = $this->containerAction->execute();
+            $container = $containerResult->isSuccess() ? $containerResult->getValue() : null;
+        }
 
         return Result::success(new SystemOverview(
-            environment: $environmentResult->getValue(),
+            environment: $environment,
             cpu: $cpuResult->getValue(),
             memory: $memoryResult->getValue(),
             storage: $storageResult->isSuccess() ? $storageResult->getValue() : null,
@@ -80,7 +89,7 @@ final class SystemOverviewAction
             loadAverage: $loadAverageResult->isSuccess() ? $loadAverageResult->getValue() : null,
             uptime: $uptimeResult->isSuccess() ? $uptimeResult->getValue() : null,
             limits: $limitsResult->isSuccess() ? $limitsResult->getValue() : null,
-            container: $containerResult->isSuccess() ? $containerResult->getValue() : null,
+            container: $container,
         ));
     }
 }
