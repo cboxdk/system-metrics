@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\LoadAverage;
 
 use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
 use Cbox\SystemMetrics\Support\OsDetector;
@@ -27,12 +28,12 @@ final class CompositeLoadAverageSource implements LoadAverageSource
     /**
      * Read load average using the OS-specific implementation.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<LoadAverageSnapshot>
      */
     public function read(): Result
     {
         if ($this->source === null) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
+            /** @var Result<LoadAverageSnapshot> */
             return Result::failure(
                 UnsupportedOperatingSystemException::forOs(PHP_OS_FAMILY)
             );

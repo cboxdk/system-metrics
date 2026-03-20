@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Actions;
 
 use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Sources\Uptime\CompositeUptimeSource;
 
@@ -20,7 +21,7 @@ final readonly class ReadUptimeAction
     /**
      * Execute the action.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot>
+     * @return Result<UptimeSnapshot>
      */
     public function execute(): Result
     {

@@ -6,6 +6,7 @@ namespace Cbox\SystemMetrics\Sources\Cpu;
 
 use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
 use Cbox\SystemMetrics\Contracts\FileReaderInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\FileReader;
 use Cbox\SystemMetrics\Support\Parser\LinuxProcStatParser;
@@ -28,7 +29,7 @@ final class LinuxProcCpuMetricsSource implements CpuMetricsSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot> */
+            /** @var Result<CpuSnapshot> */
             return Result::failure($error);
         }
 

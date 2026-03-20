@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cbox\SystemMetrics\DTO\Metrics\Cpu;
 
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
 use DateTimeImmutable;
 
 /**
@@ -15,7 +16,7 @@ use DateTimeImmutable;
  * CPU counters are cumulative since boot (like an odometer). To calculate speed (usage %),
  * you need to measure distance traveled over time.
  *
- * @see \Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta for similar pattern
+ * @see ProcessDelta for similar pattern
  */
 final readonly class CpuDelta
 {

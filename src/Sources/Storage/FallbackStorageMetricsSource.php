@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Storage;
 
 use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
@@ -44,7 +45,7 @@ final class FallbackStorageMetricsSource implements StorageMetricsSource
             );
         }
 
-        /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot> */
+        /** @var Result<StorageSnapshot> */
         return Result::failure(
             new SystemMetricsException(
                 'All storage metrics sources failed: '.implode('; ', $errors)

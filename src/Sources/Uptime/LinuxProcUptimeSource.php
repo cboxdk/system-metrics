@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Uptime;
 
 use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\FileReader;
 use Cbox\SystemMetrics\Support\Parser\LinuxProcUptimeParser;
@@ -26,7 +27,7 @@ final class LinuxProcUptimeSource implements UptimeSource
         $result = $this->fileReader->read(self::PROC_UPTIME);
 
         if ($result->isFailure()) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot> */
+            /** @var Result<UptimeSnapshot> */
             return $result;
         }
 

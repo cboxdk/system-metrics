@@ -11,6 +11,7 @@ use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use FFI;
+use FFI\CData;
 
 /**
  * Reads CPU metrics from macOS using host_processor_info() via FFI.
@@ -88,9 +89,9 @@ final class MacOsHostProcessorInfoSource implements CpuMetricsSource
             $kr = $ffi->host_processor_info(
                 $host,
                 self::PROCESSOR_CPU_LOAD_INFO,
-                \FFI::addr($processor_count),
-                \FFI::addr($processor_info_addr),
-                \FFI::addr($processor_info_count)
+                FFI::addr($processor_count),
+                FFI::addr($processor_info_addr),
+                FFI::addr($processor_info_count)
             );
 
             if ($kr !== 0) {
@@ -118,7 +119,7 @@ final class MacOsHostProcessorInfoSource implements CpuMetricsSource
             }
 
             $void_ptr = $ffi->cast('void*', $data_addr);
-            \FFI::memcpy($data, $void_ptr, $info_count * 4);
+            FFI::memcpy($data, $void_ptr, $info_count * 4);
 
             // Parse CPU times
             $snapshot = $this->parseSnapshot($data, $num_cpus);
@@ -146,10 +147,10 @@ final class MacOsHostProcessorInfoSource implements CpuMetricsSource
     /**
      * Parse CPU snapshot from raw data.
      *
-     * @param  \FFI\CData  $data  Raw CPU data array (4 values per core)
+     * @param  CData  $data  Raw CPU data array (4 values per core)
      * @param  int  $num_cpus  Number of CPU cores
      */
-    private function parseSnapshot(\FFI\CData $data, int $num_cpus): CpuSnapshot
+    private function parseSnapshot(CData $data, int $num_cpus): CpuSnapshot
     {
         // Calculate system-wide totals
         $total_user = 0;

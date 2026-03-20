@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\LoadAverage;
 
 use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
@@ -45,7 +46,7 @@ final class FallbackLoadAverageSource implements LoadAverageSource
             );
         }
 
-        /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
+        /** @var Result<LoadAverageSnapshot> */
         return Result::failure(
             new SystemMetricsException(
                 'All load average sources failed: '.implode('; ', $errors)

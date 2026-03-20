@@ -9,6 +9,7 @@ use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use FFI;
+use FFI\CData;
 
 /**
  * Reads memory metrics from macOS using host_statistics64() via FFI.
@@ -94,7 +95,7 @@ final class MacOsHostStatisticsMemorySource implements MemoryMetricsSource
     /**
      * Parse memory snapshot from vm_statistics64 structure.
      */
-    private function parseSnapshot(\FFI\CData $vm_info, int $totalBytes, int $pageSize): MemorySnapshot
+    private function parseSnapshot(CData $vm_info, int $totalBytes, int $pageSize): MemorySnapshot
     {
         // Extract memory statistics from vm_statistics64_data_t
         // @phpstan-ignore property.notFound (FFI struct properties defined via cdef)

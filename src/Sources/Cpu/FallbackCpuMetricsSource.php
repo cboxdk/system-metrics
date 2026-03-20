@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Cpu;
 
 use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
@@ -46,7 +47,7 @@ final class FallbackCpuMetricsSource implements CpuMetricsSource
         }
 
         // All sources failed
-        /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot> */
+        /** @var Result<CpuSnapshot> */
         return Result::failure(
             new SystemMetricsException(
                 'All CPU metrics sources failed: '.implode('; ', $errors)

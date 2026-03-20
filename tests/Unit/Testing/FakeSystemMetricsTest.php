@@ -10,6 +10,7 @@ use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
 use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
 use Cbox\SystemMetrics\DTO\Metrics\SystemLimits;
 use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use Cbox\SystemMetrics\SystemMetrics;
 use Cbox\SystemMetrics\Testing\FakeContainerMetricsSource;
 use Cbox\SystemMetrics\Testing\FakeCpuMetricsSource;
@@ -277,7 +278,7 @@ describe('Fake source failure simulation', function () {
     it('simulates load average failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->loadAverage->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Load average unavailable')
+            new SystemMetricsException('Load average unavailable')
         );
 
         $result = SystemMetrics::loadAverage();
@@ -288,7 +289,7 @@ describe('Fake source failure simulation', function () {
     it('simulates memory failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->memory->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Memory read failed')
+            new SystemMetricsException('Memory read failed')
         );
 
         $result = SystemMetrics::memory();
@@ -298,7 +299,7 @@ describe('Fake source failure simulation', function () {
     it('simulates CPU failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->cpu->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('CPU read failed')
+            new SystemMetricsException('CPU read failed')
         );
 
         $result = SystemMetrics::cpu();
@@ -308,7 +309,7 @@ describe('Fake source failure simulation', function () {
     it('simulates storage failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->storage->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Storage read failed')
+            new SystemMetricsException('Storage read failed')
         );
 
         $result = SystemMetrics::storage();
@@ -318,7 +319,7 @@ describe('Fake source failure simulation', function () {
     it('simulates network failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->network->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Network read failed')
+            new SystemMetricsException('Network read failed')
         );
 
         $result = SystemMetrics::network();
@@ -328,7 +329,7 @@ describe('Fake source failure simulation', function () {
     it('simulates uptime failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->uptime->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Uptime read failed')
+            new SystemMetricsException('Uptime read failed')
         );
 
         $result = SystemMetrics::uptime();
@@ -338,7 +339,7 @@ describe('Fake source failure simulation', function () {
     it('simulates system limits failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->limits->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Limits read failed')
+            new SystemMetricsException('Limits read failed')
         );
 
         $result = SystemMetrics::limits();
@@ -348,7 +349,7 @@ describe('Fake source failure simulation', function () {
     it('simulates environment failure causes overview failure', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->environment->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Environment detection failed')
+            new SystemMetricsException('Environment detection failed')
         );
 
         $result = SystemMetrics::overview();
@@ -358,10 +359,10 @@ describe('Fake source failure simulation', function () {
     it('optional metric failures degrade gracefully in overview', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->storage->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Storage failed')
+            new SystemMetricsException('Storage failed')
         );
         $fakes->network->failWith(
-            new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('Network failed')
+            new SystemMetricsException('Network failed')
         );
 
         $result = SystemMetrics::overview();

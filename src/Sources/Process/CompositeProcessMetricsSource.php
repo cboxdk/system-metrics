@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Process;
 
 use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\UnsupportedOperatingSystemException;
 use Cbox\SystemMetrics\Support\OsDetector;
@@ -23,7 +25,7 @@ final class CompositeProcessMetricsSource implements ProcessMetricsSource
         $source = $this->source ?? $this->createOsSpecificSource();
 
         if ($source === null) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
+            /** @var Result<ProcessSnapshot> */
             return Result::failure(
                 UnsupportedOperatingSystemException::forOs(PHP_OS_FAMILY)
             );
@@ -37,7 +39,7 @@ final class CompositeProcessMetricsSource implements ProcessMetricsSource
         $source = $this->source ?? $this->createOsSpecificSource();
 
         if ($source === null) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
+            /** @var Result<ProcessGroupSnapshot> */
             return Result::failure(
                 UnsupportedOperatingSystemException::forOs(PHP_OS_FAMILY)
             );

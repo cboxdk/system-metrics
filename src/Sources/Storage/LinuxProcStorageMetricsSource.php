@@ -7,6 +7,7 @@ namespace Cbox\SystemMetrics\Sources\Storage;
 use Cbox\SystemMetrics\Contracts\FileReaderInterface;
 use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
 use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint;
 use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
@@ -72,7 +73,7 @@ final class LinuxProcStorageMetricsSource implements StorageMetricsSource
                     if (isset($inodeData[$mp->mountPoint])) {
                         $inodes = $inodeData[$mp->mountPoint];
 
-                        return new \Cbox\SystemMetrics\DTO\Metrics\Storage\MountPoint(
+                        return new MountPoint(
                             device: $mp->device,
                             mountPoint: $mp->mountPoint,
                             fsType: $mp->fsType,

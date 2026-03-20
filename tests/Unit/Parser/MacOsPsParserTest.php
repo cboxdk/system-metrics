@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\ParseException;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use Cbox\SystemMetrics\Support\Parser\MacOsPsParser;
 
 it('can parse ps command output', function () {
@@ -276,7 +277,7 @@ it('handles lsof failure gracefully', function () {
         public function execute(string $command): Result
         {
             if (str_starts_with($command, 'lsof')) {
-                return Result::failure(new \Cbox\SystemMetrics\Exceptions\SystemMetricsException('lsof failed'));
+                return Result::failure(new SystemMetricsException('lsof failed'));
             }
 
             return Result::success('');

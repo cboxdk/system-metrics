@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Actions;
 
 use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
 
@@ -20,7 +21,7 @@ final readonly class ReadProcessGroupMetricsAction
     /**
      * Execute the action to read process group metrics.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot>
+     * @return Result<ProcessGroupSnapshot>
      */
     public function execute(int $rootPid): Result
     {

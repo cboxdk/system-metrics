@@ -6,6 +6,7 @@ namespace Cbox\SystemMetrics\Sources\Memory;
 
 use Cbox\SystemMetrics\Contracts\FileReaderInterface;
 use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\FileReader;
 use Cbox\SystemMetrics\Support\Parser\LinuxMeminfoParser;
@@ -28,7 +29,7 @@ final class LinuxProcMeminfoMemoryMetricsSource implements MemoryMetricsSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+            /** @var Result<MemorySnapshot> */
             return Result::failure($error);
         }
 

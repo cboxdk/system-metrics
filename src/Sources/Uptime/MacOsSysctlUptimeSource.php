@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Uptime;
 
 use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\Parser\MacOsSysctlBoottimeParser;
 use Cbox\SystemMetrics\Support\ProcessRunner;
@@ -24,7 +25,7 @@ final class MacOsSysctlUptimeSource implements UptimeSource
         $result = $this->processRunner->execute('sysctl kern.boottime');
 
         if ($result->isFailure()) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot> */
+            /** @var Result<UptimeSnapshot> */
             return $result;
         }
 

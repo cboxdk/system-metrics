@@ -6,6 +6,7 @@ namespace Cbox\SystemMetrics\Sources\Memory;
 
 use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
 use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\Parser\MacOsVmStatParser;
 use Cbox\SystemMetrics\Support\ProcessRunner;
@@ -28,7 +29,7 @@ final class MacOsVmStatMemoryMetricsSource implements MemoryMetricsSource
             $error = $vmStatResult->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+            /** @var Result<MemorySnapshot> */
             return Result::failure($error);
         }
 
@@ -38,7 +39,7 @@ final class MacOsVmStatMemoryMetricsSource implements MemoryMetricsSource
             $error = $hwMemsizeResult->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+            /** @var Result<MemorySnapshot> */
             return Result::failure($error);
         }
 
@@ -48,7 +49,7 @@ final class MacOsVmStatMemoryMetricsSource implements MemoryMetricsSource
             $error = $pageSizeResult->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+            /** @var Result<MemorySnapshot> */
             return Result::failure($error);
         }
 

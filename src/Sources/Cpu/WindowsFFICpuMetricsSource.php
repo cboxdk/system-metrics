@@ -10,6 +10,7 @@ use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use FFI;
+use FFI\CData;
 
 /**
  * Read CPU metrics from Windows using GetSystemTimes() via FFI.
@@ -128,9 +129,9 @@ final class WindowsFFICpuMetricsSource implements CpuMetricsSource
      * FILETIME represents 100-nanosecond intervals since January 1, 1601.
      * We convert to simple tick count for consistency with Linux/macOS.
      *
-     * @param  \FFI\CData  $fileTime  FILETIME structure
+     * @param  CData  $fileTime  FILETIME structure
      */
-    private function fileTimeToTicks(\FFI\CData $fileTime): int
+    private function fileTimeToTicks(CData $fileTime): int
     {
         // @phpstan-ignore property.notFound (FFI struct properties defined via cdef)
         $high = (int) $fileTime->dwHighDateTime;

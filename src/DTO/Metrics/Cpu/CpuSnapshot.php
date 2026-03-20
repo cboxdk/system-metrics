@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cbox\SystemMetrics\DTO\Metrics\Cpu;
 
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
 use DateTimeImmutable;
 
 /**
@@ -182,7 +183,7 @@ final readonly class CpuSnapshot
      * @param  CpuSnapshot  $after  Later snapshot (MUST be taken after waiting)
      * @return CpuDelta Delta with usage percentage calculations
      *
-     * @see \Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta::cpuUsagePercentage() for similar pattern
+     * @see ProcessDelta::cpuUsagePercentage() for similar pattern
      */
     public static function calculateDelta(
         CpuSnapshot $before,

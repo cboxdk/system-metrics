@@ -7,6 +7,7 @@ namespace Cbox\SystemMetrics\Sources\Process;
 use Cbox\SystemMetrics\Contracts\FileReaderInterface;
 use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
 use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\FileReader;
 use Cbox\SystemMetrics\Support\Parser\LinuxProcPidStatParser;
@@ -30,7 +31,7 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
+            /** @var Result<ProcessSnapshot> */
             return Result::failure($error);
         }
 
@@ -45,7 +46,7 @@ final class LinuxProcProcessMetricsSource implements ProcessMetricsSource
             $error = $rootResult->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot> */
+            /** @var Result<ProcessGroupSnapshot> */
             return Result::failure($error);
         }
 

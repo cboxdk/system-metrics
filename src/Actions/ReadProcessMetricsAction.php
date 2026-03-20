@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Actions;
 
 use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
 
@@ -20,7 +21,7 @@ final readonly class ReadProcessMetricsAction
     /**
      * Execute the action to read process metrics.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot>
+     * @return Result<ProcessSnapshot>
      */
     public function execute(int $pid): Result
     {

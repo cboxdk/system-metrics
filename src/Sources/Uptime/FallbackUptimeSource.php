@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Uptime;
 
 use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
@@ -45,7 +46,7 @@ final class FallbackUptimeSource implements UptimeSource
             );
         }
 
-        /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\UptimeSnapshot> */
+        /** @var Result<UptimeSnapshot> */
         return Result::failure(
             new SystemMetricsException(
                 'All uptime sources failed: '.implode('; ', $errors)

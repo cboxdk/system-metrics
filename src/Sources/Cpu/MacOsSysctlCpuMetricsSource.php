@@ -8,6 +8,7 @@ use Cbox\SystemMetrics\Contracts\CpuMetricsSource;
 use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
 use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
+use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use Cbox\SystemMetrics\Support\Parser\MacOsSysctlParser;
 use Cbox\SystemMetrics\Support\ProcessRunner;
 
@@ -38,7 +39,7 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
         if ($cpTimeResult->isFailure()) {
             /** @var Result<CpuSnapshot> */
             return Result::failure(
-                new \Cbox\SystemMetrics\Exceptions\SystemMetricsException(
+                new SystemMetricsException(
                     'kern.cp_time sysctl not available (use MacOsHostProcessorInfoSource for modern macOS)'
                 )
             );
@@ -49,7 +50,7 @@ final class MacOsSysctlCpuMetricsSource implements CpuMetricsSource
         if ($cpTimesResult->isFailure()) {
             /** @var Result<CpuSnapshot> */
             return Result::failure(
-                new \Cbox\SystemMetrics\Exceptions\SystemMetricsException(
+                new SystemMetricsException(
                     'kern.cp_times sysctl not available (use MacOsHostProcessorInfoSource for modern macOS)'
                 )
             );

@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics;
 
 use Cbox\SystemMetrics\Contracts\ProcessMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Process\ProcessStats;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use Cbox\SystemMetrics\Sources\Process\CompositeProcessMetricsSource;
@@ -66,12 +70,12 @@ final class ProcessMetrics
     /**
      * Stop tracking and calculate final statistics.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessStats>
+     * @return Result<ProcessStats>
      */
     public static function stop(string $trackerId): Result
     {
         if (! isset(self::$trackers[$trackerId])) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessStats> */
+            /** @var Result<ProcessStats> */
             return Result::failure(
                 new SystemMetricsException("Tracker ID '{$trackerId}' not found")
             );
@@ -89,12 +93,12 @@ final class ProcessMetrics
     /**
      * Capture a manual sample for a tracked process.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot>
+     * @return Result<ProcessSnapshot>
      */
     public static function sample(string $trackerId): Result
     {
         if (! isset(self::$trackers[$trackerId])) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
+            /** @var Result<ProcessSnapshot> */
             return Result::failure(
                 new SystemMetricsException("Tracker ID '{$trackerId}' not found")
             );
@@ -106,12 +110,12 @@ final class ProcessMetrics
     /**
      * Get delta between start and current state for a tracked process.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta>
+     * @return Result<ProcessDelta>
      */
     public static function delta(string $trackerId): Result
     {
         if (! isset(self::$trackers[$trackerId])) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessDelta> */
+            /** @var Result<ProcessDelta> */
             return Result::failure(
                 new SystemMetricsException("Tracker ID '{$trackerId}' not found")
             );
@@ -123,7 +127,7 @@ final class ProcessMetrics
     /**
      * Get a one-time snapshot of a process (no tracking).
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot>
+     * @return Result<ProcessSnapshot>
      */
     public static function snapshot(int $pid): Result
     {
@@ -135,7 +139,7 @@ final class ProcessMetrics
     /**
      * Get a snapshot of a process group (parent + children).
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessGroupSnapshot>
+     * @return Result<ProcessGroupSnapshot>
      */
     public static function group(int $rootPid): Result
     {
@@ -147,13 +151,13 @@ final class ProcessMetrics
     /**
      * Get a snapshot of the current PHP process.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot>
+     * @return Result<ProcessSnapshot>
      */
     public static function current(): Result
     {
         $pid = getmypid();
         if ($pid === false) {
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Process\ProcessSnapshot> */
+            /** @var Result<ProcessSnapshot> */
             return Result::failure(
                 new SystemMetricsException('Unable to get current process ID')
             );

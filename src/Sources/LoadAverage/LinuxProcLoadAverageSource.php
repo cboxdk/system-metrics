@@ -6,6 +6,7 @@ namespace Cbox\SystemMetrics\Sources\LoadAverage;
 
 use Cbox\SystemMetrics\Contracts\FileReaderInterface;
 use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\FileReader;
 use Cbox\SystemMetrics\Support\Parser\LinuxProcLoadavgParser;
@@ -25,7 +26,7 @@ final readonly class LinuxProcLoadAverageSource implements LoadAverageSource
     /**
      * Read load average from /proc/loadavg.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<LoadAverageSnapshot>
      */
     public function read(): Result
     {
@@ -35,7 +36,7 @@ final readonly class LinuxProcLoadAverageSource implements LoadAverageSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
+            /** @var Result<LoadAverageSnapshot> */
             return Result::failure($error);
         }
 

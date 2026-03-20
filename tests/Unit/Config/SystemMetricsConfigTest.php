@@ -10,6 +10,23 @@ use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
 use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
 use Cbox\SystemMetrics\Contracts\SystemLimitsSource;
 use Cbox\SystemMetrics\Contracts\UptimeSource;
+use Cbox\SystemMetrics\DTO\Environment\Architecture;
+use Cbox\SystemMetrics\DTO\Environment\ArchitectureKind;
+use Cbox\SystemMetrics\DTO\Environment\Cgroup;
+use Cbox\SystemMetrics\DTO\Environment\CgroupVersion;
+use Cbox\SystemMetrics\DTO\Environment\Containerization;
+use Cbox\SystemMetrics\DTO\Environment\ContainerType;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
+use Cbox\SystemMetrics\DTO\Environment\Kernel;
+use Cbox\SystemMetrics\DTO\Environment\OperatingSystem;
+use Cbox\SystemMetrics\DTO\Environment\OsFamily;
+use Cbox\SystemMetrics\DTO\Environment\Virtualization;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationType;
+use Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
+use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Sources\Container\CompositeContainerMetricsSource;
 use Cbox\SystemMetrics\Sources\Cpu\CompositeCpuMetricsSource;
 use Cbox\SystemMetrics\Sources\Environment\CompositeEnvironmentDetector;
@@ -47,36 +64,36 @@ describe('SystemMetricsConfig', function () {
     it('returns custom EnvironmentDetector when set', function () {
         $customDetector = new class implements EnvironmentDetector
         {
-            public function detect(): \Cbox\SystemMetrics\DTO\Result
+            public function detect(): Result
             {
-                return \Cbox\SystemMetrics\DTO\Result::success(
-                    new \Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
-                        os: new \Cbox\SystemMetrics\DTO\Environment\OperatingSystem(
-                            family: \Cbox\SystemMetrics\DTO\Environment\OsFamily::Linux,
+                return Result::success(
+                    new EnvironmentSnapshot(
+                        os: new OperatingSystem(
+                            family: OsFamily::Linux,
                             name: 'Custom',
                             version: '1.0'
                         ),
-                        kernel: new \Cbox\SystemMetrics\DTO\Environment\Kernel(
+                        kernel: new Kernel(
                             release: '5.0',
                             version: '5.0.0'
                         ),
-                        architecture: new \Cbox\SystemMetrics\DTO\Environment\Architecture(
-                            kind: \Cbox\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
+                        architecture: new Architecture(
+                            kind: ArchitectureKind::X86_64,
                             raw: 'x86_64'
                         ),
-                        virtualization: new \Cbox\SystemMetrics\DTO\Environment\Virtualization(
-                            type: \Cbox\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
-                            vendor: \Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
+                        virtualization: new Virtualization(
+                            type: VirtualizationType::BareMetal,
+                            vendor: VirtualizationVendor::Unknown,
                             rawIdentifier: null
                         ),
-                        containerization: new \Cbox\SystemMetrics\DTO\Environment\Containerization(
-                            type: \Cbox\SystemMetrics\DTO\Environment\ContainerType::None,
+                        containerization: new Containerization(
+                            type: ContainerType::None,
                             runtime: null,
                             insideContainer: false,
                             rawIdentifier: null
                         ),
-                        cgroup: new \Cbox\SystemMetrics\DTO\Environment\Cgroup(
-                            version: \Cbox\SystemMetrics\DTO\Environment\CgroupVersion::None,
+                        cgroup: new Cgroup(
+                            version: CgroupVersion::None,
                             cpuPath: null,
                             memoryPath: null
                         )
@@ -101,11 +118,11 @@ describe('SystemMetricsConfig', function () {
     it('returns custom CpuMetricsSource when set', function () {
         $customSource = new class implements CpuMetricsSource
         {
-            public function read(): \Cbox\SystemMetrics\DTO\Result
+            public function read(): Result
             {
-                return \Cbox\SystemMetrics\DTO\Result::success(
-                    new \Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot(
-                        total: new \Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes(
+                return Result::success(
+                    new CpuSnapshot(
+                        total: new CpuTimes(
                             user: 100,
                             nice: 0,
                             system: 50,
@@ -137,10 +154,10 @@ describe('SystemMetricsConfig', function () {
     it('returns custom MemoryMetricsSource when set', function () {
         $customSource = new class implements MemoryMetricsSource
         {
-            public function read(): \Cbox\SystemMetrics\DTO\Result
+            public function read(): Result
             {
-                return \Cbox\SystemMetrics\DTO\Result::success(
-                    new \Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot(
+                return Result::success(
+                    new MemorySnapshot(
                         totalBytes: 1000000,
                         freeBytes: 500000,
                         availableBytes: 600000,
@@ -162,36 +179,36 @@ describe('SystemMetricsConfig', function () {
     it('resets all configuration to defaults', function () {
         $customDetector = new class implements EnvironmentDetector
         {
-            public function detect(): \Cbox\SystemMetrics\DTO\Result
+            public function detect(): Result
             {
-                return \Cbox\SystemMetrics\DTO\Result::success(
-                    new \Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
-                        os: new \Cbox\SystemMetrics\DTO\Environment\OperatingSystem(
-                            family: \Cbox\SystemMetrics\DTO\Environment\OsFamily::Linux,
+                return Result::success(
+                    new EnvironmentSnapshot(
+                        os: new OperatingSystem(
+                            family: OsFamily::Linux,
                             name: 'Custom',
                             version: '1.0'
                         ),
-                        kernel: new \Cbox\SystemMetrics\DTO\Environment\Kernel(
+                        kernel: new Kernel(
                             release: '5.0',
                             version: '5.0.0'
                         ),
-                        architecture: new \Cbox\SystemMetrics\DTO\Environment\Architecture(
-                            kind: \Cbox\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
+                        architecture: new Architecture(
+                            kind: ArchitectureKind::X86_64,
                             raw: 'x86_64'
                         ),
-                        virtualization: new \Cbox\SystemMetrics\DTO\Environment\Virtualization(
-                            type: \Cbox\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
-                            vendor: \Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
+                        virtualization: new Virtualization(
+                            type: VirtualizationType::BareMetal,
+                            vendor: VirtualizationVendor::Unknown,
                             rawIdentifier: null
                         ),
-                        containerization: new \Cbox\SystemMetrics\DTO\Environment\Containerization(
-                            type: \Cbox\SystemMetrics\DTO\Environment\ContainerType::None,
+                        containerization: new Containerization(
+                            type: ContainerType::None,
                             runtime: null,
                             insideContainer: false,
                             rawIdentifier: null
                         ),
-                        cgroup: new \Cbox\SystemMetrics\DTO\Environment\Cgroup(
-                            version: \Cbox\SystemMetrics\DTO\Environment\CgroupVersion::None,
+                        cgroup: new Cgroup(
+                            version: CgroupVersion::None,
                             cpuPath: null,
                             memoryPath: null
                         )
@@ -211,36 +228,36 @@ describe('SystemMetricsConfig', function () {
     it('persists custom configuration across multiple get calls', function () {
         $customDetector = new class implements EnvironmentDetector
         {
-            public function detect(): \Cbox\SystemMetrics\DTO\Result
+            public function detect(): Result
             {
-                return \Cbox\SystemMetrics\DTO\Result::success(
-                    new \Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot(
-                        os: new \Cbox\SystemMetrics\DTO\Environment\OperatingSystem(
-                            family: \Cbox\SystemMetrics\DTO\Environment\OsFamily::Linux,
+                return Result::success(
+                    new EnvironmentSnapshot(
+                        os: new OperatingSystem(
+                            family: OsFamily::Linux,
                             name: 'Custom',
                             version: '1.0'
                         ),
-                        kernel: new \Cbox\SystemMetrics\DTO\Environment\Kernel(
+                        kernel: new Kernel(
                             release: '5.0',
                             version: '5.0.0'
                         ),
-                        architecture: new \Cbox\SystemMetrics\DTO\Environment\Architecture(
-                            kind: \Cbox\SystemMetrics\DTO\Environment\ArchitectureKind::X86_64,
+                        architecture: new Architecture(
+                            kind: ArchitectureKind::X86_64,
                             raw: 'x86_64'
                         ),
-                        virtualization: new \Cbox\SystemMetrics\DTO\Environment\Virtualization(
-                            type: \Cbox\SystemMetrics\DTO\Environment\VirtualizationType::BareMetal,
-                            vendor: \Cbox\SystemMetrics\DTO\Environment\VirtualizationVendor::Unknown,
+                        virtualization: new Virtualization(
+                            type: VirtualizationType::BareMetal,
+                            vendor: VirtualizationVendor::Unknown,
                             rawIdentifier: null
                         ),
-                        containerization: new \Cbox\SystemMetrics\DTO\Environment\Containerization(
-                            type: \Cbox\SystemMetrics\DTO\Environment\ContainerType::None,
+                        containerization: new Containerization(
+                            type: ContainerType::None,
                             runtime: null,
                             insideContainer: false,
                             rawIdentifier: null
                         ),
-                        cgroup: new \Cbox\SystemMetrics\DTO\Environment\Cgroup(
-                            version: \Cbox\SystemMetrics\DTO\Environment\CgroupVersion::None,
+                        cgroup: new Cgroup(
+                            version: CgroupVersion::None,
                             cpuPath: null,
                             memoryPath: null
                         )

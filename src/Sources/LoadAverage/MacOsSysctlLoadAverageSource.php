@@ -6,6 +6,7 @@ namespace Cbox\SystemMetrics\Sources\LoadAverage;
 
 use Cbox\SystemMetrics\Contracts\LoadAverageSource;
 use Cbox\SystemMetrics\Contracts\ProcessRunnerInterface;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Support\Parser\MacOsSysctlLoadavgParser;
 use Cbox\SystemMetrics\Support\ProcessRunner;
@@ -23,7 +24,7 @@ final readonly class MacOsSysctlLoadAverageSource implements LoadAverageSource
     /**
      * Read load average via sysctl vm.loadavg.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<LoadAverageSnapshot>
      */
     public function read(): Result
     {
@@ -33,7 +34,7 @@ final readonly class MacOsSysctlLoadAverageSource implements LoadAverageSource
             $error = $result->getError();
             assert($error !== null);
 
-            /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot> */
+            /** @var Result<LoadAverageSnapshot> */
             return Result::failure($error);
         }
 

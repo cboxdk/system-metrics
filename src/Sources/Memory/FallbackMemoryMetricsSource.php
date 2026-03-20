@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Memory;
 
 use Cbox\SystemMetrics\Contracts\MemoryMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 
@@ -44,7 +45,7 @@ final class FallbackMemoryMetricsSource implements MemoryMetricsSource
             );
         }
 
-        /** @var Result<\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot> */
+        /** @var Result<MemorySnapshot> */
         return Result::failure(
             new SystemMetricsException(
                 'All memory metrics sources failed: '.implode('; ', $errors)

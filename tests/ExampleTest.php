@@ -1,5 +1,10 @@
 <?php
 
+use Cbox\SystemMetrics\DTO\Environment\ArchitectureKind;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
+use Cbox\SystemMetrics\DTO\Environment\OsFamily;
+use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
+use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use Cbox\SystemMetrics\SystemMetrics;
 
 it('can read system environment', function () {
@@ -8,9 +13,9 @@ it('can read system environment', function () {
     expect($result->isSuccess())->toBeTrue();
 
     $env = $result->getValue();
-    expect($env->os->family)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Environment\OsFamily::class);
+    expect($env->os->family)->toBeInstanceOf(OsFamily::class);
     expect($env->kernel->release)->toBeString();
-    expect($env->architecture->kind)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Environment\ArchitectureKind::class);
+    expect($env->architecture->kind)->toBeInstanceOf(ArchitectureKind::class);
 });
 
 it('can read CPU metrics', function () {
@@ -76,17 +81,17 @@ it('can get complete system overview', function () {
 
         if ($result->isSuccess()) {
             $overview = $result->getValue();
-            expect($overview->environment)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot::class);
-            expect($overview->cpu)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot::class);
-            expect($overview->memory)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot::class);
+            expect($overview->environment)->toBeInstanceOf(EnvironmentSnapshot::class);
+            expect($overview->cpu)->toBeInstanceOf(CpuSnapshot::class);
+            expect($overview->memory)->toBeInstanceOf(MemorySnapshot::class);
         }
     } else {
         // Linux: should succeed
         expect($result->isSuccess())->toBeTrue();
 
         $overview = $result->getValue();
-        expect($overview->environment)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot::class);
-        expect($overview->cpu)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot::class);
-        expect($overview->memory)->toBeInstanceOf(\Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot::class);
+        expect($overview->environment)->toBeInstanceOf(EnvironmentSnapshot::class);
+        expect($overview->cpu)->toBeInstanceOf(CpuSnapshot::class);
+        expect($overview->memory)->toBeInstanceOf(MemorySnapshot::class);
     }
 });

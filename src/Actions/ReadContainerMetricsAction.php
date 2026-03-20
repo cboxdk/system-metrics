@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Actions;
 
 use Cbox\SystemMetrics\Contracts\ContainerMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Sources\Container\CompositeContainerMetricsSource;
 
@@ -20,7 +21,7 @@ final readonly class ReadContainerMetricsAction
     /**
      * Execute the action to read container metrics.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\Container\ContainerLimits>
+     * @return Result<ContainerLimits>
      */
     public function execute(): Result
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Actions;
 
 use Cbox\SystemMetrics\Contracts\LoadAverageSource;
+use Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Sources\LoadAverage\CompositeLoadAverageSource;
 
@@ -20,7 +21,7 @@ final readonly class ReadLoadAverageAction
     /**
      * Execute the action to read load average.
      *
-     * @return Result<\Cbox\SystemMetrics\DTO\Metrics\LoadAverageSnapshot>
+     * @return Result<LoadAverageSnapshot>
      */
     public function execute(): Result
     {
