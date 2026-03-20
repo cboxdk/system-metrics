@@ -68,7 +68,7 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
         return new OperatingSystem(
             family: OsFamily::Linux,
             name: php_uname('s'),
-            version: php_uname('r'),
+            version: 'unknown',
         );
     }
 

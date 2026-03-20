@@ -11,13 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Bug Fixes
 
-- **Rewrite container detection to use allowlist strategy**: The previous detection used fragile heuristics (cgroup path analysis, init.scope exclusions) that caused false positives on VMs with cgroup v2 and systemd. Replaced with a clean allowlist approach: check for known container indicators only (sentinel files, PID 1 environment, cgroup keywords). If no known indicator matches, we are not in a container. No more trying to prove a negative.
-- **Detection order** (most reliable first):
-  1. Sentinel files: `/.dockerenv` (Docker), `/run/.containerenv` (Podman)
-  2. PID 1 environment: `container=` variable (LXC/systemd-nspawn)
-  3. Cgroup keywords: `kubepods`, `docker`, `containerd`, `crio`, `lxc` in `/proc/self/cgroup` and `/proc/1/cgroup`
-- Extracted `readCgroupContent()`, `matchContainerRuntime()`, and `containerized()` helpers for readability
-- Added LXC detection via cgroup keywords
+- **Rewrite container detection to use allowlist strategy**: Replaced fragile cgroup path heuristics with clean allowlist approach. Only known container indicators trigger detection. No more false positives on VMs with systemd/cgroup v2.
+- **Fix OS version showing "unknown"**: `/etc/os-release` is a symlink to `/usr/lib/os-release` on systemd distros. The `realpath()` security check resolved the symlink but `/usr/lib/` was not in the FileReader whitelist, silently blocking the read. Added `/usr/lib/os-release` to the whitelist.
+- Use `PRETTY_NAME` as primary OS name for more descriptive output (e.g. "Ubuntu 24.04.3 LTS").
+- Fall back through `VERSION_ID` → `VERSION` → `BUILD_ID` for the version field.
+- Added LXC detection via cgroup keywords.
 
 **Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v2.3.0...v2.3.1
 

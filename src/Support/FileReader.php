@@ -38,6 +38,7 @@ final class FileReader implements FileReaderInterface
         '/etc/debian_version',
         '/etc/redhat-release',
         '/etc/system-release',
+        '/usr/lib/os-release',
 
         // macOS system paths (if needed in future)
         '/System/',
