@@ -226,18 +226,21 @@ final class LinuxEnvironmentDetector implements EnvironmentDetector
                 );
             }
 
-            // cgroup v2: check if PID 1 cgroup scope indicates a container
-            // On VMs/bare metal, /proc/self/cgroup is "0::/" (root cgroup)
-            // In containers, it's "0::/docker/<hash>" or "0::/system.slice/docker-<hash>.scope"
-            if (preg_match('#0::/(.+)#', $content, $matches)) {
-                $cgroupPath = trim($matches[1]);
-                // Root cgroup "/" means bare metal or VM — not a container
-                if ($cgroupPath !== '' && $cgroupPath !== '/') {
+            // cgroup v2: check PID 1's cgroup path for container detection.
+            // On VMs/bare metal, PID 1 (systemd/init) is always at root cgroup "/".
+            // In containers, PID 1 is placed in a non-root cgroup by the runtime.
+            // We check /proc/1/cgroup (not /proc/self/cgroup) because PHP-FPM
+            // runs under a systemd service slice on VMs (e.g. /system.slice/php8.4-fpm.service)
+            // which would cause a false positive if we checked the current process.
+            $pid1Cgroup = $this->fileReader->read('/proc/1/cgroup');
+            if ($pid1Cgroup->isSuccess() && preg_match('#0::/(.+)#', $pid1Cgroup->getValue(), $matches)) {
+                $initCgroupPath = trim($matches[1]);
+                if ($initCgroupPath !== '' && $initCgroupPath !== '/') {
                     return new Containerization(
                         type: ContainerType::Other,
                         runtime: 'unknown',
                         insideContainer: true,
-                        rawIdentifier: "/proc/self/cgroup: {$cgroupPath}",
+                        rawIdentifier: "/proc/1/cgroup: {$initCgroupPath}",
                     );
                 }
             }
