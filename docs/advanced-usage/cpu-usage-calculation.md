@@ -180,6 +180,6 @@ while (true) {
 
 ## Related Documentation
 
-- [CPU Metrics](../basic-usage/cpu-metrics) - Raw CPU counters
-- [Load Average](../basic-usage/load-average) - System load metrics
+- [CPU Metrics](../basic-usage/cpu-metrics.md) - Raw CPU counters
+- [Load Average](../basic-usage/load-average.md) - System load metrics
 - [Process Metrics](process-metrics.md) - Per-process CPU tracking

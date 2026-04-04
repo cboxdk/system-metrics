@@ -155,7 +155,7 @@ Measured at: 2024-01-15 14:30:45
 - No buffers/cache breakdown (always 0)
 - Dynamic swap (values are estimates)
 
-See [Platform Support](../platform-support/comparison) for details.
+See [Platform Support](../platform-support/comparison.md) for details.
 
 ## Use Cases
 
@@ -211,6 +211,6 @@ if ($env->containerization->insideContainer) {
 
 ## Related Documentation
 
-- [Container Metrics](../advanced-usage/container-metrics) - Container memory limits
-- [Unified Limits API](../advanced-usage/unified-limits) - Environment-aware limits
-- [Process Metrics](../advanced-usage/process-metrics) - Per-process memory usage
+- [Container Metrics](../advanced-usage/container-metrics.md) - Container memory limits
+- [Unified Limits API](../advanced-usage/unified-limits.md) - Environment-aware limits
+- [Process Metrics](../advanced-usage/process-metrics.md) - Per-process memory usage

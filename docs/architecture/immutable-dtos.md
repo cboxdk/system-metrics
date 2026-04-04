@@ -150,4 +150,4 @@ readonly class CpuTimes {
 ## Related Documentation
 
 - [Design Principles](design-principles.md) - Overall architecture
-- [API Reference](../api-reference) - All DTOs
+- [API Reference](../api-reference.md) - All DTOs

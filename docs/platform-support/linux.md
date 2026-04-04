@@ -122,4 +122,4 @@ Tested on:
 
 - [macOS Support](macos.md)
 - [Platform Comparison](comparison.md)
-- [Container Metrics](../advanced-usage/container-metrics)
+- [Container Metrics](../advanced-usage/container-metrics.md)

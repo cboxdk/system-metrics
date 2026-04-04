@@ -90,7 +90,7 @@ interface CpuMetricsSource {
 - Testable with stubs
 - Clear contracts
 
-See [Custom Implementations](../advanced-usage/custom-implementations).
+See [Custom Implementations](../advanced-usage/custom-implementations.md).
 
 ## Action Pattern
 

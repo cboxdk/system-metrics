@@ -147,6 +147,6 @@ echo "Memory delta: " . round($stats->delta->memoryDeltaBytes / 1024**2, 2) . " 
 
 ## Related Documentation
 
-- [System Overview](../basic-usage/system-overview)
-- [CPU Metrics](../basic-usage/cpu-metrics)
-- [Memory Metrics](../basic-usage/memory-metrics)
+- [System Overview](../basic-usage/system-overview.md)
+- [CPU Metrics](../basic-usage/cpu-metrics.md)
+- [Memory Metrics](../basic-usage/memory-metrics.md)

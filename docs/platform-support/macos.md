@@ -133,4 +133,4 @@ If running production PHP on macOS (rare):
 
 - [Linux Support](linux.md)
 - [Platform Comparison](comparison.md)
-- [Environment Detection](../basic-usage/environment-detection)
+- [Environment Detection](../basic-usage/environment-detection.md)

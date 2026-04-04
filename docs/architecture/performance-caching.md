@@ -114,6 +114,6 @@ Alternative approaches considered:
 
 ## Related Documentation
 
-- [Introduction](../introduction) - Performance characteristics
-- [Environment Detection](../basic-usage/environment-detection) - What gets cached
+- [Introduction](../introduction.md) - Performance characteristics
+- [Environment Detection](../basic-usage/environment-detection.md) - What gets cached
 - [Design Principles](design-principles.md) - Architectural decisions

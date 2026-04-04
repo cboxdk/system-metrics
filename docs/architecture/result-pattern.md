@@ -104,5 +104,5 @@ if ($result->isFailure()) {
 
 ## Related Documentation
 
-- [Error Handling](../advanced-usage/error-handling) - Complete guide
-- [API Reference](../api-reference) - All Result<T> methods
+- [Error Handling](../advanced-usage/error-handling.md) - Complete guide
+- [API Reference](../api-reference.md) - All Result<T> methods

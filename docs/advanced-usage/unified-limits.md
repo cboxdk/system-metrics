@@ -176,5 +176,5 @@ The API automatically selects the appropriate source:
 ## Related Documentation
 
 - [Container Metrics](container-metrics.md) - Detailed cgroup metrics
-- [CPU Metrics](../basic-usage/cpu-metrics)
-- [Memory Metrics](../basic-usage/memory-metrics)
+- [CPU Metrics](../basic-usage/cpu-metrics.md)
+- [Memory Metrics](../basic-usage/memory-metrics.md)

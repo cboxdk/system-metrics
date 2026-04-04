@@ -191,7 +191,7 @@ echo "System: " . round($delta->systemPercentage(), 1) . "%\n";
 - Modern macOS (Apple Silicon) may return zero values
 - Uses `sysctl kern.cp_time` (deprecated on new systems)
 
-See [Platform Support](../platform-support/comparison) for details.
+See [Platform Support](../platform-support/comparison.md) for details.
 
 ## Use Cases
 
@@ -238,6 +238,6 @@ echo "Operation used " . round($delta->usagePercentage(), 1) . "% CPU\n";
 ## Related Documentation
 
 - [Load Average](load-average.md) - System load metrics
-- [CPU Usage Calculation](../advanced-usage/cpu-usage-calculation) - Deep dive into delta calculations
-- [Process Metrics](../advanced-usage/process-metrics) - Per-process CPU tracking
-- [Container Metrics](../advanced-usage/container-metrics) - Container CPU limits
+- [CPU Usage Calculation](../advanced-usage/cpu-usage-calculation.md) - Deep dive into delta calculations
+- [Process Metrics](../advanced-usage/process-metrics.md) - Per-process CPU tracking
+- [Container Metrics](../advanced-usage/container-metrics.md) - Container CPU limits

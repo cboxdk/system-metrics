@@ -96,5 +96,5 @@ All these would slot into the composite pattern transparently.
 
 ## Related Documentation
 
-- [Platform Support](../platform-support/comparison) - Platform differences
-- [Custom Implementations](../advanced-usage/custom-implementations) - Add your own sources
+- [Platform Support](../platform-support/comparison.md) - Platform differences
+- [Custom Implementations](../advanced-usage/custom-implementations.md) - Add your own sources

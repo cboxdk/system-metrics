@@ -297,7 +297,7 @@ SystemMetrics::clearEnvironmentCache();
 - Limited container detection (mostly returns `ContainerType::NONE`)
 - Simplified virtualization detection
 
-See [Platform Support](../platform-support/comparison) for detailed comparison.
+See [Platform Support](../platform-support/comparison.md) for detailed comparison.
 
 ## Use Cases
 
@@ -343,7 +343,7 @@ match ($env->architecture->kind) {
 
 ## Related Documentation
 
-- [Container Metrics](../advanced-usage/container-metrics) - Cgroup limits and usage
-- [Unified Limits API](../advanced-usage/unified-limits) - Environment-aware resource limits
-- [Platform Support: Linux](../platform-support/linux) - Linux-specific details
-- [Platform Support: macOS](../platform-support/macos) - macOS-specific details
+- [Container Metrics](../advanced-usage/container-metrics.md) - Cgroup limits and usage
+- [Unified Limits API](../advanced-usage/unified-limits.md) - Environment-aware resource limits
+- [Platform Support: Linux](../platform-support/linux.md) - Linux-specific details
+- [Platform Support: macOS](../platform-support/macos.md) - macOS-specific details

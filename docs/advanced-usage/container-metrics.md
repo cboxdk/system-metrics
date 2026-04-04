@@ -142,4 +142,4 @@ if ($container->isCpuThrottled()) {
 ## Related Documentation
 
 - [Unified Limits API](unified-limits.md) - Environment-aware resource limits
-- [Environment Detection](../basic-usage/environment-detection) - Container detection
+- [Environment Detection](../basic-usage/environment-detection.md) - Container detection
