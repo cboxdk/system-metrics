@@ -20,7 +20,8 @@ function makeContainerSource(
     ?float $cpuUsageCores = null,
     ?int $memoryUsageBytes = null,
 ): ContainerMetricsSource {
-    return new class($version, $cpuQuota, $memoryLimitBytes, $cpuUsageCores, $memoryUsageBytes) implements ContainerMetricsSource {
+    return new class($version, $cpuQuota, $memoryLimitBytes, $cpuUsageCores, $memoryUsageBytes) implements ContainerMetricsSource
+    {
         public function __construct(
             private readonly CgroupVersion $version,
             private readonly ?float $cpuQuota,
@@ -46,7 +47,8 @@ function makeContainerSource(
 
 function makeCpuSource(int $coreCount): CpuMetricsSource
 {
-    return new class($coreCount) implements CpuMetricsSource {
+    return new class($coreCount) implements CpuMetricsSource
+    {
         public function __construct(private readonly int $coreCount) {}
 
         public function read(): Result
@@ -70,7 +72,8 @@ function makeCpuSource(int $coreCount): CpuMetricsSource
 
 function makeMemorySource(int $totalBytes, int $usedBytes): MemoryMetricsSource
 {
-    return new class($totalBytes, $usedBytes) implements MemoryMetricsSource {
+    return new class($totalBytes, $usedBytes) implements MemoryMetricsSource
+    {
         public function __construct(
             private readonly int $totalBytes,
             private readonly int $usedBytes,

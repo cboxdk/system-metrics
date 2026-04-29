@@ -10,7 +10,8 @@ describe('CompositeContainerMetricsSource', function () {
     it('reuses the same injected source across multiple reads', function () {
         $callCount = 0;
 
-        $mockSource = new class($callCount) implements ContainerMetricsSource {
+        $mockSource = new class($callCount) implements ContainerMetricsSource
+        {
             private int $callCount;
 
             public function __construct(int &$callCount)
