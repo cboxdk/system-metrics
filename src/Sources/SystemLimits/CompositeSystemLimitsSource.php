@@ -72,8 +72,8 @@ final class CompositeSystemLimitsSource implements SystemLimitsSource
         $memory = $memoryResult->getValue();
 
         // Use cgroup limits if available, otherwise fall back to host
-        $cpuCores = $container->availableCpuCores() ?? $this->getHostCpuCores();
-        $memoryBytes = $container->availableMemoryBytes() ?? $memory->totalBytes;
+        $cpuCores = $container->cpuQuota ?? $this->getHostCpuCores();
+        $memoryBytes = $container->memoryLimitBytes ?? $memory->totalBytes;
 
         // Current usage from cgroup
         $currentCpuUsage = $container->cpuUsageCores ?? 0.0;
@@ -84,9 +84,9 @@ final class CompositeSystemLimitsSource implements SystemLimitsSource
         /** @var Result<SystemLimits> */
         return Result::success(new SystemLimits(
             source: $source,
-            cpuCores: (int) ceil($cpuCores),
+            cpuCores: $cpuCores,
             memoryBytes: $memoryBytes,
-            currentCpuCores: (int) ceil($currentCpuUsage),
+            currentCpuCores: $currentCpuUsage,
             currentMemoryBytes: $currentMemoryUsage,
             swapBytes: $memory->swapTotalBytes,
             currentSwapBytes: (float) $memory->swapUsedBytes,
@@ -116,12 +116,12 @@ final class CompositeSystemLimitsSource implements SystemLimitsSource
         $memory = $memoryResult->getValue();
 
         // For host limits, we use total system resources
-        $cpuCores = $cpu->coreCount();
+        $cpuCores = (float) $cpu->coreCount();
 
         // Current usage: calculate from most recent snapshot
         // Note: CPU usage requires delta, so we use 0 for "not yet measured"
         // Users should call SystemMetrics::cpu() twice to get actual usage
-        $currentCpuCores = 0;
+        $currentCpuCores = 0.0;
 
         // Memory current usage
         $currentMemoryUsage = (float) $memory->usedBytes;
@@ -141,13 +141,13 @@ final class CompositeSystemLimitsSource implements SystemLimitsSource
     /**
      * Get host CPU cores count.
      */
-    private function getHostCpuCores(): int
+    private function getHostCpuCores(): float
     {
         $cpuResult = $this->cpuSource->read();
         if ($cpuResult->isFailure()) {
-            return 1; // Safe fallback
+            return 1.0; // Safe fallback
         }
 
-        return $cpuResult->getValue()->coreCount();
+        return (float) $cpuResult->getValue()->coreCount();
     }
 }
