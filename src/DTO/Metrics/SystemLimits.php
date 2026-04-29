@@ -29,6 +29,7 @@ final readonly class SystemLimits
      */
     public function availableCpuCores(): float
     {
+        // Round to eliminate floating-point epsilon noise (e.g. 1.5 - 1.2 = 0.30000000000000004)
         $available = round($this->cpuCores - $this->currentCpuCores, 10);
 
         return max(0.0, $available);
