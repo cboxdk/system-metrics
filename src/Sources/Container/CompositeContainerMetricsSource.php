@@ -12,9 +12,14 @@ use Cbox\SystemMetrics\Support\OsDetector;
 
 /**
  * Composite container metrics source with automatic OS detection.
+ *
+ * Persists the Linux source instance so that the cgroup parser's
+ * delta-based CPU usage sampling cache survives across calls.
  */
 final class CompositeContainerMetricsSource implements ContainerMetricsSource
 {
+    private ?ContainerMetricsSource $linuxSource = null;
+
     public function __construct(
         private readonly ?ContainerMetricsSource $source = null,
     ) {}
@@ -27,9 +32,11 @@ final class CompositeContainerMetricsSource implements ContainerMetricsSource
 
         // Only Linux supports cgroups
         if (OsDetector::isLinux()) {
-            $source = new LinuxCgroupMetricsSource;
+            if ($this->linuxSource === null) {
+                $this->linuxSource = new LinuxCgroupMetricsSource;
+            }
 
-            return $source->read();
+            return $this->linuxSource->read();
         }
 
         // Non-Linux systems: return NONE
