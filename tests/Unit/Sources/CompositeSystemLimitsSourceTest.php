@@ -161,8 +161,9 @@ describe('CompositeSystemLimitsSource', function () {
         expect($result->isSuccess())->toBeTrue();
         $limits = $result->getValue();
 
-        // Falls back to host: 16.0 cores
+        // Falls back to host: 16.0 cores, but source is still CGROUP_V2
         expect($limits->cpuCores)->toBe(16.0);
+        expect($limits->source)->toBe(LimitSource::CGROUP_V2);
     });
 
     it('falls back to host memory when cgroup has no limit', function () {
