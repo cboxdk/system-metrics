@@ -5,6 +5,46 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v3.0.0 - 2026-04-29
+
+### Breaking Changes
+
+- **`SystemLimits::$cpuCores`**: Changed from `int` to `float` to support fractional CPU quotas (e.g. 200m = 0.2 cores, 1500m = 1.5 cores).
+- **`SystemLimits::$currentCpuCores`**: Changed from `int` to `float`.
+- **`SystemLimits::availableCpuCores()`**: Now returns `float` instead of `int`.
+- **`SystemLimits::canScaleCpu()`**: Parameter changed from `int` to `float`.
+- **`ContainerLimits::cpuUtilizationPercentage()`**: No longer capped at 100%. Can exceed 100% during over-quota burst scenarios.
+- **`ContainerLimits::memoryUtilizationPercentage()`**: No longer capped at 100%. Can exceed 100% if memory usage exceeds limit before OOM kill.
+
+### Bug Fixes
+
+- **Fix CPU limit using headroom instead of quota**: `CompositeSystemLimitsSource` was using `availableCpuCores()` (quota − usage) to populate the `cpuCores` limit field. The limit now correctly uses `cpuQuota` directly. Same fix for memory: uses `memoryLimitBytes` instead of `availableMemoryBytes()`.
+- **Fix delta-based CPU usage sampling permanently broken**: `CompositeContainerMetricsSource` was creating a new `LinuxCgroupMetricsSource` on every `read()` call, resetting the parser's delta cache. `cpuUsageCores` was always `null`. The source instance is now persisted across calls.
+- **Fix fractional CPU precision loss**: Removed `(int) ceil()` casts that rounded cgroup CPU quotas to whole cores (e.g. 200m/0.2 cores became 1).
+- **Fix test: container appears in overview**: The `FakeSystemMetricsTest` container-in-overview test now correctly configures `insideContainer: true` on the fake environment.
+
+### Migration Guide
+
+Downstream consumers that use `SystemLimits` CPU fields need to handle `float` instead of `int`:
+
+```php
+// Before (v2.x)
+$cores = $limits->cpuCores;        // int: 1, 2, 4, 8
+$available = $limits->availableCpuCores(); // int
+
+// After (v3.0)
+$cores = $limits->cpuCores;        // float: 0.2, 1.5, 4.0, 8.0
+$available = $limits->availableCpuCores(); // float
+```
+
+If you relied on `cpuUtilizationPercentage()` or `memoryUtilizationPercentage()` never exceeding 100%, add your own capping:
+
+```php
+$util = min(100.0, $container->cpuUtilizationPercentage());
+```
+
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v2.3.1...v3.0.0
+
 ## v2.3.1 - 2026-03-21
 
 ### What's Changed
