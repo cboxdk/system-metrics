@@ -16,9 +16,9 @@ describe('SystemLimits', function () {
         );
 
         expect($limits->source)->toBe(LimitSource::HOST);
-        expect($limits->cpuCores)->toBe(8);
+        expect($limits->cpuCores)->toBe(8.0);
         expect($limits->memoryBytes)->toBe(16_000_000_000);
-        expect($limits->currentCpuCores)->toBe(4);
+        expect($limits->currentCpuCores)->toBe(4.0);
         expect($limits->currentMemoryBytes)->toBe(8_000_000_000.0);
         expect($limits->swapBytes)->toBe(4_000_000_000);
         expect($limits->currentSwapBytes)->toBe(2_000_000_000.0);
@@ -46,7 +46,7 @@ describe('SystemLimits', function () {
             currentMemoryBytes: 8_000_000_000.0,
         );
 
-        expect($limits->availableCpuCores())->toBe(5);
+        expect($limits->availableCpuCores())->toBe(5.0);
     });
 
     it('calculates available memory bytes correctly', function () {
@@ -70,7 +70,7 @@ describe('SystemLimits', function () {
             currentMemoryBytes: 8_000_000_000.0,
         );
 
-        expect($limits->availableCpuCores())->toBe(0);
+        expect($limits->availableCpuCores())->toBe(0.0);
         expect($limits->availableMemoryBytes())->toBe(0);
     });
 
@@ -83,7 +83,7 @@ describe('SystemLimits', function () {
             currentMemoryBytes: 9_000_000_000.0, // Over limit
         );
 
-        expect($limits->availableCpuCores())->toBe(0);
+        expect($limits->availableCpuCores())->toBe(0.0);
         expect($limits->availableMemoryBytes())->toBe(0);
     });
 
@@ -326,5 +326,39 @@ describe('SystemLimits', function () {
 
         $reflection = new ReflectionClass($limits);
         expect($reflection->isReadOnly())->toBeTrue();
+    });
+
+    it('supports fractional CPU cores for container environments', function () {
+        $limits = new SystemLimits(
+            source: LimitSource::CGROUP_V2,
+            cpuCores: 0.5,
+            memoryBytes: 512_000_000,
+            currentCpuCores: 0.2,
+            currentMemoryBytes: 256_000_000.0,
+        );
+
+        expect($limits->cpuCores)->toBe(0.5);
+        expect($limits->currentCpuCores)->toBe(0.2);
+        expect($limits->availableCpuCores())->toBe(0.3);
+        expect($limits->cpuUtilization())->toBe(40.0);
+        expect($limits->canScaleCpu(0.2))->toBeTrue();
+        expect($limits->canScaleCpu(0.4))->toBeFalse();
+    });
+
+    it('supports millicores-scale CPU values', function () {
+        $limits = new SystemLimits(
+            source: LimitSource::CGROUP_V1,
+            cpuCores: 1.5,
+            memoryBytes: 1_000_000_000,
+            currentCpuCores: 1.2,
+            currentMemoryBytes: 500_000_000.0,
+        );
+
+        expect($limits->cpuCores)->toBe(1.5);
+        expect($limits->currentCpuCores)->toBe(1.2);
+        expect($limits->availableCpuCores())->toBe(0.3);
+        expect($limits->cpuUtilization())->toBe(80.0);
+        expect($limits->isCpuPressure())->toBeTrue();
+        expect($limits->cpuHeadroom())->toBe(20.0);
     });
 });

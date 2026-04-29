@@ -141,7 +141,7 @@ describe('ContainerLimits', function () {
             oomKillCount: null,
         );
 
-        expect($limits->cpuUtilizationPercentage())->toBe(100.0);
+        expect($limits->cpuUtilizationPercentage())->toBe(150.0);
         expect($limits->availableCpuCores())->toBe(0.0);
     });
 
@@ -156,7 +156,7 @@ describe('ContainerLimits', function () {
             oomKillCount: null,
         );
 
-        expect($limits->memoryUtilizationPercentage())->toBe(100.0);
+        expect($limits->memoryUtilizationPercentage())->toBe(200.0);
         expect($limits->availableMemoryBytes())->toBe(0);
     });
 

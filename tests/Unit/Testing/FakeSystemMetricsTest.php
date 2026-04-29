@@ -1,6 +1,9 @@
 <?php
 
 use Cbox\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\DTO\Environment\Containerization;
+use Cbox\SystemMetrics\DTO\Environment\ContainerType;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
 use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
 use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
@@ -160,7 +163,7 @@ describe('SystemMetrics facade with fakes', function () {
         expect($result->isSuccess())->toBeTrue();
         $limits = $result->getValue();
         expect($limits)->toBeInstanceOf(SystemLimits::class);
-        expect($limits->cpuCores)->toBe(4);
+        expect($limits->cpuCores)->toBe(4.0);
         expect($limits->memoryBytes)->toBe(8_589_934_592);
     });
 
@@ -266,6 +269,23 @@ describe('Fake source customization', function () {
     it('container appears in overview when configured', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->container->asContainer();
+
+        // Environment must also report insideContainer=true for overview to collect container metrics
+        $env = FakeEnvironmentDetector::default();
+        $fakes->environment->set(new EnvironmentSnapshot(
+            os: $env->os,
+            kernel: $env->kernel,
+            architecture: $env->architecture,
+            virtualization: $env->virtualization,
+            containerization: new Containerization(
+                type: ContainerType::Docker,
+                runtime: 'containerd',
+                insideContainer: true,
+                rawIdentifier: null,
+            ),
+            cgroup: $env->cgroup,
+        ));
+        SystemMetrics::clearEnvironmentCache();
 
         $result = SystemMetrics::overview();
         expect($result->isSuccess())->toBeTrue();
@@ -432,7 +452,7 @@ describe('Fake source defaults', function () {
     it('FakeSystemLimitsSource defaults to 4 cores and 8 GB', function () {
         $default = FakeSystemLimitsSource::default();
 
-        expect($default->cpuCores)->toBe(4);
+        expect($default->cpuCores)->toBe(4.0);
         expect($default->memoryBytes)->toBe(8_589_934_592);
         expect($default->isContainerized())->toBeFalse();
     });

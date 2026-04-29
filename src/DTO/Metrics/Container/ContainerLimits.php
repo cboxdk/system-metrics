@@ -38,7 +38,8 @@ final readonly class ContainerLimits
     }
 
     /**
-     * Get CPU utilization as percentage (0-100).
+     * Get CPU utilization as percentage (0-100+).
+     * Can exceed 100% during quota burst scenarios.
      */
     public function cpuUtilizationPercentage(): ?float
     {
@@ -46,11 +47,12 @@ final readonly class ContainerLimits
             return null;
         }
 
-        return min(100.0, ($this->cpuUsageCores / $this->cpuQuota) * 100);
+        return ($this->cpuUsageCores / $this->cpuQuota) * 100;
     }
 
     /**
-     * Get memory utilization as percentage (0-100).
+     * Get memory utilization as percentage (0-100+).
+     * Can exceed 100% if memory usage exceeds limit before OOM kill.
      */
     public function memoryUtilizationPercentage(): ?float
     {
@@ -58,7 +60,7 @@ final readonly class ContainerLimits
             return null;
         }
 
-        return min(100.0, ($this->memoryUsageBytes / $this->memoryLimitBytes) * 100);
+        return ($this->memoryUsageBytes / $this->memoryLimitBytes) * 100;
     }
 
     /**

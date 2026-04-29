@@ -16,9 +16,9 @@ final readonly class SystemLimits
 {
     public function __construct(
         public LimitSource $source,
-        public int $cpuCores,
+        public float $cpuCores,
         public int $memoryBytes,
-        public int $currentCpuCores,
+        public float $currentCpuCores,
         public float $currentMemoryBytes,
         public ?int $swapBytes = null,
         public ?float $currentSwapBytes = null,
@@ -27,11 +27,12 @@ final readonly class SystemLimits
     /**
      * Available CPU cores for scaling up.
      */
-    public function availableCpuCores(): int
+    public function availableCpuCores(): float
     {
-        $available = $this->cpuCores - $this->currentCpuCores;
+        // Round to eliminate floating-point epsilon noise (e.g. 1.5 - 1.2 = 0.30000000000000004)
+        $available = round($this->cpuCores - $this->currentCpuCores, 6);
 
-        return max(0, $available);
+        return max(0.0, $available);
     }
 
     /**
@@ -50,7 +51,7 @@ final readonly class SystemLimits
      */
     public function cpuUtilization(): float
     {
-        if ($this->cpuCores === 0) {
+        if ($this->cpuCores <= 0.0) {
             return 0.0;
         }
 
@@ -89,7 +90,7 @@ final readonly class SystemLimits
     /**
      * Can scale up by specified CPU cores without exceeding limit?
      */
-    public function canScaleCpu(int $additionalCores): bool
+    public function canScaleCpu(float $additionalCores): bool
     {
         return ($this->currentCpuCores + $additionalCores) <= $this->cpuCores;
     }

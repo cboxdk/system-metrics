@@ -50,9 +50,9 @@ final class FakeSystemLimitsSource implements SystemLimitsSource
     {
         return new SystemLimits(
             source: LimitSource::HOST,
-            cpuCores: 4,
+            cpuCores: 4.0,
             memoryBytes: 8_589_934_592,             // 8 GB
-            currentCpuCores: 4,
+            currentCpuCores: 4.0,
             currentMemoryBytes: 4_294_967_296.0,    // 4 GB used
             swapBytes: 2_147_483_648,               // 2 GB
             currentSwapBytes: 536_870_912.0,        // 512 MB used
