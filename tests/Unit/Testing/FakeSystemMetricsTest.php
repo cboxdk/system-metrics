@@ -1,6 +1,9 @@
 <?php
 
 use Cbox\SystemMetrics\Config\SystemMetricsConfig;
+use Cbox\SystemMetrics\DTO\Environment\Containerization;
+use Cbox\SystemMetrics\DTO\Environment\ContainerType;
+use Cbox\SystemMetrics\DTO\Environment\EnvironmentSnapshot;
 use Cbox\SystemMetrics\DTO\Metrics\Container\CgroupVersion;
 use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuSnapshot;
 use Cbox\SystemMetrics\DTO\Metrics\Cpu\CpuTimes;
@@ -266,6 +269,23 @@ describe('Fake source customization', function () {
     it('container appears in overview when configured', function () {
         $fakes = FakeSystemMetrics::install();
         $fakes->container->asContainer();
+
+        // Environment must also report insideContainer=true for overview to collect container metrics
+        $env = FakeEnvironmentDetector::default();
+        $fakes->environment->set(new EnvironmentSnapshot(
+            os: $env->os,
+            kernel: $env->kernel,
+            architecture: $env->architecture,
+            virtualization: $env->virtualization,
+            containerization: new Containerization(
+                type: ContainerType::Docker,
+                runtime: 'containerd',
+                insideContainer: true,
+                rawIdentifier: null,
+            ),
+            cgroup: $env->cgroup,
+        ));
+        SystemMetrics::clearEnvironmentCache();
 
         $result = SystemMetrics::overview();
         expect($result->isSuccess())->toBeTrue();
