@@ -160,7 +160,7 @@ describe('SystemMetrics facade with fakes', function () {
         expect($result->isSuccess())->toBeTrue();
         $limits = $result->getValue();
         expect($limits)->toBeInstanceOf(SystemLimits::class);
-        expect($limits->cpuCores)->toBe(4);
+        expect($limits->cpuCores)->toBe(4.0);
         expect($limits->memoryBytes)->toBe(8_589_934_592);
     });
 
@@ -432,7 +432,7 @@ describe('Fake source defaults', function () {
     it('FakeSystemLimitsSource defaults to 4 cores and 8 GB', function () {
         $default = FakeSystemLimitsSource::default();
 
-        expect($default->cpuCores)->toBe(4);
+        expect($default->cpuCores)->toBe(4.0);
         expect($default->memoryBytes)->toBe(8_589_934_592);
         expect($default->isContainerized())->toBeFalse();
     });
