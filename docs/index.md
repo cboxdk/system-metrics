@@ -108,6 +108,7 @@ Track CPU usage deltas, identify bottlenecks, analyze I/O patterns, monitor netw
 
 ## Quick Links
 
+- [Requirements](requirements.md) - Supported PHP versions and platforms
 - [Installation](installation.md) - Get started with Composer
 - [Quick Start](quickstart.md) - 30-second working example
 - [Basic Usage](basic-usage/system-overview.md) - Common metrics and examples

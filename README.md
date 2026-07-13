@@ -201,7 +201,8 @@ SystemMetrics::cpu()
 Comprehensive documentation is available in the [docs/](docs/) directory:
 
 ### Getting Started
-- **[Introduction](docs/introduction.md)** - Overview and key features
+- **[Introduction](docs/index.md)** - Overview and key features
+- **[Requirements](docs/requirements.md)** - Supported PHP versions and platforms
 - **[Installation](docs/installation.md)** - Installation and setup
 - **[Quick Start](docs/quickstart.md)** - 30-second working example
 
