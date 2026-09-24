@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Network;
 
 use Cbox\SystemMetrics\Contracts\NetworkMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Network\NetworkSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use Cbox\SystemMetrics\Support\OsDetector;
@@ -19,10 +20,14 @@ final class CompositeNetworkMetricsSource implements NetworkMetricsSource
         private readonly ?NetworkMetricsSource $macosSource = null,
     ) {}
 
+    /**
+     * @return Result<NetworkSnapshot>
+     */
     public function read(): Result
     {
         $osFamily = OsDetector::getFamily();
 
+        /** @var Result<NetworkSnapshot> */
         return match ($osFamily) {
             'Linux' => $this->getLinuxSource()->read(),
             'Darwin' => $this->getMacosSource()->read(),

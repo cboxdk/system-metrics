@@ -104,20 +104,37 @@ final class MacOsPsParser
     }
 
     /**
-     * Count open file descriptors for a process using lsof.
+     * Count open file descriptors for a process.
      *
-     * Uses ProcessRunner for consistent command execution through the
-     * security whitelist. Counts lines in PHP rather than using shell pipes.
+     * The Linux source counts entries in /proc/{pid}/fd, so this has to
+     * mean the same thing or the field is not comparable across platforms.
+     *
+     * The obvious `lsof -p PID` does NOT mean that. Its default output is
+     * every open FILE, which includes the working directory, the
+     * executable and each loaded shared library (cwd, txt) and every
+     * memory-mapped region. A plain PHP process with 5 descriptors reports
+     * 59 lines that way, and the number tracks how many dylibs are loaded
+     * rather than how many files are open.
+     *
+     * `-F f` asks for the field format instead, one `f<number>` line per
+     * actual descriptor, which is the thing being counted.
      *
      * @return int Number of open file descriptors, or 0 if unable to determine
      */
     private function countFileDescriptors(int $pid): int
     {
-        // Use lsof to count file descriptors
-        // -p PID: specify process
+        if ($pid === getmypid()) {
+            $own = $this->countOwnFileDescriptors();
+
+            if ($own !== null) {
+                return $own;
+            }
+        }
+
+        // -F f: field output, one `f<fd>` line per descriptor
         // -n: no hostname resolution (faster)
         // -P: no port name resolution (faster)
-        $result = $this->processRunner->execute("lsof -p {$pid} -n -P");
+        $result = $this->processRunner->execute("lsof -p {$pid} -n -P -F f");
 
         if ($result->isFailure()) {
             return 0;
@@ -128,10 +145,42 @@ final class MacOsPsParser
             return 0;
         }
 
-        // Count lines, skipping header (first line)
-        $lines = explode("\n", trim($output));
+        $descriptors = 0;
 
-        return max(0, count($lines) - 1);
+        foreach (explode("\n", trim($output)) as $line) {
+            // Field output also carries p<pid> and other records; only the
+            // numeric f-records are descriptors.
+            if (preg_match('/^f\d+$/', trim($line)) === 1) {
+                $descriptors++;
+            }
+        }
+
+        return $descriptors;
+    }
+
+    /**
+     * The calling process's own descriptors, read rather than shelled out.
+     *
+     * /dev/fd is the current process's descriptor table on macOS — the same
+     * answer lsof gives for this pid, for about a five-hundredth of the
+     * cost (0.05 ms against 25 ms), which matters because a per-request
+     * profiler samples its own process on every request.
+     *
+     * Null when the directory cannot be read, so the caller falls back.
+     */
+    private function countOwnFileDescriptors(): ?int
+    {
+        if (! is_dir('/dev/fd') || ! is_readable('/dev/fd')) {
+            return null;
+        }
+
+        $entries = @scandir('/dev/fd');
+
+        if ($entries === false) {
+            return null;
+        }
+
+        return count(array_diff($entries, ['.', '..']));
     }
 
     /**

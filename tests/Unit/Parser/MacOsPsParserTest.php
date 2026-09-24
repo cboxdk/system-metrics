@@ -217,7 +217,6 @@ PS;
 });
 
 it('uses ProcessRunner for file descriptor counting', function () {
-    // Create a mock ProcessRunner that returns a known lsof output
     $mockRunner = new class implements ProcessRunnerInterface
     {
         public bool $lsofCalled = false;
@@ -227,17 +226,13 @@ it('uses ProcessRunner for file descriptor counting', function () {
         public function execute(string $command): Result
         {
             $this->lastCommand = $command;
-            if (str_starts_with($command, 'lsof')) {
-                $this->lsofCalled = true;
-                // Simulate lsof output: header + 5 file descriptors
-                $output = "COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF NODE NAME\n";
-                $output .= "php     1234   user    0u   CHR  16,0      0t0  661 /dev/ttys000\n";
-                $output .= "php     1234   user    1u   CHR  16,0      0t0  661 /dev/ttys000\n";
-                $output .= "php     1234   user    2u   CHR  16,0      0t0  661 /dev/ttys000\n";
-                $output .= "php     1234   user    3r   REG    1,5     1234   12 /some/file\n";
-                $output .= "php     1234   user    4w   REG    1,5     5678   34 /another/file\n";
 
-                return Result::success($output);
+            if (str_contains($command, 'lsof')) {
+                $this->lsofCalled = true;
+
+                // Field output: one f-record per descriptor, plus the pid
+                // record lsof always emits first.
+                return Result::success("p1234\nf0\nf1\nf2\nf3\nf4\n");
             }
 
             return Result::success('');
@@ -256,17 +251,16 @@ it('uses ProcessRunner for file descriptor counting', function () {
 
     $parser = new MacOsPsParser($mockRunner);
 
-    $output = <<<'PS'
-  PID  PPID    RSS      VSZ      TIME
- 1234     1  10240    20480  00:01:30
-PS;
+    // A pid that is not this process, so the /dev/fd shortcut does not apply.
+    $pid = getmypid() + 1;
 
-    $result = $parser->parse($output, 1234);
+    $output = "  PID  PPID    RSS      VSZ      TIME\n {$pid}     1  10240    20480  00:01:30";
+
+    $result = $parser->parse($output, $pid);
 
     expect($result->isSuccess())->toBeTrue();
     expect($mockRunner->lsofCalled)->toBeTrue();
-    expect($mockRunner->lastCommand)->toBe('lsof -p 1234 -n -P');
-    // 5 lines after header = 5 file descriptors
+    expect($mockRunner->lastCommand)->toBe("lsof -p {$pid} -n -P -F f");
     expect($result->getValue()->resources->openFileDescriptors)->toBe(5);
 });
 
@@ -337,3 +331,60 @@ PS;
     // 999 hours + 59 minutes + 59 seconds = 3599999 seconds * 100 = 359999900 ticks
     expect($result->getValue()->resources->cpuTimes->user)->toBe(359999900);
 });
+
+/**
+ * A runner that records what it was asked and answers with canned lsof
+ * field output.
+ */
+final class RecordingLsofRunner implements ProcessRunnerInterface
+{
+    /** @var list<string> */
+    public array $commands = [];
+
+    public function __construct(private readonly string $answer) {}
+
+    public function execute(string $command): Result
+    {
+        $this->commands[] = $command;
+
+        return Result::success($this->answer);
+    }
+}
+
+it('counts descriptors, not every file the process has mapped', function () {
+    // lsof's default output is every open FILE: the working directory, the
+    // executable and each shared library, plus mapped regions. Counting
+    // those lines reported 59 for a process with 5 descriptors, and grew
+    // with the number of dylibs rather than with open files.
+    $runner = new RecordingLsofRunner("p4242\nf0\nf1\nf2\nfcwd\nftxt\nf7\n");
+
+    $parser = new MacOsPsParser($runner);
+
+    $output = <<<'PS'
+  PID  PPID    RSS      VSZ      TIME
+ 4242     1  10240    20480  00:01:30
+PS;
+
+    $snapshot = $parser->parse($output, 4242)->getValue();
+
+    // f0, f1, f2 and f7 — not the pid record, and not cwd or txt.
+    expect($snapshot->resources->openFileDescriptors)->toBe(4)
+        ->and($runner->commands[0])->toContain('-F f');
+});
+
+it('reads its own descriptors without spawning a process', function () {
+    $runner = new RecordingLsofRunner("p1\nf0\n");
+
+    $parser = new MacOsPsParser($runner);
+
+    $pid = getmypid();
+
+    $output = "  PID  PPID    RSS      VSZ      TIME\n {$pid}     1  10240    20480  00:01:30";
+
+    $snapshot = $parser->parse($output, $pid)->getValue();
+
+    // The whole point: a per-request sampler asks about its own process on
+    // every request, and lsof costs ~25ms a call.
+    expect($runner->commands)->toBe([])
+        ->and($snapshot->resources->openFileDescriptors)->toBeGreaterThan(0);
+})->skip(! is_dir('/dev/fd'), '/dev/fd is macOS/BSD only');
