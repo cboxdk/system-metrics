@@ -5,6 +5,36 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v3.0.2 - 2026-09-24
+
+### Fixed
+
+- **macOS file descriptor counts were wrong, and expensive.** The macOS source
+  ran `lsof -p PID -n -P` and counted the lines after the header. That is not a
+  descriptor count: lsof's default output is every open FILE, including the
+  working directory, the executable, each loaded shared library (`cwd`, `txt`)
+  and every memory-mapped region. A plain PHP process with 5 descriptors
+  reported **59**, and the number tracked how many dylibs were loaded rather
+  than how many files were open. The Linux source counts entries in
+  `/proc/{pid}/fd`, so the same field meant two different things depending on
+  the platform.
+
+  `lsof -F f` is now used instead — one record per actual descriptor, which
+  agrees with `/dev/fd` and with Linux. **`openFileDescriptors` will drop
+  sharply on macOS**; it was inflated before, not now.
+
+  The call was also the expensive part of a snapshot: 24 ms of 29 ms. For the
+  calling process, `/dev/fd` is its own descriptor table and answers the same
+  question in 0.05 ms, so a self-sample skips the process spawn entirely.
+  `ProcessMetrics::start()` for the current pid goes from **29 ms to 4.6 ms**,
+  which matters because a per-request profiler samples its own process on
+  every request.
+
+- **PHPStan on the composite network and storage readers.** `Result::failure()`
+  widened the match to `Result<mixed>`, which no longer satisfied the
+  interface under a newer PHPStan. Unrelated to the above, and failing on main
+  since a version bump the workflow had not run against.
+
 ## v3.0.0 - 2026-04-29
 
 ### Breaking Changes
