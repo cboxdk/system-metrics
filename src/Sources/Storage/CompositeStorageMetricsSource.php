@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cbox\SystemMetrics\Sources\Storage;
 
 use Cbox\SystemMetrics\Contracts\StorageMetricsSource;
+use Cbox\SystemMetrics\DTO\Metrics\Storage\StorageSnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Exceptions\SystemMetricsException;
 use Cbox\SystemMetrics\Support\OsDetector;
@@ -21,10 +22,14 @@ final class CompositeStorageMetricsSource implements StorageMetricsSource
         private readonly ?StorageMetricsSource $freebsdSource = null,
     ) {}
 
+    /**
+     * @return Result<StorageSnapshot>
+     */
     public function read(): Result
     {
         $osFamily = OsDetector::getFamily();
 
+        /** @var Result<StorageSnapshot> */
         return match ($osFamily) {
             'Linux' => $this->getLinuxSource()->read(),
             'Darwin' => $this->getMacosSource()->read(),
