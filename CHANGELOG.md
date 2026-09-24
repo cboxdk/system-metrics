@@ -35,6 +35,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   interface under a newer PHPStan. Unrelated to the above, and failing on main
   since a version bump the workflow had not run against.
 
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v3.0.1...v3.0.2
+
+## v3.0.1 - 2026-09-23
+
+Maintenance only — no source changes.
+
+### Changed
+
+- Documentation landing page normalised, and a requirements section added.
+- CI: `actions/checkout` bumped from 6 to 7 (#8).
+
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v3.0.0...v3.0.1
+
 ## v3.0.0 - 2026-04-29
 
 ### Breaking Changes
@@ -190,34 +203,6 @@ use Cbox\SystemMetrics\SystemMetrics;
 ```
 **Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.6.0...v2.0.0
 
-## v2.0.0 - 2026-01-16
-
-### Breaking Changes
-
-- **Namespace Changed**: `PHPeek\SystemMetrics` → `Cbox\SystemMetrics`
-- **Package Renamed**: `gophpeek/system-metrics` → `cboxdk/system-metrics`
-
-### Migration Guide
-
-Update your `composer.json`:
-
-```bash
-composer remove gophpeek/system-metrics
-composer require cboxdk/system-metrics
-
-```
-Update your imports:
-
-```php
-// Before
-use PHPeek\SystemMetrics\SystemMetrics;
-
-// After
-use Cbox\SystemMetrics\SystemMetrics;
-
-```
-**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.6.0...v2.0.0
-
 ## v1.6.0 - 2026-01-02
 
 ### What's Changed
@@ -250,18 +235,6 @@ use Cbox\SystemMetrics\SystemMetrics;
 ### What's Changed
 
 * feat(freebsd): Add comprehensive FreeBSD FFI support by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/9
-
-**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.4.0...v1.5.0
-
-## v1.4.0 - 2025-11-20
-
-### What's Changed
-
-* feat: eliminate shell execution with FFI-based metrics by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/8
-
-**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.3.0...v1.4.0
-
-## [Unreleased]
 
 ### Added
 
@@ -419,6 +392,16 @@ use Cbox\SystemMetrics\SystemMetrics;
   - **Linux**: 100% pure /proc + FFI (storage via statfs64(), all others via /proc filesystem)
   
 
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.4.0...v1.5.0
+
+## v1.4.0 - 2025-11-20
+
+### What's Changed
+
+* feat: eliminate shell execution with FFI-based metrics by @sylvesterdamgaard in https://github.com/cboxdk/system-metrics/pull/8
+
+**Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v1.3.0...v1.4.0
+
 ## v1.3.0 - 2025-11-19
 
 ### What's Changed
@@ -455,7 +438,7 @@ use Cbox\SystemMetrics\SystemMetrics;
 
 **Full Changelog**: https://github.com/cboxdk/system-metrics/compare/v0.1.0...v1.0.0
 
-## [0.1.0] - 2025-11-16
+## v0.1.0 - 2025-11-16
 
 ### Added
 
