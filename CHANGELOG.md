@@ -5,6 +5,36 @@ All notable changes to `system-metrics` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v3.1.0 - 2026-10-14
+
+### Added
+
+- **Memory working set for containers.** `ContainerLimits::$memoryWorkingSetBytes`
+  reports cgroup memory usage minus inactive file cache, the way cAdvisor and
+  Kubernetes define the working set: `memory.current - inactive_file` on
+  cgroup v2, `memory.usage_in_bytes - total_inactive_file` on v1, floored at 0.
+  Raw usage counts reclaimable page cache, so a container that writes files
+  reads as close to its limit even though the kernel would hand that memory
+  back. `memoryWorkingSetUtilizationPercentage()` and
+  `availableMemoryBytesFromWorkingSet()` go with it. All three are null when
+  `memory.stat` cannot be read. `memoryUsageBytes` and its helpers are
+  unchanged, and so is `limits()`.
+
+### Fixed
+
+- **`limits()` in a cgroup without a memory limit pairs host total with host
+  usage.** It used to pair the host's total with the usage of only the
+  processes inside the cgroup — every systemd service, and every container
+  whose limit sits on a parent cgroup (a Kubernetes pod or ECS task limit).
+  `availableMemoryBytes()` and `memoryUtilization()` described neither scope,
+  and a capacity planner built on them over-packed the machine. Cgroups with a
+  limit are unchanged. (#10)
+- **cgroup v1 `oomKillCount` counts OOM kills.** It read the `under_oom` flag,
+  which is 1 only while the cgroup is stalled with the OOM killer disabled, so
+  it stayed 0 however many processes the kernel killed. It now reads the
+  `oom_kill` counter in `memory.oom_control` (Linux 4.13+), and is null on
+  older kernels. cgroup v2 is unchanged. (#11)
+
 ## v3.0.2 - 2026-09-24
 
 ### Fixed
