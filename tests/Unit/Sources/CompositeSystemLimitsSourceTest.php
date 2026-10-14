@@ -188,6 +188,47 @@ describe('CompositeSystemLimitsSource', function () {
         expect($limits->memoryBytes)->toBe(16_000_000_000);
     });
 
+    it('pairs the host total with host usage when the cgroup has no memory limit', function () {
+        // An unlimited cgroup's own usage leaves out every process outside it,
+        // so pairing it with the host total overstates free memory.
+        $source = new CompositeSystemLimitsSource(
+            containerSource: makeContainerSource(
+                version: CgroupVersion::V1,
+                cpuQuota: null,
+                memoryLimitBytes: null,
+                cpuUsageCores: null,
+                memoryUsageBytes: 700_000_000,
+            ),
+            cpuSource: makeCpuSource(8),
+            memorySource: makeMemorySource(16_000_000_000, 9_000_000_000),
+        );
+
+        $limits = $source->read()->getValue();
+
+        expect($limits->memoryBytes)->toBe(16_000_000_000)
+            ->and($limits->currentMemoryBytes)->toBe(9_000_000_000.0)
+            ->and($limits->availableMemoryBytes())->toBe(7_000_000_000);
+    });
+
+    it('pairs the cgroup limit with cgroup usage when the cgroup has a memory limit', function () {
+        $source = new CompositeSystemLimitsSource(
+            containerSource: makeContainerSource(
+                version: CgroupVersion::V2,
+                cpuQuota: null,
+                memoryLimitBytes: 4_000_000_000,
+                cpuUsageCores: null,
+                memoryUsageBytes: 1_000_000_000,
+            ),
+            cpuSource: makeCpuSource(8),
+            memorySource: makeMemorySource(16_000_000_000, 9_000_000_000),
+        );
+
+        $limits = $source->read()->getValue();
+
+        expect($limits->memoryBytes)->toBe(4_000_000_000)
+            ->and($limits->currentMemoryBytes)->toBe(1_000_000_000.0);
+    });
+
     it('reads from host when no cgroups detected', function () {
         $source = new CompositeSystemLimitsSource(
             containerSource: makeContainerSource(

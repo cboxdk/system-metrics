@@ -73,11 +73,20 @@ final class CompositeSystemLimitsSource implements SystemLimitsSource
 
         // Use cgroup limits if available, otherwise fall back to host
         $cpuCores = $container->cpuQuota ?? $this->getHostCpuCores();
-        $memoryBytes = $container->memoryLimitBytes ?? $memory->totalBytes;
 
         // Current usage from cgroup
         $currentCpuUsage = $container->cpuUsageCores ?? 0.0;
-        $currentMemoryUsage = (float) $container->memoryUsageBytes;
+
+        // A limit and its usage must come from the same scope. A cgroup with no
+        // memory limit can still use all of the host's memory, which other
+        // processes outside the cgroup are using too.
+        if ($container->memoryLimitBytes !== null) {
+            $memoryBytes = $container->memoryLimitBytes;
+            $currentMemoryUsage = (float) $container->memoryUsageBytes;
+        } else {
+            $memoryBytes = $memory->totalBytes;
+            $currentMemoryUsage = (float) $memory->usedBytes;
+        }
 
         $source = $version === CgroupVersion::V2 ? LimitSource::CGROUP_V2 : LimitSource::CGROUP_V1;
 
