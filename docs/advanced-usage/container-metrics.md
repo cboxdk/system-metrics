@@ -64,6 +64,22 @@ if ($container->hasOomKills()) {
 
 `oomKillCount` is the cgroup's cumulative OOM kill counter: `oom_kill` in `memory.events` on cgroup v2, and in `memory.oom_control` on cgroup v1 (Linux 4.13+). It is `null` where the kernel does not report it.
 
+## Working Set (Page-Cache-Adjusted Usage)
+
+`memoryUsageBytes` is the cgroup's raw usage counter (`memory.current` on cgroup v2, `memory.usage_in_bytes` on cgroup v1). It includes page cache. A container that writes files will see this number climb toward its limit even though the kernel reclaims that cache under pressure, long before it OOM-kills anything.
+
+`memoryWorkingSetBytes` is the working set as cAdvisor and Kubernetes define it: usage minus the inactive file cache from `memory.stat` (`inactive_file` on cgroup v2, `total_inactive_file` on cgroup v1), floored at zero. It is the figure `kubectl top` and kubelet eviction use, and it is the better input for "how close am I to the limit?".
+
+```php
+if ($container->hasMemoryLimit() && $container->memoryWorkingSetBytes !== null) {
+    echo "Working set: " . round($container->memoryWorkingSetBytes / 1024**3, 2) . " GB\n";
+    echo "Utilization: " . round($container->memoryWorkingSetUtilizationPercentage(), 1) . "%\n";
+    echo "Available: " . round($container->availableMemoryBytesFromWorkingSet() / 1024**3, 2) . " GB\n";
+}
+```
+
+`memoryWorkingSetBytes` is `null` when the usage or `memory.stat` cannot be read, or `memory.stat` has no inactive file line; the two helpers return `null` in that case too, and when there is no memory limit. The raw `memoryUsageBytes`, `memoryUtilizationPercentage()` and `availableMemoryBytes()` keep their meaning.
+
 ## Complete Example
 
 ```php

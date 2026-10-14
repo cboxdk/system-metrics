@@ -230,4 +230,55 @@ describe('ContainerLimits', function () {
         expect($limits->isCpuThrottled())->toBeFalse();
         expect($limits->hasOomKills())->toBeFalse();
     });
+
+    it('defaults the working set to null for existing callers', function () {
+        $limits = new ContainerLimits(
+            cgroupVersion: CgroupVersion::V2,
+            cpuQuota: null,
+            memoryLimitBytes: 4_000_000_000,
+            cpuUsageCores: null,
+            memoryUsageBytes: 3_000_000_000,
+            cpuThrottledCount: null,
+            oomKillCount: null,
+        );
+
+        expect($limits->memoryWorkingSetBytes)->toBeNull()
+            ->and($limits->memoryWorkingSetUtilizationPercentage())->toBeNull()
+            ->and($limits->availableMemoryBytesFromWorkingSet())->toBeNull();
+    });
+
+    it('measures utilization and headroom against the working set', function () {
+        $limits = new ContainerLimits(
+            cgroupVersion: CgroupVersion::V2,
+            cpuQuota: null,
+            memoryLimitBytes: 4_000_000_000,
+            cpuUsageCores: null,
+            memoryUsageBytes: 3_000_000_000,
+            cpuThrottledCount: null,
+            oomKillCount: null,
+            memoryWorkingSetBytes: 1_000_000_000,
+        );
+
+        // Raw usage keeps its meaning; the working set excludes page cache.
+        expect($limits->memoryUtilizationPercentage())->toBe(75.0)
+            ->and($limits->availableMemoryBytes())->toBe(1_000_000_000)
+            ->and($limits->memoryWorkingSetUtilizationPercentage())->toBe(25.0)
+            ->and($limits->availableMemoryBytesFromWorkingSet())->toBe(3_000_000_000);
+    });
+
+    it('has no working-set utilization without a memory limit', function () {
+        $limits = new ContainerLimits(
+            cgroupVersion: CgroupVersion::V2,
+            cpuQuota: null,
+            memoryLimitBytes: null,
+            cpuUsageCores: null,
+            memoryUsageBytes: 3_000_000_000,
+            cpuThrottledCount: null,
+            oomKillCount: null,
+            memoryWorkingSetBytes: 1_000_000_000,
+        );
+
+        expect($limits->memoryWorkingSetUtilizationPercentage())->toBeNull()
+            ->and($limits->availableMemoryBytesFromWorkingSet())->toBeNull();
+    });
 });

@@ -72,6 +72,7 @@ final class CgroupParser
                 memoryUsageBytes: null,
                 cpuThrottledCount: null,
                 oomKillCount: null,
+                memoryWorkingSetBytes: null,
             ));
         }
 
@@ -82,6 +83,7 @@ final class CgroupParser
             $memoryUsage = $this->v2MemoryParser->parseUsage();
             $cpuThrottled = $this->v2CpuParser->parseThrottled();
             $oomKills = $this->v2MemoryParser->parseOomKills();
+            $memoryWorkingSet = $this->v2MemoryParser->parseWorkingSet($memoryUsage);
         } else {
             $cpuQuota = $this->v1CpuParser->parseQuota($hostCpuCores);
             $memoryLimit = $this->v1MemoryParser->parseLimit();
@@ -89,6 +91,7 @@ final class CgroupParser
             $memoryUsage = $this->v1MemoryParser->parseUsage();
             $cpuThrottled = $this->v1CpuParser->parseThrottled();
             $oomKills = $this->v1MemoryParser->parseOomKills();
+            $memoryWorkingSet = $this->v1MemoryParser->parseWorkingSet($memoryUsage);
         }
 
         return Result::success(new ContainerLimits(
@@ -99,6 +102,7 @@ final class CgroupParser
             memoryUsageBytes: $memoryUsage,
             cpuThrottledCount: $cpuThrottled,
             oomKillCount: $oomKills,
+            memoryWorkingSetBytes: $memoryWorkingSet,
         ));
     }
 

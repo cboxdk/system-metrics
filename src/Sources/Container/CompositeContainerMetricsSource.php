@@ -48,6 +48,7 @@ final class CompositeContainerMetricsSource implements ContainerMetricsSource
             memoryUsageBytes: null,
             cpuThrottledCount: null,
             oomKillCount: null,
+            memoryWorkingSetBytes: null,
         ));
     }
 }

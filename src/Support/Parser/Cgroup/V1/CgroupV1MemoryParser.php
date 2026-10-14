@@ -101,4 +101,50 @@ final class CgroupV1MemoryParser
 
         return (int) $matches[1];
     }
+
+    /**
+     * Parse the memory working set: usage minus inactive file cache (memory.stat).
+     *
+     * Null when usage is unknown or memory.stat cannot be read.
+     */
+    public function parseWorkingSet(?int $usageBytes): ?int
+    {
+        if ($usageBytes === null) {
+            return null;
+        }
+
+        $path = $this->pathResolver->resolvePath('memory', 'memory.stat');
+        if ($path === null) {
+            return null;
+        }
+
+        $contents = @file_get_contents($path);
+
+        return $this->workingSetFromMemoryStat($usageBytes, $contents === false ? null : $contents);
+    }
+
+    /**
+     * The working set as cAdvisor and the kubelet define it: `memory.usage_in_bytes`
+     * minus `total_inactive_file` from memory.stat, floored at zero. Inactive file pages
+     * are page cache the kernel reclaims before it OOM-kills, so they are not
+     * pressure on the limit.
+     *
+     * Reads the hierarchical `total_inactive_file`, which matches the hierarchical
+     * `memory.usage_in_bytes`; the local `inactive_file` line is ignored. Null when the usage, the memory.stat contents or the key
+     * is missing.
+     *
+     * @internal
+     */
+    public function workingSetFromMemoryStat(?int $usageBytes, ?string $memoryStat): ?int
+    {
+        if ($usageBytes === null || $memoryStat === null) {
+            return null;
+        }
+
+        if (! preg_match('/^total_inactive_file\s+(\d+)\s*$/m', $memoryStat, $matches)) {
+            return null;
+        }
+
+        return max(0, $usageBytes - (int) $matches[1]);
+    }
 }

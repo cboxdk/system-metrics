@@ -80,6 +80,11 @@ final class CompositeSystemLimitsSource implements SystemLimitsSource
         // A limit and its usage must come from the same scope. A cgroup with no
         // memory limit can still use all of the host's memory, which other
         // processes outside the cgroup are using too.
+        //
+        // Cgroup usage stays the raw counter (page cache included), not the
+        // working set: currentMemoryBytes has always meant that here, and
+        // consumers who want cache-adjusted usage read it from
+        // ContainerLimits::$memoryWorkingSetBytes.
         if ($container->memoryLimitBytes !== null) {
             $memoryBytes = $container->memoryLimitBytes;
             $currentMemoryUsage = (float) $container->memoryUsageBytes;

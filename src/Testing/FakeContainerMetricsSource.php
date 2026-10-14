@@ -72,6 +72,7 @@ final class FakeContainerMetricsSource implements ContainerMetricsSource
             memoryUsageBytes: (int) ($memoryLimitBytes * 0.6),
             cpuThrottledCount: 0,
             oomKillCount: 0,
+            memoryWorkingSetBytes: (int) ($memoryLimitBytes * 0.5),
         );
 
         return $this;

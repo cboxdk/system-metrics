@@ -8,6 +8,11 @@ namespace Cbox\SystemMetrics\DTO\Metrics\Container;
  * Container resource limits and usage from cgroups.
  *
  * All values represent the container's perspective, not the host.
+ *
+ * `memoryUsageBytes` is the cgroup's raw usage and includes page cache the
+ * kernel can reclaim. `memoryWorkingSetBytes` subtracts the inactive file
+ * cache: the working set as cAdvisor and Kubernetes define it, and the figure
+ * kubelet eviction and `kubectl top` use.
  */
 final readonly class ContainerLimits
 {
@@ -19,6 +24,7 @@ final readonly class ContainerLimits
         public ?int $memoryUsageBytes,
         public ?int $cpuThrottledCount,
         public ?int $oomKillCount,
+        public ?int $memoryWorkingSetBytes = null,
     ) {}
 
     /**
@@ -64,6 +70,19 @@ final readonly class ContainerLimits
     }
 
     /**
+     * Get working-set memory utilization as percentage (0-100+).
+     * Unlike memoryUtilizationPercentage(), reclaimable page cache is excluded.
+     */
+    public function memoryWorkingSetUtilizationPercentage(): ?float
+    {
+        if ($this->memoryLimitBytes === null || $this->memoryWorkingSetBytes === null || $this->memoryLimitBytes <= 0) {
+            return null;
+        }
+
+        return ($this->memoryWorkingSetBytes / $this->memoryLimitBytes) * 100;
+    }
+
+    /**
      * Get available CPU cores (quota - usage).
      */
     public function availableCpuCores(): ?float
@@ -85,6 +104,19 @@ final readonly class ContainerLimits
         }
 
         return max(0, $this->memoryLimitBytes - $this->memoryUsageBytes);
+    }
+
+    /**
+     * Get available memory in bytes against the working set (limit - working set).
+     * Counts reclaimable page cache as available, unlike availableMemoryBytes().
+     */
+    public function availableMemoryBytesFromWorkingSet(): ?int
+    {
+        if ($this->memoryLimitBytes === null || $this->memoryWorkingSetBytes === null) {
+            return null;
+        }
+
+        return max(0, $this->memoryLimitBytes - $this->memoryWorkingSetBytes);
     }
 
     /**

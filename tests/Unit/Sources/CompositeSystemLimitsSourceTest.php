@@ -12,6 +12,7 @@ use Cbox\SystemMetrics\DTO\Metrics\LimitSource;
 use Cbox\SystemMetrics\DTO\Metrics\Memory\MemorySnapshot;
 use Cbox\SystemMetrics\DTO\Result;
 use Cbox\SystemMetrics\Sources\SystemLimits\CompositeSystemLimitsSource;
+use Cbox\SystemMetrics\Testing\FakeContainerMetricsSource;
 
 function makeContainerSource(
     CgroupVersion $version,
@@ -227,6 +228,25 @@ describe('CompositeSystemLimitsSource', function () {
 
         expect($limits->memoryBytes)->toBe(4_000_000_000)
             ->and($limits->currentMemoryBytes)->toBe(1_000_000_000.0);
+    });
+
+    it('keeps raw cgroup usage, not the working set, as current memory', function () {
+        $source = new CompositeSystemLimitsSource(
+            containerSource: (new FakeContainerMetricsSource)->set(new ContainerLimits(
+                cgroupVersion: CgroupVersion::V2,
+                cpuQuota: null,
+                memoryLimitBytes: 4_000_000_000,
+                cpuUsageCores: null,
+                memoryUsageBytes: 3_000_000_000,
+                cpuThrottledCount: null,
+                oomKillCount: null,
+                memoryWorkingSetBytes: 1_000_000_000,
+            )),
+            cpuSource: makeCpuSource(8),
+            memorySource: makeMemorySource(16_000_000_000, 9_000_000_000),
+        );
+
+        expect($source->read()->getValue()->currentMemoryBytes)->toBe(3_000_000_000.0);
     });
 
     it('reads from host when no cgroups detected', function () {
