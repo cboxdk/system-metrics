@@ -62,6 +62,8 @@ if ($container->hasOomKills()) {
 }
 ```
 
+`oomKillCount` is the cgroup's cumulative OOM kill counter: `oom_kill` in `memory.events` on cgroup v2, and in `memory.oom_control` on cgroup v1 (Linux 4.13+). It is `null` where the kernel does not report it.
+
 ## Complete Example
 
 ```php

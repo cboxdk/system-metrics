@@ -68,7 +68,7 @@ final class CgroupV1MemoryParser
     }
 
     /**
-     * Parse cgroup v1 OOM kills (memory.oom_control under_oom).
+     * Parse cgroup v1 OOM kills (memory.oom_control oom_kill).
      */
     public function parseOomKills(): ?int
     {
@@ -82,7 +82,20 @@ final class CgroupV1MemoryParser
             return null;
         }
 
-        if (! preg_match('/under_oom\s+(\d+)/', $contents, $matches)) {
+        return $this->oomKillsFromOomControl($contents);
+    }
+
+    /**
+     * The `oom_kill` counter from memory.oom_control (Linux 4.13+), or null on
+     * kernels that do not report it. `under_oom` is not a count: it is 1 only
+     * while the cgroup is currently stalled at its limit with the OOM killer
+     * disabled.
+     *
+     * @internal
+     */
+    public function oomKillsFromOomControl(string $contents): ?int
+    {
+        if (! preg_match('/^oom_kill\s+(\d+)\s*$/m', $contents, $matches)) {
             return null;
         }
 
