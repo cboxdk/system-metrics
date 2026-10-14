@@ -173,6 +173,16 @@ The API automatically selects the appropriate source:
 2. If cgroup limits found, uses those (container-aware)
 3. Otherwise falls back to host limits (bare metal/VM)
 
+### How Memory Usage Is Measured
+
+`memoryBytes` and `currentMemoryBytes` always come from the same scope:
+
+- **Cgroup with a memory limit**: the cgroup's limit and its raw usage counter (`memory.current` on v2, `memory.usage_in_bytes` on v1). This counter includes page cache the kernel can reclaim, so it reads higher than the memory the container really needs.
+- **Cgroup without a memory limit** (most systemd services, or a container whose limit sits on a parent cgroup such as a Kubernetes pod or ECS task): the host's total and used memory, the same values as the `host` source. `source` still reports the cgroup version, since CPU may come from the cgroup.
+- **Host**: total memory, and used memory derived from `MemAvailable`, which already excludes reclaimable cache.
+
+`currentMemoryBytes` is deliberately left as the raw cgroup counter in the limited case. For a page-cache-adjusted figure in a container, read `memoryWorkingSetBytes` from [Container Metrics](container-metrics.md#working-set-page-cache-adjusted-usage).
+
 ## Related Documentation
 
 - [Container Metrics](container-metrics.md) - Detailed cgroup metrics
