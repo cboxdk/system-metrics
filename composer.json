@@ -32,7 +32,7 @@
     },
     "require-dev": {
         "laravel/pint": "^1.0",
-        "pestphp/pest": "^4.1",
+        "pestphp/pest": "^5.3",
         "phpstan/phpstan": "^2.0"
     },
     "autoload": {
