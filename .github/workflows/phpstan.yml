@@ -10,6 +10,11 @@ on:
       - '**.php'
       - 'phpstan.neon.dist'
 
+concurrency:
+  # A new push to a pull request cancels its older run; runs on main are never cancelled.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   phpstan:
     name: phpstan
